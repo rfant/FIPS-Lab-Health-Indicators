@@ -31,20 +31,29 @@ Module_Active_Data folder
 	update_active_list.sh
 		1) Used to pull current active module data from https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&CertificateStatus=Active&ValidationYear=0
 		2) Note: to improve download speed, the external VPN is disabled during the CMVP pull
+	
 	active_cert_pull/
+	
 		1) folder containing all the currently active certificates. One html file for each cert.
+	
 	active_cert_pull_backup/
 		1) a backup, just in case.
+	
 	active_to_sql
 		1) executable that parses the html file and update the corresponding sql table.
+	
 	active_to_sql.ccp
 		1) source code
+	
 	go
 		1) shell script which invokes the parser after backing up the cert files.  This script is invoked by a cron job
+	
 	Makefile
 		1) used to create active_to_sql executable.
+	
 	urls.txt
 		1) temp file created by crawling through the CMVP active website. It is used to store all the certificate urls.
+	
 	utils.h
 		1) contains file utilities used by 'active_to_sql'		
 
@@ -55,32 +64,39 @@ Module_In_Process_Data folder
 		from "https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/Modules-In-Process-List" 
 		3) Note: to improve download speed, the external VPN is disabled during the CMVP pull, but must be enabled
 		during the CST SVN pull.
+	
 	cmvp_web site_pull/
 		1) folder containing the most recent pull from the CMVP MIP website.
+	
 	curret_MIP_Indicator_sql.h
 		1) include file used by the parser executable. This file contains most of the sql commands used by the parser 
 		to update, merge duplicate, check errors, etc.
+	
 	current_MIP_indicator
 		1) executable that parsers the html files and updates the "current" MIPS sql table.
+	
 	current_mip_to_sql.cpp
 		1) source code for the "current data" parser
+	
 	
 	
 	MIP_Indicator_sql.h
 		1) include file used by the parser executable for historic files. This file contains most of the sql commands used by the parser 
 		to update, merge duplicate, check errors, etc.
 
+	
 	go
 		1) shell script which invokes both parsers (current / historic). This script is invoked by the cron job.
+	
 	Makefile
 		1) used for compiling both parsers (current/historic).
+	
 	utils.h
 		1) contains file utilities used by both parsers (current/historic)
 
 
 =========================
-ubuntu postgresql connection string
-connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
+
 ================================================================================================================
 Actual Indicators
 The indicators are written in PHP using the ChartDirector library. Intel has a license for this alreday, but the "free version" banner still appears
