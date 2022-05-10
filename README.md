@@ -17,10 +17,12 @@ This single html file has all a listing of all the Module in process and is pars
 Folder Structure
 
 The Module_In_Process_Date folder is used to:
+	
 	1) update the sql table: CMVP_MIP_Table  with the most recent daily data 
 	   from  the CMPV website https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/Modules-In-Process-List 
 	
 The Active_Module_Data folder is used to:
+	
 	1) Update the sql table: CMVP_Active_Table with the most recent daily data
 		from the CMVP website 	https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&CertificateStatus=Active&ValidationYear=0
 
@@ -29,7 +31,9 @@ The files/folders used are:
 -----------------------------
 Module_Active_Data folder
 	update_active_list.sh
+		
 		1) Used to pull current active module data from https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&CertificateStatus=Active&ValidationYear=0
+		
 		2) Note: to improve download speed, the external VPN is disabled during the CMVP pull
 	
 	active_cert_pull/
