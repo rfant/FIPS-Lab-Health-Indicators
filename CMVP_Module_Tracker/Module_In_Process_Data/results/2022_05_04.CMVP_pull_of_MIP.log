@@ -1,0 +1,9 @@
+Move any current HTML MIP fles in /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull into the backup folder at /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull_backup.
+     mv /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull/*.HTML /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull_backup/.
+ 
+Updating my current CMVP Module In Process List (getting single HTML file from bar chart).
+     curl https::Modules-In_Process-List > /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull/2022_05_04.MIP.HTML
+Finished current  CMVP Module In Process (MIP) pull.
+     cd /home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/
+Launching './go' for HTML parser for this single HTML file.
+     ./go

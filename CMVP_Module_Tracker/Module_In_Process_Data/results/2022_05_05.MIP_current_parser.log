@@ -1,0 +1,246 @@
+SUCCESSFUL postgres connection
+SUCCESS: dropped 'get_most_recent_date_in_both_rows (bigint, bigint );' 
+
+SUCCESS: added   'get_most_recent_date_in_both_rows ( bigint,   bigint )'
+
+SUCCESS: dropped 'merge_rows_with_no_TID (bigint, bigint);'
+
+SUCCESS: added   'merge_rows_with_no_TID (bigint, bigint )'
+SUCCESS: added   'merge_rows_with_same_TID (bigint, bigint )'
+yankee: slq1= 
+CREATE OR REPLACE FUNCTION loop_to_merge_all_dups_with_same_TID ( ) RETURNS integer  	AS $$ DECLARE 	  inner_row  record; 		  outer_row record; 	BEGIN	FOR outer_row in (SELECT "Row_ID","TID","Status" FROM "CMVP_MIP_Table"  order by "Row_ID" asc ) LOOP		if  (outer_row."TID" is  not null) AND (outer_row."Status" is null) then						FOR inner_row in (SELECT "Row_ID","TID","Status" FROM "CMVP_MIP_Table"  order by "Row_ID" asc ) LOOP				if  (inner_row."TID" is  not null) AND (inner_row."Status" is null) then					if  (inner_row."TID"  = outer_row."TID") AND (outer_row."Row_ID" != inner_row."Row_ID") then											if(select merge_rows_with_same_TID (								case when (inner_row."Row_ID" < outer_row."Row_ID") then (inner_row."Row_ID") else (outer_row."Row_ID") end, /* smaller Row num */ 								case when (inner_row."Row_ID" < outer_row."Row_ID") then (outer_row."Row_ID") else (inner_row."Row_ID") end  /* bigger Row num */ 													        )						   ) !=1 then   	/* return=1 means success */   						return(-2);	 /*merge_rows_with_same_TID failed */ 					end if;										end if; 				end if; 			end loop; /* for inner_row */		/*else */ 	/* outer_row is not null, but inner_row is null */  		/*return (-4); */ 	/* outer_row is not null, but inner_row is null */  	end if;  /*if out_row is not null */  		end loop;  /*for outer_row*/   	delete from "CMVP_MIP_Table" where "Status"='DELETE';		return(1);			END;	$$ LANGUAGE 'plpgsql';	
+SUCCESS: added   'loop_to_merge_all_dups_with_same_TID ( )'
+
+
+********************************************************************************
+
+Opening file: '/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull/2022_05_05.MIP.HTML'
+Error: '/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull/2022_05_05.MIP.HTML' is empty
+*** Error 356: Error reading file '/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull/2022_05_05.MIP.HTML'.
+
+delete Daily sql1=delete from "Daily_CMVP_MIP_Table"
+***** Error 142a: Last Update Tag Not found (x=0.y=1)
+
+loop_to_merge_all_dups_with_same_TID
+bravo8: loop_to_merge_all_dups_with_same_TID
+exiting
+1: ################
+Invoke the LHI to force a refresh of the confidence tool.
+
+
+
+  
+
+
+  
+<!----------------------------------------------------------------------------------------------------------------->
+  
+<!----------------------------------------------------------------------------------------------------------------->
+<body style="margin:5px 0px 0px 5px">
+
+
+<table> <!-- date buttons -->
+
+	<form action="/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php" method="POST"> 
+	
+   	<tr>    <td align="right"> Start Date <input type="date" name="startDate" value="1995-01-01">   
+   	 		<td rowspan="2"> <td colspan="3"><img src = "http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/INTEL_FIPS_LOGO_v3.png"     height = "70" width = "262" /></td></td>
+   	
+   <!--	<td rowspan="2"> <td colspan="2"> CST Lab Health Indicator</td></td>	-->	
+   			
+   			
+   	</tr>
+	<tr>	<td align="right"> End Date   <input type="date" name="endDate" value="2022-05-05"> </td> <td>&nbsp</td></tr>
+   	<tr> 	<td align="center">  <button type='submit' >    Refresh  </button> 
+   	</form> 	
+   			</td>  
+   				<script>
+					n =  new Date();
+					y = n.getFullYear();
+					m = n.getMonth() +1;   //have to add one to get current month since array is zero-index based.
+					d = n.getDate();
+					
+				</script>
+		
+			<td>
+				
+				<script>
+					AendDate=  y + '-' + m + '-' + d ;  //today's date 
+					
+					AstartDate= y-2+ '-' + m +'-' + d; //24 months earlier
+
+					Azoom= 1;
+				  Aurl="//127.0.0.1";
+					Azoom="1";
+
+				</script>
+   				<button  style="background-color: silver;" type="button"    				 onclick="window.location.href='http:'+ Aurl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?zoom='+Azoom+'&in_TopButtons=1&startDate='+ AstartDate+ '&endDate='+ AendDate;"> Last 24 Months  
+   				
+   				</button> 
+   			</td>
+   			<td> 
+				<script>
+					BendDate=  y-1 + '-12-31' ;  //Dec 31st of the current year
+					BstartDate= y-1 + '-01' +'-01'; //Jan 1st of last year 
+					Bzoom= 1;
+					 Burl="//127.0.0.1";
+					Bzoom="1"; 
+				</script>
+
+   			 	<button  style="background-color: silver;" type="button"    				 onclick="window.location.href='http:'+ Burl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?zoom='+Bzoom+'&in_TopButtons=2&startDate='+BstartDate+ '&endDate='+BendDate;"> Last Year  
+   				</button>  
+   			</td> 
+			<td>
+				<script>
+					CendDate=  y + '-' + m + '-' + d ;  //today's date 
+					CstartDate= y + '-01' +'-01'; //january 1st of the current year
+					Czoom= 1;
+					C_url="//127.0.0.1";
+					Czoom="1";
+				</script>
+				<button  style="background-color: silver;" type="button"    				 onclick="window.location.href='http:'+ C_url+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?zoom='+Czoom+'&in_TopButtons=3&startDate='+ CstartDate+ '&endDate='+ CendDate;"> This Year  
+   				</button> 
+   			</td>
+   			<td>
+				<script>
+					DendDate=  y + '-' +  m + '-' + d;  //today
+					DstartDate=1995 + '-01-01'  ;  //birth of the CMVP program
+					Dzoom= 1;
+					Durl="//127.0.0.1";
+					Dzoom="1";
+				</script>
+				<button  style="background-color: gray;" type="button"    				  onclick="window.location.href='http:'+ Durl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?zoom='+Dzoom+'&in_TopButtons=4&startDate='+ DstartDate+ '&endDate=' + DendDate ;"> All Time  
+   				</button> 
+   			</td>
+</tr>
+   
+ </table> <!-- date buttons -->
+   
+<hr style="border:solid 1px #000080" />
+
+<table>
+	<tr>		<td style="width:100px">
+	</td>
+	<td>
+		<img src="getchart.php?img=chart1&id=1vf52isicff9j5ps8pjaehlkj66273bc423014e&" border="0" usemap="#map1">
+	</td>
+	</tr>
+</table>
+<map name="map1">
+<area shape="rect" coords="80,103,80,136"  title='Vendor: VMware, Inc.
+Module: VMware&#39;s VPN Crypto Module
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=9&xLabel=ACUMEN&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='VMware,%20Inc.'&Module_Name='VMware&#39;s%20VPN%20Crypto%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,103,80,136"  title='Vendor: VMware, Inc.
+Module: VMware&#39;s VPN Crypto Module
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=9&xLabel=ACUMEN&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='VMware,%20Inc.'&Module_Name='VMware&#39;s%20VPN%20Crypto%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,103,254,136"  title='Vendor: VMware, Inc.
+Module: VMware&#39;s VPN Crypto Module
+Coordination: 139 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=9&xLabel=ACUMEN&dataSet=2&dataSetName=Coordination&value=139&Vendor_Name='VMware,%20Inc.'&Module_Name='VMware&#39;s%20VPN%20Crypto%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,143,80,176"  title='Vendor: Google, LLC
+Module: Look-aside Cryptography and Compression Engine (LCE)
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=8&xLabel=ACUMEN&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Google,%20LLC'&Module_Name='Look-aside%20Cryptography%20and%20Compression%20Engine%20(LCE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,143,156,176"  title='Vendor: Google, LLC
+Module: Look-aside Cryptography and Compression Engine (LCE)
+In_Review: 61 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=8&xLabel=ACUMEN&dataSet=1&dataSetName=In_Review&value=61&Vendor_Name='Google,%20LLC'&Module_Name='Look-aside%20Cryptography%20and%20Compression%20Engine%20(LCE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="156,143,339,176"  title='Vendor: Google, LLC
+Module: Look-aside Cryptography and Compression Engine (LCE)
+Coordination: 146 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=8&xLabel=ACUMEN&dataSet=2&dataSetName=Coordination&value=146&Vendor_Name='Google,%20LLC'&Module_Name='Look-aside%20Cryptography%20and%20Compression%20Engine%20(LCE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,183,80,216"  title='Vendor: Motorola Solutions, Inc.
+Module: KMF/Wave/Traffic CryptR
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=7&xLabel=UL&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Motorola%20Solutions,%20Inc.'&Module_Name='KMF/Wave/Traffic%20CryptR'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,183,80,216"  title='Vendor: Motorola Solutions, Inc.
+Module: KMF/Wave/Traffic CryptR
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=7&xLabel=UL&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Motorola%20Solutions,%20Inc.'&Module_Name='KMF/Wave/Traffic%20CryptR'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,183,198,216"  title='Vendor: Motorola Solutions, Inc.
+Module: KMF/Wave/Traffic CryptR
+Coordination: 94 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=7&xLabel=UL&dataSet=2&dataSetName=Coordination&value=94&Vendor_Name='Motorola%20Solutions,%20Inc.'&Module_Name='KMF/Wave/Traffic%20CryptR'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,223,80,256"  title='Vendor: Google, LLC
+Module: Inline Crypto Engine (ICE)
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=6&xLabel=ACUMEN&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Google,%20LLC'&Module_Name='Inline%20Crypto%20Engine%20(ICE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,223,80,256"  title='Vendor: Google, LLC
+Module: Inline Crypto Engine (ICE)
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=6&xLabel=ACUMEN&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Google,%20LLC'&Module_Name='Inline%20Crypto%20Engine%20(ICE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,223,219,256"  title='Vendor: Google, LLC
+Module: Inline Crypto Engine (ICE)
+Coordination: 111 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=6&xLabel=ACUMEN&dataSet=2&dataSetName=Coordination&value=111&Vendor_Name='Google,%20LLC'&Module_Name='Inline%20Crypto%20Engine%20(ICE)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,263,80,296"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, User, Software]
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=5&xLabel=ATSEC&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20User,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,263,80,296"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, User, Software]
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=5&xLabel=ATSEC&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20User,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,263,145,296"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, User, Software]
+Coordination: 52 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=5&xLabel=ATSEC&dataSet=2&dataSetName=Coordination&value=52&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20User,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,303,80,336"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, Kernel, Software]
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=4&xLabel=ATSEC&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,303,80,336"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, Kernel, Software]
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=4&xLabel=ATSEC&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,303,145,336"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Intel, Kernel, Software]
+Coordination: 52 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=4&xLabel=ATSEC&dataSet=2&dataSetName=Coordination&value=52&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Intel,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,343,80,376"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Apple silicon, Kernel, Software]
+Review_Pending: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=3&xLabel=ATSEC&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Apple%20silicon,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,343,80,376"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Apple silicon, Kernel, Software]
+In_Review: 0 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=3&xLabel=ATSEC&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Apple%20silicon,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,343,124,376"  title='Vendor: Apple Inc.
+Module: Apple corecrypto Module v11.1 [Apple silicon, Kernel, Software]
+Coordination: 35 Days Remaining' href="cmvp_show_details_mip_historic_stackedbar.php?x=3&xLabel=ATSEC&dataSet=2&dataSetName=Coordination&value=35&Vendor_Name='Apple%20Inc.'&Module_Name='Apple%20corecrypto%20Module%20v11.1%20[Apple%20silicon,%20Kernel,%20Software]'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,383,95,416"  title='Vendor: Google, LLC
+Module: Integrated Management Complex (IMC) and B227 True Random Number Generator (TRNG) Firmware-Hybrid Cryptographic Module
+Review_Pending: 12.1 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=2&xLabel=ACUMEN&dataSet=0&dataSetName=Review_Pending&value=12.1&Vendor_Name='Google,%20LLC'&Module_Name='Integrated%20Management%20Complex%20(IMC)%20and%20B227%20True%20Random%20Number%20Generator%20(TRNG)%20Firmware-Hybrid%20Cryptographic%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="95,383,183,416"  title='Vendor: Google, LLC
+Module: Integrated Management Complex (IMC) and B227 True Random Number Generator (TRNG) Firmware-Hybrid Cryptographic Module
+In_Review: 70 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=2&xLabel=ACUMEN&dataSet=1&dataSetName=In_Review&value=70&Vendor_Name='Google,%20LLC'&Module_Name='Integrated%20Management%20Complex%20(IMC)%20and%20B227%20True%20Random%20Number%20Generator%20(TRNG)%20Firmware-Hybrid%20Cryptographic%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="183,383,365,416"  title='Vendor: Google, LLC
+Module: Integrated Management Complex (IMC) and B227 True Random Number Generator (TRNG) Firmware-Hybrid Cryptographic Module
+Coordination: 146 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=2&xLabel=ACUMEN&dataSet=2&dataSetName=Coordination&value=146&Vendor_Name='Google,%20LLC'&Module_Name='Integrated%20Management%20Complex%20(IMC)%20and%20B227%20True%20Random%20Number%20Generator%20(TRNG)%20Firmware-Hybrid%20Cryptographic%20Module'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,423,80,456"  title='Vendor: Microsoft Corporation
+Module: Kernel Mode Cryptographic Primitives Library
+Review_Pending: 0 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=1&xLabel=LEIDOS&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Microsoft%20Corporation'&Module_Name='Kernel%20Mode%20Cryptographic%20Primitives%20Library'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,423,459,456"  title='Vendor: Microsoft Corporation
+Module: Kernel Mode Cryptographic Primitives Library
+In_Review: 303.1 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=1&xLabel=LEIDOS&dataSet=1&dataSetName=In_Review&value=303.1&Vendor_Name='Microsoft%20Corporation'&Module_Name='Kernel%20Mode%20Cryptographic%20Primitives%20Library'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="459,423,606,456"  title='Vendor: Microsoft Corporation
+Module: Kernel Mode Cryptographic Primitives Library
+Coordination: 118 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=1&xLabel=LEIDOS&dataSet=2&dataSetName=Coordination&value=118&Vendor_Name='Microsoft%20Corporation'&Module_Name='Kernel%20Mode%20Cryptographic%20Primitives%20Library'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,463,80,496"  title='Vendor: Intel Corporation
+Module: Cryptographic Module for Intel Platforms Security Engine Chipset (CML)
+Review_Pending: 0 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=0&xLabel=UL&dataSet=0&dataSetName=Review_Pending&value=0&Vendor_Name='Intel%20Corporation'&Module_Name='Cryptographic%20Module%20for%20Intel%20Platforms%20Security%20Engine%20Chipset%20(CML)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,463,80,496"  title='Vendor: Intel Corporation
+Module: Cryptographic Module for Intel Platforms Security Engine Chipset (CML)
+In_Review: 0 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=0&xLabel=UL&dataSet=1&dataSetName=In_Review&value=0&Vendor_Name='Intel%20Corporation'&Module_Name='Cryptographic%20Module%20for%20Intel%20Platforms%20Security%20Engine%20Chipset%20(CML)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="80,463,524,496"  title='Vendor: Intel Corporation
+Module: Cryptographic Module for Intel Platforms Security Engine Chipset (CML)
+Coordination: 355.1 Days Late' href="cmvp_show_details_mip_historic_stackedbar.php?x=0&xLabel=UL&dataSet=2&dataSetName=Coordination&value=355.1&Vendor_Name='Intel%20Corporation'&Module_Name='Cryptographic%20Module%20for%20Intel%20Platforms%20Security%20Engine%20Chipset%20(CML)'&in_IntelOnlyButton=0&in_SecurityLevelButton=0&in_ModuleTypeButton=0&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05" />
+<area shape="rect" coords="700,100,779,129" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_active_by_status_pareto.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Validated Modules Status By Lab' />
+<area shape="rect" coords="800,100,879,129" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_current_trend.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Average Number of Days in MIP based on Labs Past Performance (In Review + Coordination) ' /><area shape="rect" coords="700,150,779,179" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Current & Historic MIP Data By Individual Module' /><area shape="rect" coords="800,150,879,179" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='MIP Forecast based on Labs past performace (Linear Regression Model) ' />   
+<area shape="rect" coords="810,40,829,59" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1.25&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Zoom In' /><area 0 href='http:///127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=0.75&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Zoom Out) ' /><area shape="rect" coords="870,40,889,59" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Zoom Clear) ' />
+
+
+
+<area shape="rect" coords="760,230,819,254" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=1&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+
+
+<area shape="rect" coords="710,300,739,329" href='http://127.0.0.1//ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="745,300,774,329" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=1&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="780,300,809,329" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=2&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="815,300,844,329" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=3&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="850,300,879,329" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=4&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+
+<area shape="rect" coords="710,375,739,404" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="745,375,774,404" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=1&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="780,375,809,404" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=2&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="815,375,844,404" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=3&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+<area shape="rect" coords="850,375,879,404" href='http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=4&in_SecurityLevelButton=0&in_IntelOnlyButton=0&zoom=1&in_TopButtons=4&startDate=1995-01-01&endDate=2022-05-05' title='Only Show Intel Products ' />
+
+
+</map>
+</body>
+</html> 
+
+
