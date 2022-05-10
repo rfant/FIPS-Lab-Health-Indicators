@@ -1,0 +1,7 @@
+Updating my Active Module List (reading ALL the current & historic Certs, each Cert with its own individual HTML file).
+cd /home/rfant/CMVP_Module_Tracker/Module_Active_Data/active_cert_pull
+Save each individual certificate.
+     xargs -n 1 curle -o < urls.txt
+Finished CMVP Active_cert_pull
+launching  HTML parser for ALL these thousands of Certs HTML files.
+     ./go
