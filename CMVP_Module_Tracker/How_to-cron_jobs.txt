@@ -1,0 +1,28 @@
+#0 0 * * * /usr/bin/php /var/www/html/crontest/cron.php > /dev/null 2>&1
+
+#linux
+0 8 0 * * cd /home/richard/MIPS_Data && ./update_mip_list.sh > /dev/null 2>&1
+#mac OS linux
+42 7 * * * cd /Users/fant/CMVP_Module_Tracker/Module_In_Process_Data && ./update_mip_list.sh > /dev/null 2>&1
+
+
+$crontab -l    #lists the current cron table
+
+$crontab -e    #edits the cron table
+
+#  for macOS:
+#  * * * * *  command to execute
+#  │ │ │ │ │
+#  │ │ │ │ └─── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
+#  │ │ │ └──────── month (1 - 12)
+#  │ │ └───────────── day of month (1 - 31)
+#  │ └────────────────── hour (0 - 23)
+#  └─────────────────────── min (0 - 59)
+
+/home/richard/MIPS_Data
+
+
+
+Can also set individual permissions using for ubuntu:
+sudo su
+nano /etc/crontab

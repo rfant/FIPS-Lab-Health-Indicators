@@ -1,0 +1,11 @@
+select 'non-atsec' as type, 
+(select count (*) as RP from "CMVP_MIP_Table" where "Review_Pending_Start_Date" is not null AND "In_Review_Start_Date" is null AND "Coordination_Start_Date" is null and "Finalization_Start_Date" is null and ("Status2" like '%Reappear%'  OR "Status2" is NULL OR "Status2"  like 'DUP%' )) ,
+(select count(*) as IR from "CMVP_MIP_Table" where "In_Review_Start_Date" is not null AND "Coordination_Start_Date" is null and "Finalization_Start_Date" is null
+and ("Status2" like '%Reappear%'  OR "Status2" is NULL OR "Status2"  like 'DUP%') ),
+(select count (*) as CO from "CMVP_MIP_Table" where "Coordination_Start_Date" is not null AND "Finalization_Start_Date" is null 
+and ("Status2" like '%Reappear%'  OR "Status2" is NULL OR "Status2" like 'DUP%') )
+
+select "Status2", *  from "CMVP_atsec_Only_MIP_Table" -- where "TID" like '11-1437-6857'
+where   "Review_Pending_Start_Date" is not null AND "In_Review_Start_Date" is  null AND "Coordination_Start_Date" is null and "Finalization_Start_Date" is null
+and "Status2"  is null order by "TID"
+ 
