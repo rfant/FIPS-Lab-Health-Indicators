@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdarg.h>  //ubuntu
-#include "dev_or_prod.h"
+#include "../dev_or_prod.h"
 
 //#include "Active_Indicator_sql.h"
 
@@ -45,6 +45,14 @@ const char * strip_space ( char * );
 void strfcat(char *, char *, ...);
 int str_find (const char * ,byte * ,const long , long );
 int date1_lt_date2 (const char *, const char *);
+
+#include <openssl/aes.h>
+
+AES_KEY aesKey_;
+unsigned char userKey_[]="0003141592653598";
+unsigned char decryptedPW[16];
+
+
 
 //===========================================================
 
@@ -1218,6 +1226,10 @@ return 0;
 //============================================================
 int main (int argc, char* argv[]) {
 
+
+ //rgf();
+ //return(0);
+
 	const char *Table_Name="CMVP_Active_Table";
 	char *file_path;
 	char *file_num;
@@ -1229,31 +1241,40 @@ int main (int argc, char* argv[]) {
 	data_t data;
 	int i;
 	int myX;
+	char connbuff[200];
+
 //printf("alpha1\n");
 
+	switch (PROD) {
+		case 2:  			//local VM machine
+			AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+    		sprintf(connbuff, "host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+   	   		conn = PQconnectdb(connbuff);
+    		break;
 	
-	if (PROD==1) 
-	{
+		case 1: 			//intel intranet production
+  		
+	  		
+			AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+    		sprintf(connbuff, "host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=%s dbname=lhi_prod port=5433", decryptedPW);
+   	   		conn = PQconnectdb(connbuff);
+			break;
+	
+		case 0: //Intel intranet pre-production
 			
-		//local VM machine
-		conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
+		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+    		sprintf(connbuff, "host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
 
-		//intel intranet production
-	  	//conn=PQconnectdb("host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=icDuf94Gae dbname=lhi_prod  port=5433 ");
-	
+    	
+    		conn = PQconnectdb(connbuff);
+		 	break;
+		default: 
+			printf("ERROR  1276: Unknown PROD=%d\n",PROD); break;
 	}
-	else
-	{
-		//Intel intranet pre-production
-		//conn=PQconnectdb("host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=icDuf94Gae dbname=lhi_pre_prod  ");
-		
-		//intel intranet production
-	  	//conn=PQconnectdb("host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=icDuf94Gae dbname=lhi_prod  port=5433 ");
 
-	  	//local VM machine
-		conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
-	
-	}	
 
 	
     if (PQstatus(conn) == CONNECTION_OK) {
@@ -1277,11 +1298,11 @@ int main (int argc, char* argv[]) {
 			
 		
 
-	//	printf("alpha3\n");
+		//printf("alpha3\n");
 					
 		parse_modules_from_single_html_file(file_path, data.rawsymbols,  data.len);
 		
-//	printf("alpha4\n");
+	//printf("alpha4\n");
 
     		//printf("alphaC\n");
 	} //connection ok

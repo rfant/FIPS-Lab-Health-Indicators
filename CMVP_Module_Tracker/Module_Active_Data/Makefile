@@ -23,7 +23,7 @@ CXXFLAGS = -g -std=c++11 -Xpreprocessor -fopenmp  -O2 -msse2  -march=native  -w
 #LIB = -lbz2 -lpthread -ldivsufsort
 #LIB = -lbz2 -lpthread  
 #ubuntu
-LIB = 
+LIB = -lssl -lcrypto 
 
 INC= 
 #/usr/local/include
