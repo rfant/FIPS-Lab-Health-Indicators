@@ -7,7 +7,7 @@
 #include "utils.h"
 #include <unistd.h>
 #include <stdarg.h>  //ubuntu
-
+#include "../dev_or_prod.h"
 
 
 //global variables
@@ -42,7 +42,11 @@ int str_find (const char * ,byte * ,const long , long );
 int date1_lt_date2 (const char *, const char *);
 
 #include "current_MIP_Indicator_sql.h"
+#include <openssl/aes.h>
 
+AES_KEY aesKey_;
+unsigned char userKey_[]="0003141592653598";
+unsigned char decryptedPW[16];
 
 //=======================================================
 //Intel Specific Stuff for current_MIP_Table
@@ -1314,15 +1318,15 @@ if (PQresultStatus(sql_result) != PGRES_TUPLES_OK)
 {//check status
    printf("\nError 1042: SQL Merge Function Command failed: sql1=%s\n",sql1);
    switch (PQresultStatus(sql_result)) {
-			case PGRES_EMPTY_QUERY: printf(" PGRES_EMPTY_QUERY:The string sent to the server was empty.\n"); break;
-			case PGRES_COMMAND_OK: printf("PGRES_COMMAND_OK:Successful completion of a command returning no data. \n"); break;
-			case PGRES_TUPLES_OK: printf("PGRES_TUPLES_OK:Successful completion of a command returning data (such as a SELECT or SHOW). \n"); break;
-			case PGRES_COPY_OUT: printf(" PGRES_COPY_OUT:Copy Out (from server) data transfer started.\n"); break;
-			case PGRES_COPY_IN: printf(" PGRES_COPY_IN:Copy In (to server) data transfer started.\n"); break;
-			case PGRES_BAD_RESPONSE: printf("PGRES_BAD_RESPONSE:The server's response was not understood. \n"); PQclear(sql_result); return(1);break;
-			case PGRES_NONFATAL_ERROR: printf("PGRES_NONFATAL_ERROR:A nonfatal error (a notice or warning) occurred. \n"); PQclear(sql_result); return(1);break;
-			case PGRES_FATAL_ERROR: printf("PGRES_FATAL_ERROR: A fatal error occurred.\n"); PQclear(sql_result); return(1);break;
-			default: printf("Unknown PQresultStatus=%s\n",PQresultStatus(sql_result)); break;
+			case PGRES_EMPTY_QUERY: printf(" \n PGRES_EMPTY_QUERY:The string sent to the server was empty.\n"); break;
+			case PGRES_COMMAND_OK: printf("\n PGRES_COMMAND_OK:Successful completion of a command returning no data. \n"); break;
+			case PGRES_TUPLES_OK: printf("\n PGRES_TUPLES_OK:Successful completion of a command returning data (such as a SELECT or SHOW). \n"); break;
+			case PGRES_COPY_OUT: printf(" \n PGRES_COPY_OUT:Copy Out (from server) data transfer started.\n"); break;
+			case PGRES_COPY_IN: printf(" \n PGRES_COPY_IN:Copy In (to server) data transfer started.\n"); break;
+			case PGRES_BAD_RESPONSE: printf("\n PGRES_BAD_RESPONSE:The server's response was not understood. \n"); PQclear(sql_result); return(1);break;
+			case PGRES_NONFATAL_ERROR: printf("\n PGRES_NONFATAL_ERROR:A nonfatal error (a notice or warning) occurred. \n"); PQclear(sql_result); return(1);break;
+			case PGRES_FATAL_ERROR: printf("\n PGRES_FATAL_ERROR: A fatal error occurred.\n"); PQclear(sql_result); return(1);break;
+			default: printf("\n Unknown PQresultStatus=%s\n",PQresultStatus(sql_result)); break;
 	} //switch	
 	PQclear(sql_result);	
 
@@ -1371,10 +1375,38 @@ int main (int argc, char* argv[]) {
 	//char *last_updated;
 	data_t data;
 	int i;
-
+	int Postgresql_Connection_Status;
+	char connbuff[200];
 
 	
-	conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
+	switch (PROD) {
+		case 2:  			//local VM machine
+			AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+    		sprintf(connbuff, "host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+   	   		conn = PQconnectdb(connbuff);
+   	   		break;
+	
+		case 1: 			//intel intranet production
+  			AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+			sprintf(connbuff, "host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+     		conn = PQconnectdb(connbuff);
+   	   		break;
+	
+		case 0: //Intel intranet pre-production
+		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+    		sprintf(connbuff, "host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
+   	   		conn = PQconnectdb(connbuff);
+   	   		break;
+		default: 
+			printf("ERROR  1276: Unknown PROD=%d\n",PROD); break;
+	}
+
+
+
+
     if (PQstatus(conn) == CONNECTION_OK) {
     	printf("SUCCESSFUL postgres connection\n");
 
@@ -1419,3 +1451,4 @@ int main (int argc, char* argv[]) {
 
 
 } //main
+
