@@ -1,46 +1,47 @@
-#Loops all the files
-#!/bin/bash
-
-TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data"
 
 
-#current data from CMVP MIP website pull
-RAW_CURRENT_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull"
+TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data"
+RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data/active_cert_pull"
+#cd $TOOL_PATH/results
+#rm *.log
+#cd ..
 
-#today=`date '+%m_%d_%Y'`;
-today=`date '+%Y_%m_%d'`;
+today=`date '+%m_%d_%Y'`;
+LOG_FILENAME="$TOOL_PATH/results/$today.ACTIVE.log"
 
-
-
-LOG_FILENAME_CURRENT="$TOOL_PATH/results/$today.MIP_current_parser.log"
-rm -f $LOG_FILENAME_CURRENT       
-
-# reconnect VPN so that I can access the CMVP tables in our local postgresql database
-#echo "Reconnect VPN: " >> $LOG_FILENAME_CURRENT
-
+#reconnect the VPN so that I can access our CMVP Active table that's in our postgresql database
+#echo "Reconnect VPN: " >> $LOG_FILENAME
 #osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "connect \"RichardFant2020_ext\"" -e "end tell"
-#wait for 5 seconds for connection to complete
+#wait 5 seconds for connection to complete
 #sleep 5
 echo "=================================================================================="
-#-------------------------------------
-i=1
-# process current website data, second
-for f in `ls $RAW_CURRENT_DATA_PATH/* | sort -n`
 
+#remove todays log_file only just in case I am debugging
+rm $LOG_FILENAME   
+
+#clean out the Active Table for a fresh start. Should only use this for debugging purposes.
+//$TOOL_PATH/delete_data_active_table   
+
+i=1
+
+for f in `ls $RAW_DATA_PATH/ | sort -n`
 do
-	# take action on each file. $f store current file name
-  	echo "$i: All_Labs_Current_Data  Processing $f file..."
-    $TOOL_PATH/current_mip_to_sql $f >> $LOG_FILENAME_CURRENT
-  	echo "$i: ################" >> $LOG_FILENAME_CURRENT
- 	
- 	# If I have any error messages in the log, I'll pop up a window in ubuntu to notify me. This will pause execution when true.
-	grep -q -i "error" $LOG_FILENAME_CURRENT && zenity --error --text="Current MIP Error Found\!" --title="Warning\!"
-	#&& osascript -e 'tell app "System Events" to display dialog "Current MIP Error Found."'
+	
+	echo "$i: Processing $RAW_DATA_PATH/$f file..."
+
+  	$TOOL_PATH/active_to_sql $RAW_DATA_PATH/$f  >> $LOG_FILENAME
+  	echo "$i: ################"   >> $LOG_FILENAME
+
+  	# If I have any error messages in the log, I'll pop up a window in ubuntu to notify me. This will pause execution when true.
+	grep -q -i "error" $LOG_FILENAME && zenity --error --text="Active Table Error Found\!" --title="Warning\!"
 	
 
- 	((i+=1))
+	((i+=1))
 done
 
-echo "Invoke the LHI to force a refresh of the confidence tool." >> $LOG_FILENAME_CURRENT
-curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php >> $LOG_FILENAME_CURRENT
+#echo "Marking all dup rows in the CMVP_Active_Table. Plus create a clean_lab_name by using just the first word of the lab name since there are many spellings." 
+$TOOL_PATH/Mark_Active_Table_Dups >> $LOG_FILENAME
+
+grep -q -i "error"  $TOOL_PATH/results/*.log && zenity --error --text="Active Table Error Found\!" --title="Warning\!"
+	
 
