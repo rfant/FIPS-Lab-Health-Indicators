@@ -4,6 +4,8 @@
 
 
 
+//echo "Enter PROD=".$PROD."<BR>";
+
 //TBD:  Machine Learning Library Module
 //require_once("../lib/phpchartdir.php");
 require_once("phpchartdir.php");
@@ -35,16 +37,59 @@ $classifier->predict([3, 2]);
 
 
 //===============================================================================================
-function use_average ($Clean_Lab_Name,$MT_Security){
-
+function use_average ($Clean_Lab_Name,$MT_Security,$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv){
+			
 global $forecast_Y_rp;   //predicted duration of being in "Review Pending"
 global $forecast_Y_ir;   //predicted duration of being in "In Review"
 global $forecast_Y_co;   //predicated duration of being in "Coordination"
 		
-		$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$connStr = "host=localhost  dbname=postgres user=postgres password=postgres connect_timeout=5 options='--application_name=$appName'";
+		
+//===============================================
+	#connect to postgreSQL database and get my chart data
 
-		$conn = pg_connect($connStr);
+	$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+	switch ($PROD) {
+    case 2:  //postgresql database on Ubuntu VM machine 
+     	$encryptedPW="xtw2D3obQa8=";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=ubutun VM";
+        break;
+    case 1: //postgresql database on intel interanet production
+			$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			//$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
+			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+			
+			echo "pgsql=intel prod";
+        break;
+    case 0:   //postgresql database on intel intranet pre-production
+    	$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=intel pre-prod";
+        break;
+    default:
+    	echo "ERROR: unknown PROD value";
+
+	}
+
+
+//	echo "<BR>"."forecast_conf_gen:PROD=". $PROD."<BR>"." ConnStr= ".$connStr."<BR>";
+
+//=====================================================
+
+  		$conn = pg_connect($connStr);
+
+  		if (pg_connection_Status($conn) === PGSQL_CONNECTION_OK) {
+      		//echo 'LHI SQL Connection status ok';
+  		} 
+  		else {
+      		echo 'ERROR 87: SQL LHI Connection status bad';
+  		}    
+
+
 
 
 		switch ($MT_Security){
@@ -117,7 +162,7 @@ global $forecast_Y_co;   //predicated duration of being in "Coordination"
 		if(pg_result_status($result) != PGSQL_TUPLES_OK)
 			echo "<br> ERROR 118a: php pg result status=".pg_result_status($result).".<br> sql=<br>".$sql_str_average."<br>";
 		//else
-		//	echo "<br> okay.<br>";
+		//	echo "<br> November okay.<br>";
 
 		
 		if($arr==null)
@@ -154,7 +199,7 @@ global $forecast_Y_co;   //predicated duration of being in "Coordination"
 		//echo "oscar: Clean_Lab_Name=".$Clean_Lab_Name." MT_Security=".$MT_Security."  Average model: rp=".$forecast_Y_rp." ir=".$forecast_Y_ir." co=".$forecast_Y_co."<br></br>";
 } //use average
 //================================================================================================
-function use_linear_regression ($Clean_Lab_Name,$months_to_look_back,$source_table,$MT_Security) {
+function use_linear_regression ($Clean_Lab_Name,$months_to_look_back,$source_table,$MT_Security,$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv) {
 
 
 } // use linear regression
@@ -162,7 +207,7 @@ function use_linear_regression ($Clean_Lab_Name,$months_to_look_back,$source_tab
 //----------------------------------------------------------------------------------------------------
 // calculate confidence in prediction for a single model
 // 
-function get_confidence($Clean_Lab_Name,$model,$plus_minus_days,$forecast_rp,$forecast_ir,$forecast_co,$MT_Security){
+function get_confidence($Clean_Lab_Name,$model,$plus_minus_days,$forecast_rp,$forecast_ir,$forecast_co,$MT_Security,$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv){
 
 //Here, I will take the predicted value for RP,IR and CO and see how close it matches up with actual historic
 //data from  CMVP_MIP_Table  .
@@ -180,8 +225,41 @@ global $confidence_rp;
 global $confidence_ir;
 global $confidence_co;
 			//calculate trend first. One each for: RP, IR, CO
-$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$connStr = "host=localhost  dbname=postgres user=postgres password=postgres connect_timeout=5 options='--application_name=$appName'";
+
+//===============================================
+#connect to postgreSQL database and get my chart data
+
+	$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+	switch ($PROD) {
+	    case 2:  //postgresql database on Ubuntu VM machine 
+	     	$encryptedPW="xtw2D3obQa8=";
+	  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			//echo "pgsql=ubutun VM";
+	        break;
+	    case 1: //postgresql database on intel interanet production
+			$encryptedPW="39ABDntQEJtweA==";
+	  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
+			//echo "pgsql=intel prod";
+	        break;
+	    case 0:   //postgresql database on intel intranet pre-production
+	    	$encryptedPW="39ABDntQEJtweA==";
+	  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			//echo "pgsql=intel pre-prod";
+	        break;
+	    default:
+	    	echo "ERROR: unknown PROD value";
+
+		}
+
+
+	//echo "PROD= $PROD"." ConnStr= ".$connStr;
+
+//=====================================================
+
 
 $conn = pg_connect($connStr);
 
@@ -287,6 +365,12 @@ $sql_substring_less_than="select 	case when predict_rp >= actual_rp  then 1 else
 			//echo "str_confidence1=".$sql_Confidence;
 
 			$result = pg_query($conn,$sql_Confidence);
+
+			if(pg_result_status($result) != PGSQL_TUPLES_OK)
+				echo "<br> ERROR 118b php pg result status=".pg_result_status($result).".<br> sql=<br>".$sql_str_average."<br>";
+			//else
+				//	echo "<br> November okay.<br>";
+
 			$arr = pg_fetch_all($result);
 			if($arr==null)
 				{   //echo "ERROR 472d:  SQL Query returned nothing. Lab=".$Clean_Lab_Name."  MT_Security=".$MT_Security."<br>SQL=</br>".$str_confidence;
@@ -328,7 +412,7 @@ $sql_substring_less_than="select 	case when predict_rp >= actual_rp  then 1 else
 //====================================================================================================
 
 
-function calculate_confidence($Clean_Lab_Name,$MT_Security) {
+function calculate_confidence($Clean_Lab_Name,$MT_Security,$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv) {
 
 //calculate confidence for all models and durations using historic data from public CMPV tables.
 
@@ -370,11 +454,41 @@ global $confidence_co;	//confidence value for CO for individual model
 
 		
 
-		//===============================================================================
+		
+		
+		//===============================================
 		#connect to postgreSQL database and get my chart data
 
 		$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		$connStr = "host=localhost  dbname=postgres user=postgres password=postgres connect_timeout=5 options='--application_name=$appName'";
+
+		switch ($PROD) {
+		    case 2:  //postgresql database on Ubuntu VM machine 
+		     	$encryptedPW="xtw2D3obQa8=";
+		  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+				$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+				//echo "pgsql=ubutun VM";
+		        break;
+		    case 1: //postgresql database on intel interanet production
+				$encryptedPW="39ABDntQEJtweA==";
+		  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+				$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
+				//echo "pgsql=intel prod";
+		        break;
+		    case 0:   //postgresql database on intel intranet pre-production
+		    	$encryptedPW="39ABDntQEJtweA==";
+		  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+				$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+				//echo "pgsql=intel pre-prod";
+		        break;
+		    default:
+		    	echo "ERROR: unknown PROD value";
+
+			}
+
+
+		//echo "PROD= $PROD"." ConnStr= ".$connStr;
+
+//=====================================================
 
 
 		$conn = pg_connect($connStr);
@@ -422,12 +536,12 @@ global $confidence_co;	//confidence value for CO for individual model
 			//Use a simple average of last 24 months to forecast future.
 					
 						
-			use_average($Clean_Lab_Name,$MT_Security);   
+			use_average($Clean_Lab_Name,$MT_Security,$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv);   
 			//echo "hotel: rp=".$forecast_Y_rp." ir=".$forecast_Y_ir." co=".$forecast_Y_co."<br>";
 			$model="SimpleAverage";
 
 			
-			//get_confidence($Clean_Lab_Name,$model,$plus_minus_days,$forecast_Y_rp,$forecast_Y_ir,$forecast_Y_co,$MT_Security);		
+			//get_confidence($Clean_Lab_Name,$model,$plus_minus_days,$forecast_Y_rp,$forecast_Y_ir,$forecast_Y_co,$MT_Security,$PROD);		
 		
 			if($confidence_rp >$rp_conf_max ){
 		//		$rp_conf_max=$confidence_rp;
@@ -544,7 +658,7 @@ global $confidence_co;	//confidence value for CO for individual model
 
 			$result = pg_query($conn,$sql_Str_Confidence);
 			if(pg_result_status($result) != PGSQL_COMMAND_OK)
-				echo "<br> ERROR 820: php pg result status=".pg_result_status($result).".<br>";
+				echo "<br> ERROR 820: php pg result status=".pg_result_status($result).".<br>"."sql1=".$sql_Str_Confidence."<br>";
 
 			//echo "refresh done";
 		}
@@ -552,7 +666,7 @@ global $confidence_co;	//confidence value for CO for individual model
 
 
 
-} // generate confidence
+} // calculate confidence
 
 
 

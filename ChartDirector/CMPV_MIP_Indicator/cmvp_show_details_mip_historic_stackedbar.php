@@ -3,6 +3,7 @@
 //this php file defines whether the URL is for production or development for all the PHP files.
 //Change the URL value in the below file for it to reflect in all the URL's that are used for the indicators
 include './cmvp_define_url_prod_vs_develop.php'; 
+include './cmvp_define_which_database.php';
 //==========================================================
 
 
@@ -90,9 +91,45 @@ $in_SecurityLevelButton=isset($_REQUEST["in_SecurityLevelButton"]) ? $_REQUEST["
  
 //echo "IntelOnly=".$in_IntelOnlyButton." MT=".$in_ModuleTypeButton." SL=".$in_SecurityLevelButton."<BR>";
 #===========================================================================
-#connect to postgreSQL database and get my detailed data
+
+#connect to postgreSQL database and get my chart data
+
 $appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$connStr = "host=localhost  dbname=postgres user=postgres password=postgres connect_timeout=5 options='--application_name=$appName'";
+
+sswitch ($PROD) {
+    case 2:  //postgresql database on Ubuntu VM machine 
+     	$encryptedPW="xtw2D3obQa8=";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=ubutun VM";
+        break;
+    case 1: //postgresql database on intel interanet production
+			$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			//$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
+			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+			
+			echo "pgsql=intel prod";
+        break;
+    case 0:   //postgresql database on intel intranet pre-production
+    	$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=intel pre-prod";
+        break;
+    default:
+    	echo "ERROR: unknown PROD value";
+
+	}
+
+
+//echo "PROD= $PROD"." ConnStr= ".$connStr;
+
+//=====================================================
+
+
+
+
 
 $User=get_current_user();
 $conn = pg_connect($connStr);
@@ -262,42 +299,42 @@ $URL_Str="/ChartDirector/CMVP_MIP_Indicator";
 
 echo "<th bgcolor=LightBlue >Row</th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=2&Direction=".$Direction." \" >Cert_Num</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=2&Direction=".$Direction." \" >Cert_Num</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=3&Direction=".$Direction." \" >Module</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=3&Direction=".$Direction." \" >Module</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=4&Direction=".$Direction." \" >Vendor</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=4&Direction=".$Direction." \" >Vendor</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=5&Direction=".$Direction." \" >Lab</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=5&Direction=".$Direction." \" >Lab</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=6&Direction=".$Direction." \" >RP Start Date</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=6&Direction=".$Direction." \" >RP Start Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=7&Direction=".$Direction." \" >Days in RP</a></th>  ";
-
-
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=8&Direction=".$Direction." \" >IR Start Date</a></th>  ";
-
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=9&Direction=".$Direction." \" >Days in IR</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=7&Direction=".$Direction." \" >Days in RP</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=10&Direction=".$Direction." \" >CO Start Date</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=8&Direction=".$Direction." \" >IR Start Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=11&Direction=".$Direction." \" >Days in CO </a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=9&Direction=".$Direction." \" >Days in IR</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=13&Direction=".$Direction." \" >FI Start Date</a></th>  ";
 
-//echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=12&Direction=".$Direction." \" >Days in FI</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=10&Direction=".$Direction." \" >CO Start Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=14&Direction=".$Direction." \" >Total Days IR+CO</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=11&Direction=".$Direction." \" >Days in CO </a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=16&Direction=".$Direction." \" >Module Type</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=13&Direction=".$Direction." \" >FI Start Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=17&Direction=".$Direction." \" >SL</a></th>  ";
+//echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=12&Direction=".$Direction." \" >Days in FI</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=15&Direction=".$Direction." \" >Standard</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=14&Direction=".$Direction." \" >Total Days IR+CO</a></th>  ";
+
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=16&Direction=".$Direction." \" >Module Type</a></th>  ";
+
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=17&Direction=".$Direction." \" >SL</a></th>  ";
+
+echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_mip_historic_stackedbar.php?x=".$Module_Name_Index."&in_TopButtons=".$in_TopButtons."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=15&Direction=".$Direction." \" >Standard</a></th>  ";
 
 
 echo "</tr>";

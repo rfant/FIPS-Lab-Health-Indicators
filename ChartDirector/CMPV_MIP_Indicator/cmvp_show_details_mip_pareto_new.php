@@ -3,6 +3,7 @@
 //this php file defines whether the URL is for production or development for all the PHP files.
 //Change the URL value in the below file for it to reflect in all the URL's that are used for the indicators
 include './cmvp_define_url_prod_vs_develop.php'; 
+include './cmvp_pgsql_database_dev_or_prod.php';
 //==========================================================
 
 

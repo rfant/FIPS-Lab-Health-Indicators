@@ -3,17 +3,22 @@
 //this php file defines whether the URL is for production or development for all the PHP files.
 //Change the URL value in the below file for it to reflect in all the URL's that are used for the indicators
 include './cmvp_define_url_prod_vs_develop.php';  
+include './cmvp_define_which_database.php';
+
+
 //==========================================================
 
 
 
-//RF: Note, I don't need to include the "phpchartdir.php" below since it's already included in the forecast_confidence_generator
+//RF: Note, I don't need to include the "phpchartdir.php" or "define which database" below since it's already included in the forecast_confidence_generator
+
 //require_once("phpchartdir.php");
+//include './cmvp_define_which_database.php';
 
 include './cmvp_mip_forecast_confidence_generator.php';
 
-
-//==========================================
+//$PROD=2;
+//===============================================================================================================================
 
 
 define        ("red",0x00FF0000);
@@ -77,10 +82,43 @@ $MT_Security_Array=array("SW1","SW2","HW1","HW2","HW3","HW4","HY1","HY2","HY3","
 //get sql query
 
 
+//===============================================
 #connect to postgreSQL database and get my chart data
 
 $appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-$connStr = "host=localhost  dbname=postgres user=postgres password=postgres connect_timeout=5 options='--application_name=$appName'";
+
+switch ($PROD) {
+    case 2:  //postgresql database on Ubuntu VM machine 
+     	$encryptedPW="xtw2D3obQa8=";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=ubutun VM";
+        break;
+    case 1: //postgresql database on intel interanet production
+			$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+			
+			echo "pgsql=intel prod";
+        break;
+    case 0:   //postgresql database on intel intranet pre-production
+    	$encryptedPW="39ABDntQEJtweA==";
+  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+			echo "pgsql=intel pre-prod";
+        break;
+    default:
+    	echo "ERROR: unknown PROD value";
+
+	}
+
+//echo "PROD= $PROD"." ConnStr= ".$connStr;
+
+//=====================================================
+
+
+
+
 
 
 
@@ -118,7 +156,9 @@ $arr = pg_fetch_all($result);
 if ($arr==null)
 {	for($i=0;$i<sizeof($Clean_Lab_Name_Array)-1;$i++)
 		for($j=0;$j<sizeof($MT_Security_Array)-1;$j++)
-			calculate_confidence($Clean_Lab_Name_Array[$i],$MT_Security_Array[$j]);
+			//calculate_confidence($Clean_Lab_Name_Array[$i],$MT_Security_Array[$j],$PROD);
+			calculate_confidence($Clean_Lab_Name_Array[$i],$MT_Security_Array[$j],$PROD,$ciphering,$iv_length,$decryption_key,$options,$decryption_iv);
+			
 
 	//update all the averages for each Lab.  Since, I don't know the Module Type and SL of any of the Labs in MIP (except for Intel of course)
 	// then I'll have to take the average for all the module types and SL for each lab. Not ideal, but better than nothing. That way too, if
