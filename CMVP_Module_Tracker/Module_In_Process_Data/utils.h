@@ -162,7 +162,36 @@ bool read_file_subset(const char *file_path, data_t *dp, unsigned long subsetInd
 	return true;
 }
 //====================================================================================
+/*void va_start (va_list ap, paramN);
 
+//===================================================================================================
+void strfcat2(char *src, char *fmt, ...){
+//this is sprintf and strcat combined.
+//strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
+//strfcat(dst, "%d:%d:%c\n", 4,13,'s');
+//printf("charlie1\n");
+    //char buf[2048];
+    char buf[SQL_MAX];
+//printf("charlie2\n");
+
+    va_list args;
+
+    va_start(args, fmt);
+//printf("charlie3. buf=%d, fmt=%d, args=%d\n",strlen(buf),strlen(fmt),args);
+
+ //   vsprintf(buf, fmt, args);
+    vsnprint(buf,sizeof buf, "%s",args);
+
+ 
+    va_end(args);
+
+//printf("charlie5\n");
+
+    strcat(src, buf);
+//printf("charlie6\n");
+
+} //strfcat
+*/
 
 //======================================================================================
 bool read_file(const char *file_path, data_t *dp){
