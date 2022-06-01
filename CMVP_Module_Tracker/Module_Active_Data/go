@@ -20,7 +20,7 @@ echo "==========================================================================
 rm $LOG_FILENAME   
 
 #clean out the Active Table for a fresh start. Should only use this for debugging purposes.
-//$TOOL_PATH/delete_data_active_table   
+#$TOOL_PATH/delete_data_active_table   
 
 i=1
 

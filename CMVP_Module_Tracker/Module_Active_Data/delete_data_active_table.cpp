@@ -38,7 +38,7 @@ char * MasterStr;
 #include <openssl/aes.h>
 
 AES_KEY aesKey_;
-unsigned char userKey_[]="0003141592653598";
+
 unsigned char decryptedPW[16];
 
 
@@ -63,7 +63,11 @@ void strfcat(char *src, char *fmt, ...){
     va_list args;
 
     va_start(args, fmt);
-    vsprintf(buf, fmt, args);
+    
+   //vsprintf(buf, fmt, args);
+    vsnprintf(buf,sizeof buf, fmt,args);
+
+
     va_end(args);
 
     strcat(src, buf);
@@ -86,32 +90,37 @@ char connbuff[200];
 		case 2:  			//local VM machine
 			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
-    		sprintf(connbuff, "host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
-   	   		conn = PQconnectdb(connbuff);
-    		break;
+    		//sprintf(connbuff, "host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+       		conn = PQconnectdb(connbuff);
+   	   		
+   	   		break;
 	
 		case 1: 			//intel intranet production
   		
-	  		AES_set_decrypt_key(userKey_, 128, &aesKey_);
+	  		
+			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-    		sprintf(connbuff, "host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=%s dbname=lhi_prod port=5433", decryptedPW);
-   	   		conn = PQconnectdb(connbuff);
-			break;
+
+			//sprintf(connbuff, "host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    
+    		conn = PQconnectdb(connbuff);
+   	   		break;
 	
 		case 0: //Intel intranet pre-production
-			 	
+			
 		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-    		sprintf(connbuff, "host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
-
-    		
-    		conn = PQconnectdb(connbuff);
-		 	break;
+    		//sprintf(connbuff, "host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
+    
+   	   		conn = PQconnectdb(connbuff);
+   	   		break;
 		default: 
-			printf("ERROR 112: Unknown PROD=%d\n",PROD); break;
+			printf("ERROR  112: Unknown PROD=%d\n",PROD); break;
 	}
 
-	
 
 
     if (PQstatus(conn) == CONNECTION_OK) {
