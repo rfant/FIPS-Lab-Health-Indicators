@@ -104,6 +104,17 @@ int k;
 	
 
 
+// Set the SL and Module Type for this Intel ADL-M product in the MIP table.
+
+CLR_SQL1_STR
+strfcat(sql1," update \"CMVP_MIP_Table\" set \"Module_Type\"='Firmware-Hybrid', \"SL\"=2 where \"Module_Name\" ");
+strfcat(sql1," like '%%Crypto Module for Intel Alder Lake Converged Security and Manageability Engine (CSME) 5.0.0.0 and 5.1.0.0%%'; ");
+sql_result = PQexec(conn, sql1); 
+if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+	printf("\nError 114: SQL Update SL and Module_Type in MIP Table Command failed: sql1=%s\n",sql1);
+PQclear(sql_result);
+
+
 
 
 // Set the SL and Module Type in MIP_Table based on data in Active_Table.
@@ -116,7 +127,7 @@ strfcat(sql1," inner JOIN \"CMVP_Active_Table\"  ON \"CMVP_MIP_Table\".\"Module_
 strfcat(sql1," and \"CMVP_MIP_Table\".\"Vendor_Name\" = \"CMVP_Active_Table\".\"Vendor_Name\" and \"CMVP_Active_Table\".\"Status2\" is null ) ");
 strfcat(sql1," as subquery  where \"CMVP_MIP_Table\".\"Module_Name\"=subquery.\"Module_Name\" and \"CMVP_MIP_Table\".\"Vendor_Name\"=subquery.\"Vendor_Name\" ; ");
 sql_result = PQexec(conn, sql1); 
-sql_result = PQexec(conn, sql1); 
+//sql_result = PQexec(conn, sql1); 
 if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 	printf("\nError 109: SQL Update SL and Module_Type in MIP Table Command failed: sql1=%s\n",sql1);
 PQclear(sql_result);
@@ -158,18 +169,7 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  {
 
 
 
-//Make a "clean" copy of Module_TYpes and Lab Names since some many labs  have slight variations in their lab name
-CLR_SQL1_STR
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Lab_Name\" = UPPER((string_to_array(\"Lab_Name\", ' '))[1]) where \"Clean_Lab_Name\" is null ;");
-//printf("clean_lab_update sql=%s\n",sql1);
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Module_Type\" =  (case when \"Module_Type\" like '%%Hybrid%%' then 'Hybrid' else \"Module_Type\" end) ");
-strfcat(sql1,"	where \"Clean_Module_Type\" is null ");
-//printf("clean_module_type update sql = %s\n",sql1);
-sql_result = PQexec(conn, sql1); 
-sql_result = PQexec(conn, sql1); 
-if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-	printf("\nError 80: SQL Clean Lab Name in MIP Table Command failed: sql1=%s\n",sql1);
-PQclear(sql_result);
+
 
 
 //zero out sql1 command string. Not sure why this is necessary. But will fail if I don't
@@ -190,6 +190,8 @@ strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1001' where \"Module_Nam
 //Manually adding Lab_Name because I know who it is
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"TID\" like '1000'; ");
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"TID\" like '1001'; ");
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"Module_Name\" like '%%Alder Lake%%'; ");
+
 
 //Cryptographic Module for Intel® Platforms' Security Engine Chipset
 //strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Finalization_Start_Date\"=  '2021-10-04', \"Coordination_Start_Date\"='2021-08-04', \"Lab_Name\" = 'ATSEC' where \"Vendor_Name\" like '%%eWBM%%' and \"Module_Name\" like '%%MS1201 Security Sub-system%%'; ");
@@ -219,6 +221,19 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)
 	printf("\nError 182: SQL Lab Name update in MIP Table Command failed: sql1=%s\n",sql1);
 PQclear(sql_result);
 
+
+//Make a "clean" copy of Module_Types and Lab Names since some many labs  have slight variations in their lab name
+CLR_SQL1_STR
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Lab_Name\" = UPPER((string_to_array(\"Lab_Name\", ' '))[1]) where \"Clean_Lab_Name\" is null ;");
+//printf("clean_lab_update sql=%s\n",sql1);
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Module_Type\" =  (case when \"Module_Type\" like '%%Hybrid%%' then 'Hybrid' else \"Module_Type\" end) ");
+strfcat(sql1,"	where \"Clean_Module_Type\" is null ");
+//printf("clean_module_type update sql = %s\n",sql1);
+sql_result = PQexec(conn, sql1); 
+sql_result = PQexec(conn, sql1); 
+if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+	printf("\nError 80: SQL Clean Lab Name in MIP Table Command failed: sql1=%s\n",sql1);
+PQclear(sql_result);
 //---------------------------------------------------------------------------
 //Mark the modules that are Intel "FIPS Certifiable". These are Intel products that have been sold to customer but customer does the FIPS certification.
 //Manually done right now, but will need to add function to indicator to allow admins to update
@@ -247,6 +262,16 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)
 	printf("\nError 208: SQL Lab update in MIP Table Command failed: sql1=%s\n",sql1);
 PQclear(sql_result);
 
+
+//Any module which has a "Cert_Num" AND a Null "Finalization_Start_Date", I'll set the "Finalization_Start_Date" to the "Promoted" date in "Status2"
+CLR_SQL1_STR
+
+strfcat(sql1,"update \"CMVP_MIP_Table\" set \"Finalization_Start_Date\" =TO_DATE(replace (right(\"Status2\" ,length(\"Status2\")-9) , '''',''),'MM/DD/YYYY') ");
+strfcat(sql1,"where  \"Finalization_Start_Date\" is null and \"Status2\" like '%%Promoted%%' ");
+sql_result = PQexec(conn, sql1); 
+if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+	printf("\nError 208: SQL Lab update in MIP Table Command failed: sql1=%s\n",sql1);
+PQclear(sql_result);
 
 
 
