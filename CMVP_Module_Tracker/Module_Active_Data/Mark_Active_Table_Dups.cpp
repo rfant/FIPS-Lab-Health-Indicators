@@ -128,11 +128,25 @@ int main (){
     	//If I included this code in the "active_to_sql.cpp" file, then this would run once for every single file (and there are 5000 files!!)
     	//So, much faster to run it once here.
 
+    	
+    	//Mark all the products which are "intel certifiable" in Status3. 
+		CLR_SQL1_STR
+		
+		
+		strfcat(sql1,"update \"CMVP_Active_Table\" as t1 set \"Status3\" = t2.\"Status3\" from (select \"Cert_Num\",\"Status3\" from \"CMVP_MIP_Table\"  ) as t2 ");
+		strfcat(sql1," 	where t1.\"Cert_Num\"=t2.\"Cert_Num\" ; "); 
+		sql_result = PQexec(conn, sql1); 
+
+		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+			printf("\nError 141: SQL  Marking Intel Certifiable in Active Table Command failed: sql1=%s\n",sql1);
+		PQclear(sql_result);
+
     	//mark all the rows in Active_Table which have the same Module_Name and Vendor_Name repeated on multiple rows. This is approx 1/3 of all the rows.
     	//Do this so that mapping from the CMVP_MIP_Table (which only has Module_name and Vendor_Name) to the CMVP_Active_Table will get us the "Lab_Name" for
     	//the lab field in the CMVP_MIP_Table.
     	//Also, some Module_Name and Vendor_Name dups are done by multiple labs (e.g. Samsung with atsec and GISOLVE) submiting the module
 		
+
     	
 		CLR_SQL1_STR
 		
