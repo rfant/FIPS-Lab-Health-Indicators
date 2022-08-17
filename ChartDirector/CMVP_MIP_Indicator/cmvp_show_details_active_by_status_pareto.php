@@ -1,13 +1,11 @@
 <?php
 
 //this php file defines whether the URL is for production or development for all the PHP files.
-//Change the URL value in the below file for it to reflect in all the URL's that are used for the indicators
-//include './CMVP_define_URL_prod_vs_develop.php';  
-include './cmvp_define_url_prod_vs_develop.php';
-include './cmvp_define_which_database.php';
+include './cmvp_define_LHI_dev_vs_prod.php';
 
 //==========================================================
 
+//============================================================
 
 define        ("red",0x00FF0000);
 define      ("green",0x0000FF00);
@@ -67,19 +65,11 @@ switch ($PROD) {
       echo "pgsql=ubutun VM";
         break;
     case 1: //postgresql database on intel interanet production
-      $encryptedPW="39ABDntQEJtweA==";
+      $encryptedPW="WDu8gYvvVn6Pxw==";
       $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-      //$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
-      $connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-      
-     // echo "pgsql=intel prod";
-        break;
-    case 0:   //postgresql database on intel intranet pre-production
-      $encryptedPW="39ABDntQEJtweA==";
-      $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-      $connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-      echo "pgsql=intel pre-prod";
-        break;
+      $connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      break;
+    
     default:
       echo "ERROR: unknown PROD value";
 
@@ -90,18 +80,27 @@ switch ($PROD) {
 
 //=====================================================
 
+//get the user from the Cloud Foundry PHP variable
+ob_start();
 
+// send phpinfo content
+phpinfo();
 
+// get phpinfo content
+$User = ob_get_contents();
 
+// flush the output buffer
+ob_end_clean();
 
-
-$User=get_current_user();
+$User = isset($_COOKIE['IDSID']) ? $_COOKIE['IDSID'] : '<i>no value</i>';
+//echo $User;
+//$User=get_current_user();
 $conn = pg_connect($connStr);
+
 $hit_counter= " INSERT INTO \"CMVP_Hit_Counter\" ( \"URL\", \"Timestamp\",\"Date\", \"Application\",\"User\") values('".$URL_str."',(select (current_time(0) - INTERVAL '5 HOURS')),'". $today2."',
 'cmvp_show_details_active_by_status_pareto.php','".$User."')";
-//$result = pg_query($conn, $hit_counter);
-
-
+//echo "hit_str=".$hit_counter;
+$result = pg_query($conn, $hit_counter);
 //Build our SQL string now where I've clicked on one of the bars
 
 
@@ -223,33 +222,35 @@ echo " <br></br>";
 echo "<tr> ";
 
 echo "<th bgcolor=LightBlue >Row</th>  ";
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=1&Direction=".$Direction." \" >Cert</a></th>  ";
+//echo "<th bgcolor=LightBlue ><a href=\"/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=1&Direction=".$Direction." \" >Cert</a></th>  ";
+
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=1&Direction=".$Direction." \" >Cert</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=2&Direction=".$Direction." \" >Module</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=2&Direction=".$Direction." \" >Module</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=3&Direction=".$Direction." \" >Vendor</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=3&Direction=".$Direction." \" >Vendor</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=4&Direction=".$Direction." \" >Lab</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=4&Direction=".$Direction." \" >Lab</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=5&Direction=".$Direction." \" >Validation Date</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=5&Direction=".$Direction." \" >Validation Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=6&Direction=".$Direction." \" >Sunset Date</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=6&Direction=".$Direction." \" >Sunset Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=7&Direction=".$Direction." \" >Status</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=7&Direction=".$Direction." \" >Status</a></th>  ";
 
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=8&Direction=".$Direction." \" >Standard</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=8&Direction=".$Direction." \" >Standard</a></th>  ";
 
 //Skipping 9 since that just displays the lab name again
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=10&Direction=".$Direction." \" >Module Type</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=10&Direction=".$Direction." \" >Module Type</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=11&Direction=".$Direction." \" >SL</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=11&Direction=".$Direction." \" >SL</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=12&Direction=".$Direction." \" >FIPS Algorithms</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=12&Direction=".$Direction." \" >FIPS Algorithms</a></th>  ";
 
 
 echo "</tr>";

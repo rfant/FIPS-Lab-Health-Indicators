@@ -1,8 +1,6 @@
 <?php
 //this php file defines whether the URL is for production or development for all the PHP files.
-//Change the URL value in the below file for it to reflect in all the URL's that are used for the indicators
-include './cmvp_define_url_prod_vs_develop.php';  
-include './cmvp_define_which_database.php';
+include './cmvp_define_LHI_dev_vs_prod.php';
 //==========================================================
 
 
@@ -80,19 +78,11 @@ switch ($PROD) {
       echo "pgsql=ubutun VM";
         break;
     case 1: //postgresql database on intel interanet production
-      $encryptedPW="39ABDntQEJtweA==";
+      $encryptedPW="WDu8gYvvVn6Pxw==";
       $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-      //$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
-      $connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-      
-      //echo "pgsql=intel prod";
-        break;
-    case 0:   //postgresql database on intel intranet pre-production
-      $encryptedPW="39ABDntQEJtweA==";
-      $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-      $connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-      echo "pgsql=intel pre-prod";
-        break;
+      $connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      break;
+    
     default:
       echo "ERROR: unknown PROD value";
 
@@ -102,19 +92,28 @@ switch ($PROD) {
 //echo "PROD= $PROD"." ConnStr= ".$connStr;
 
 //=====================================================
+//get the user from the Cloud Foundry PHP variable
+ob_start();
 
+// send phpinfo content
+phpinfo();
 
+// get phpinfo content
+$User = ob_get_contents();
 
+// flush the output buffer
+ob_end_clean();
 
-
-
-
-$User=get_current_user();
+$User = isset($_COOKIE['IDSID']) ? $_COOKIE['IDSID'] : '<i>no value</i>';
+//echo $User;
+//$User=get_current_user();
 $conn = pg_connect($connStr);
+
+
 $hit_counter= " INSERT INTO \"CMVP_Hit_Counter\" ( \"URL\", \"Timestamp\",\"Date\", \"Application\",\"User\") values('".$URL_str."',(select (current_time(0) - INTERVAL '5 HOURS')),'". $today2."',
 'cmvp_mip_historic_stackedbar.php','".$User."')";
-//$result = pg_query($conn, $hit_counter);
-
+//echo "hit_str=".$hit_counter;
+$result = pg_query($conn, $hit_counter);
 
 
 //we can set the minimum number of modules a lab has done to be included in this plot
@@ -293,9 +292,24 @@ $c->setRoundedFrame();
 $plotAreaObj = $c->setPlotArea(80,100, $width-300, $height-190);
 $plotAreaObj->setBackground(0xffffff);
 
+
+
+//==== Get the Last_Updated date =====================================================
+$sql_Str_Last_Updated="select * from \"CMVP_MIP_Table\"  order by \"Row_ID\" desc limit 1 ;";
+//echo "juliet sql=<br> ".$sql_Str_Last_Updated."<br>";
+$result = pg_query($conn,$sql_Str_Last_Updated);
+$arr = pg_fetch_all($result);
+$row=sizeof($arr);
+foreach($arr as $row){
+    $Last_Updated=$row['Last_Updated'];
+  }
+//======================================================================================
+
+
+
 # Add a title to the chart using 15pt Times Bold Italic font. The text is white (ffffff) on a blue
 # (0000cc) background, with glass effect.
-$title = $c->addTitle("CMVP Current & Historic MIP Data", "timesbi.ttf", 15, 0xffffff);
+$title = $c->addTitle("CMVP Current & Historic MIP Data (Updated:".$Last_Updated.")", "timesbi.ttf", 15, 0xffffff);
 $title->setBackground(0x0000cc, 0x000000, glassEffect(ReducedGlare));
 //-------------------------------------------------------------------------------
 
@@ -628,7 +642,7 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
 	<form action="<?= $self; ?>" method="POST"> 
 	
    	<tr>    <td align="right"> Start Date <input type="date" name="startDate" value="<?= $startDate;?>">   
-   		     <td rowspan="2"> <td colspan="3"><img src = "http:<?=$URL_str?>/ChartDirector/CMVP_MIP_Indicator/INTEL_FIPS_LOGO_v3.png"     height = "70" width = "262" /></td></td>
+   		     <td rowspan="2"> <td colspan="3"><img src = "./INTEL_FIPS_LOGO_v3.png"     height = "70" width = "262" /></td></td>
     
    <!-- <td rowspan="2"> <td colspan="2"> CST Lab Health Indicator</td></td>  --> 
    			
@@ -654,11 +668,12 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           AendDate=  y + '-' + m + '-' + d ;  //today's date 
           
           AstartDate= y-2+ '-' + m +'-' + d; //24 months earlier
-          Aurl="<?= $URL_str; ?>";
+        
           Ain_IntelOnly="<?= $in_IntelOnlyButton  ?>";
           Ain_SL="<?= $in_SecurityLevelButton ?>";
           Ain_MT="<?= $in_ModuleTypeBUtton ?>";
           Azoom="<?=$zoom ?>";
+          Aurl= "<?=$URL_path ?>";
         </script>
           <?php
           if($in_TopButtons==1)
@@ -666,7 +681,7 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           else
             echo "<button  style=\"background-color: silver;\" type=\"button\" ";
           ?>
-           onclick="window.location.href='http:'+ Aurl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?zoom='+Azoom+'&in_ModuleTypeButton='+Ain_MT+'&in_SecurityLevelButton='+Ain_SL+'&in_IntelOnlyButton='+Ain_IntelOnly+'&in_TopButtons=1&startDate='+ AstartDate+ '&endDate='+ AendDate;"> Last 24 Months  
+           onclick="window.location.href= Aurl + '/cmvp_mip_historic_stackedbar.php?zoom='+Azoom+'&in_ModuleTypeButton='+Ain_MT+'&in_SecurityLevelButton='+Ain_SL+'&in_IntelOnlyButton='+Ain_IntelOnly+'&in_TopButtons=1&startDate='+ AstartDate+ '&endDate='+ AendDate;"> Last 24 Months  
           
           </button> 
           
@@ -677,11 +692,12 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           BendDate=  y-1 + '-12-31' ;  //Dec 31st of the current year
           
           BstartDate= y-1 + '-01' +'-01'; //Jan 1st of last year 
-          Burl="<?= $URL_str; ?>";
+         
           Bin_IntelOnly="<?= $in_IntelOnlyButton  ?>";
           Bin_SL="<?= $in_SecurityLevelButton ?>";
           Bin_MT="<?= $in_ModuleTypeBUtton ?>";
           Bzoom="<?=$zoom ?>";
+          Burl= "<?=$URL_path ?>";
         </script>
 
           <?php
@@ -692,7 +708,7 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           ?>
 
 
-           onclick="window.location.href='http:'+ Burl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?zoom='+Bzoom+'&in_ModuleTypeButton='+Bin_MT+'&in_SecurityLevelButton='+Bin_SL+'&in_IntelOnlyButton='+Bin_IntelOnly+ '&in_TopButtons=2&startDate='+BstartDate+ '&endDate='+BendDate;"> Last Year  
+           onclick="window.location.href= Burl + '/cmvp_mip_historic_stackedbar.php?zoom='+Bzoom+'&in_ModuleTypeButton='+Bin_MT+'&in_SecurityLevelButton='+Bin_SL+'&in_IntelOnlyButton='+Bin_IntelOnly+ '&in_TopButtons=2&startDate='+BstartDate+ '&endDate='+BendDate;"> Last Year  
           </button>  
         </td> 
       <td>
@@ -701,11 +717,12 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           CendDate=  y + '-' + m + '-' + d ;  //today's date 
           
           CstartDate= y + '-01' +'-01'; //january 1st of the current year
-          C_url="<?= $URL_str; ?>";
+         
           Cin_IntelOnly="<?= $in_IntelOnlyButton  ?>";
           Cin_SL="<?= $in_SecurityLevelButton ?>";
           Cin_MT="<?= $in_ModuleTypeBUtton ?>";
           Czoom="<?=$zoom ?>";
+          Curl= "<?=$URL_path ?>";
         </script>
         <?php
           if($in_TopButtons==3)
@@ -714,7 +731,7 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
             echo "<button  style=\"background-color: silver;\" type=\"button\" ";
           ?>
           
-           onclick="window.location.href='http:'+ C_url+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?zoom='+Czoom+'&in_ModuleTypeButton='+Cin_MT+'&in_SecurityLevelButton='+Cin_SL+'&in_IntelOnlyButton='+Cin_IntelOnly+'&in_TopButtons=3&startDate='+ CstartDate+ '&endDate='+ CendDate;"> This Year  
+           onclick="window.location.href= Curl + '/cmvp_mip_historic_stackedbar.php?zoom='+Czoom+'&in_ModuleTypeButton='+Cin_MT+'&in_SecurityLevelButton='+Cin_SL+'&in_IntelOnlyButton='+Cin_IntelOnly+'&in_TopButtons=3&startDate='+ CstartDate+ '&endDate='+ CendDate;"> This Year  
           </button> 
         
         
@@ -726,11 +743,12 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
           DendDate=  y + '-' +  m + '-' + d;  //today
            
           DstartDate=1995 + '-01-01'  ;  //birth of the CMVP program
-          Durl="<?= $URL_str; ?>";
+         
           Din_IntelOnly="<?= $in_IntelOnlyButton  ?>";
           Din_SL="<?= $in_SecurityLevelButton ?>";
           Din_MT="<?= $in_ModuleTypeBUtton ?>";
           Dzoom="<?=$zoom ?>";
+          Durl= "<?=$URL_path ?>";
         </script>
         <?php
           if($in_TopButtons==4)
@@ -739,7 +757,7 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
             echo "<button  style=\"background-color: silver;\" type=\"button\" ";
           ?>
         
-            onclick="window.location.href='http:'+ Durl+ '/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?zoom='+Dzoom+'&in_ModuleTypeButton='+Din_MT+'&in_SecurityLevelButton='+Din_SL+'&in_IntelOnlyButton='+ Din_IntelOnly+ '&in_TopButtons=4&startDate='+ DstartDate+ '&endDate=' + DendDate ;"> All Time  
+            onclick="window.location.href= Durl + '/cmvp_mip_historic_stackedbar.php?zoom='+Dzoom+'&in_ModuleTypeButton='+Din_MT+'&in_SecurityLevelButton='+Din_SL+'&in_IntelOnlyButton='+ Din_IntelOnly+ '&in_TopButtons=4&startDate='+ DstartDate+ '&endDate=' + DendDate ;"> All Time  
           </button> 
         </td>
         <td style="width:75px"></td>
@@ -763,59 +781,59 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
 <map name="map1">
 <?php echo $imageMap?>
 
-<area <?php echo $coor_button1.  " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=". $in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button1.  " href='".$URL_path."/cmvp_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=". $in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
     " title='Validated Modules Status By Lab' />"; ?>
-<area <?php echo $coor_button3. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_current_trend.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".($in_TopButtons * -1)."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button3. " href='".$URL_path."/cmvp_current_trend.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".($in_TopButtons * -1)."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Average Number of Days in MIP based on Labs Past Performance (In Review + Coordination) ' />"?>
 
-<area <?php echo $coor_button4. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button4. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Current & Historic MIP Data By Individual Module' />"?>
 
-<area <?php echo $coor_button5. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button5. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='MIP Forecast based on Labs past performace (Linear Regression Model) ' />"?>
    
-<area <?php echo $coor_zoomIn. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomIn. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom In' />"?>
-<area <?php echo $coor_zoomOut. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom - .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomOut. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom - .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom Out) ' />"?>
-<area <?php echo $coor_zoomClear. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=1&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomClear. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=1&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom Clear) ' />"?>
 
 
-<area <?php echo $coor_IntelOnlyButton. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton ^ 1)."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_IntelOnlyButton. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton ^ 1)."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
 
 
-<area <?php echo $coor_SL_ALL. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=0&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_ALL. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=0&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_SL_1." href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=1&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_1." href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=1&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_SL_2. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=2&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_2. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=2&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_SL_3. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=3&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_3. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=3&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_SL_4. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=4&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_4. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=4&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
 
-<area <?php echo $coor_MT_ALL. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_MT_ALL. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_1. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=1&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_MT_1. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=1&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_2. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=2&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_MT_2. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=2&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_3. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=3&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_MT_3. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=3&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_4. " href='http:".$URL_str."/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=4&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_MT_4. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=4&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
 

@@ -57,18 +57,11 @@ global $forecast_Y_co;   //predicated duration of being in "Coordination"
 		echo "pgsql=ubutun VM";
         break;
     case 1: //postgresql database on intel interanet production
-		$encryptedPW="39ABDntQEJtweA==";
-  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-		$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-			
-		//echo "pgsql=intel prod";
-        break;
-    case 0:   //postgresql database on intel intranet pre-production
-    	$encryptedPW="39ABDntQEJtweA==";
-  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-		$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-		echo "pgsql=intel pre-prod";
-        break;
+		$encryptedPW="WDu8gYvvVn6Pxw==";
+		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+  		$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      	break;
+    
     default:
     	echo "ERROR: unknown PROD value";
 
@@ -238,17 +231,11 @@ global $confidence_co;
 			//echo "pgsql=ubutun VM";
 	        break;
 	    case 1: //postgresql database on intel interanet production
-			$encryptedPW="39ABDntQEJtweA==";
-	  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-			//echo "pgsql=intel prod";
-	        break;
-	    case 0:   //postgresql database on intel intranet pre-production
-	    	$encryptedPW="39ABDntQEJtweA==";
-	  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-			//echo "pgsql=intel pre-prod";
-	        break;
+			$encryptedPW="WDu8gYvvVn6Pxw==";
+			$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+  			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      		break;
+    
 	    default:
 	    	echo "ERROR: unknown PROD value";
 
@@ -468,17 +455,11 @@ global $confidence_co;	//confidence value for CO for individual model
 				//echo "pgsql=ubutun VM";
 		        break;
 		    case 1: //postgresql database on intel interanet production
-				$encryptedPW="39ABDntQEJtweA==";
-		  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-				$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-			//echo "pgsql=intel prod";
-		        break;
-		    case 0:   //postgresql database on intel intranet pre-production
-		    	$encryptedPW="39ABDntQEJtweA==";
-		  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-				$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-				//echo "pgsql=intel pre-prod";
-		        break;
+				$encryptedPW="WDu8gYvvVn6Pxw==";
+				$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+  				$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      			break;
+    
 		    default:
 		    	echo "ERROR: unknown PROD value";
 
