@@ -84,6 +84,7 @@ else
 
 //1 means selected. 0 means not selected
 $in_IntelOnlyButton=isset($_REQUEST["in_IntelOnlyButton"]) ? $_REQUEST["in_IntelOnlyButton"] : 0;
+$in_IntelOnlyButton2=isset($_REQUEST["in_IntelOnlyButton2"]) ? $_REQUEST["in_IntelOnlyButton2"] : 0;
 $in_ModuleTypeButton=isset($_REQUEST["in_ModuleTypeButton"]) ? $_REQUEST["in_ModuleTypeButton"] : 0;
 $in_SecurityLevelButton=isset($_REQUEST["in_SecurityLevelButton"]) ? $_REQUEST["in_SecurityLevelButton"] : 0;
  
@@ -91,31 +92,6 @@ $in_SecurityLevelButton=isset($_REQUEST["in_SecurityLevelButton"]) ? $_REQUEST["
 #===========================================================================
 
 #connect to postgreSQL database and get my chart data
-
-$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-switch ($PROD) {
-    case 2:  //postgresql database on Ubuntu VM machine 
-     	$encryptedPW="xtw2D3obQa8=";
-  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-			$connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-			echo "pgsql=ubutun VM";
-        break;
-    case 1: //postgresql database on intel interanet production
-		$encryptedPW="WDu8gYvvVn6Pxw==";
-			$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-  		$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-      break;
-    
-    default:
-    	echo "ERROR: unknown PROD value";
-
-	}
-
-
-//echo "PROD= $PROD"." ConnStr= ".$connStr;
-
-//=====================================================
 
 //get the user from the Cloud Foundry PHP variable
 ob_start();
@@ -129,13 +105,45 @@ $User = ob_get_contents();
 // flush the output buffer
 ob_end_clean();
 
-$User = isset($_COOKIE['IDSID']) ? $_COOKIE['IDSID'] : '<i>no value</i>';
-//echo $User;
-//$User=get_current_user();
+$appName = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+switch ($PROD) {
+    case 2:  //postgresql database on Ubuntu VM machine 
+      $encryptedPW="xtw2D3obQa8=";
+      $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+      $connStr = "host=localhost  dbname=postgres user=postgres password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
+      echo "pgsql=ubutun VM";
+      $User=get_current_user();
+        break;
+    case 1: //postgresql database on intel interanet production
+     $encryptedPW="WDu8gYvvVn6Pxw==";
+      $decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+      $connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      $User = isset($_COOKIE['IDSID']) ? $_COOKIE['IDSID'] : '<i>no value</i>';
+      break;
+    
+    default:
+      echo "ERROR: unknown PROD value";
+
+  }
+
+
+//echo "PROD= $PROD"." ConnStr= ".$connStr;
+
+//echo "<br>$User<br>";
+
+//=====================================================
+
+
 $conn = pg_connect($connStr);
 
-$hit_counter= " INSERT INTO \"CMVP_Hit_Counter\" ( \"URL\", \"Timestamp\",\"Date\", \"Application\",\"User\") values('".$URL_str."',(select (current_time(0) - INTERVAL '5 HOURS')),'". $today2."',
-'cmvp_show_details_mip_historic_stackedbar.php','".$User."')";
+//$hit_counter= " INSERT INTO \"CMVP_Hit_Counter\" ( \"URL\", \"Timestamp\",\"Date\", \"Application\",\"User\") values('".$URL_str."',(select (current_time(0) - INTERVAL '5 HOURS')),'". $today2."','cmvp_active_by_status_pareto.php','".$User."')";
+
+
+//Don't add the developer "rfant' since there will be too many hits then.
+$hit_counter=  " INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
+select '".$URL_str."', (select (current_time(0) - INTERVAL '5 HOURS')),'".$today2."', 'cmvp_show_details_mip_historic_stackedbar.php', '".$User."'
+where not exists (     select 1 from \"CMVP_Hit_Counter\" where \"User\" = 'rfant' and \"Date\" = (select current_date) );";
 //echo "hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
 

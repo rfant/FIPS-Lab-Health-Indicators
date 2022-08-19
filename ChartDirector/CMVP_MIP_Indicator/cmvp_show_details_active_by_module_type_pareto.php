@@ -66,19 +66,11 @@ switch ($PROD) {
 			echo "pgsql=ubutun VM";
         break;
     case 1: //postgresql database on intel interanet production
-			$encryptedPW="39ABDntQEJtweA==";
-  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-			//$connStr = "host=postgres5456-lb-fm-in.dbaas.intel.com  dbname=lhi_prod user=lhi_prod_so password=".$decryptedPW." port=5433 connect_timeout=5 options='--application_name=$appName'";
-			$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
-			//
-			//echo "pgsql=intel prod";
-        break;
-    case 0:   //postgresql database on intel intranet pre-production
-    	$encryptedPW="39ABDntQEJtweA==";
-  		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
-			$connStr = "host=postgres5596-lb-fm-in.dbaas.intel.com  dbname=lhi_pre_prod user=lhi_pre_prod_so password=".$decryptedPW." connect_timeout=5 options='--application_name=$appName'";
-			echo "pgsql=intel pre-prod";
-        break;
+		$encryptedPW="WDu8gYvvVn6Pxw==";
+		$decryptedPW=openssl_decrypt ($encryptedPW, $ciphering, $decryption_key, $options, $decryption_iv);
+  		$connStr = "host=postgres5320-lb-fm-in.dbaas.intel.com  port=5432 dbname=lhi_prod2 user=lhi_prod2_so password=".$decryptedPW."  connect_timeout=5 options='--application_name=$appName'";
+      break;
+    
     default:
     	echo "ERROR: unknown PROD value";
 
@@ -88,12 +80,22 @@ switch ($PROD) {
 //echo "PROD= $PROD"." ConnStr= ".$connStr;
 
 //=====================================================
+//get the user from the Cloud Foundry PHP variable
+ob_start();
 
+// send phpinfo content
+phpinfo();
 
+// get phpinfo content
+$User = ob_get_contents();
 
+// flush the output buffer
+ob_end_clean();
 
+$User = isset($_COOKIE['IDSID']) ? $_COOKIE['IDSID'] : '<i>no value</i>';
+//echo $User;
+//$User=get_current_user();
 
-$User=get_current_user();
 $conn = pg_connect($connStr);
 $hit_counter= " INSERT INTO \"CMVP_Hit_Counter\" ( \"URL\", \"Timestamp\",\"Date\", \"Application\",\"User\") values('".$URL_str."',(select (current_time(0) - INTERVAL '5 HOURS')),'". $today2."',
 'cmvp_show_details_active_by_module_type_pareto.php','".$User."')";
