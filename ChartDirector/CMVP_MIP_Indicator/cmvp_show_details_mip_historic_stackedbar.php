@@ -16,6 +16,7 @@ define      ("black",0x00000000);
 define      ("grey1",0x00dcdcdc);
 define      ("grey2",0x00f6f6f6);
 
+
 #=======================================================
 
 //================================================================================================
@@ -147,12 +148,16 @@ where not exists (     select 1 from \"CMVP_Hit_Counter\" where \"User\" = 'rfan
 //echo "hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
 
-global $g_in_Module_Name;
-strip_quote ($in_Module_Name); 
+//strip out any single quote so as not to faciliate a SQL injection attack
+
+//echo "<br>before:".$in_Module_Name;
+$in_Module_Name[0]='%';
+$in_Module_Name[strlen($in_Module_Name)-1]='%';
+$in_Module_Name=str_replace("'","''",$in_Module_Name);
+$in_Module_Name=str_replace("%","'",$in_Module_Name);
+//echo "<br>a fter    :  ".$in_Module_Name."<br>";
 
 $where_module_name=" and 3=3 and \"Module_Name\" =".$in_Module_Name." and 4=4";
-//$where_module_name=" and 3=3 and \"Module_Name\" =".$g_in_Module_Name." and 4=4";
-
 $where_vendor_name=" and 5=5 and \"Vendor_Name\" =".$in_Vendor_Name." and 6=6";
 			
 		
