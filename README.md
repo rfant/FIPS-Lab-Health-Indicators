@@ -4,7 +4,7 @@ Indicators using publicly available US Government data to show how well a FIPS L
 Define production/preproduction
 -----------------------------
 1) for the LHI itself (written in PHP), "cmvp_define_which_database.php" defines which database to use (prod,pre-prod, VM)
-2) for the HTML parsers (written in C), "dev_or_prod.h" defined which database to use (prod,pre-prod, VM)
+2) for the HTML parsers (written in C), "dev_or_prod.h" defined which database to use (prod, VM)
 3)
 
 Nov 10, 2021
