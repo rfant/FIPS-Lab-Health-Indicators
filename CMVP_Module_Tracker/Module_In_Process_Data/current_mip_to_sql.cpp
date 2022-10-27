@@ -107,7 +107,8 @@ int k;
 // Set the SL and Module Type for this Intel ADL-M product in the MIP table.
 
 CLR_SQL1_STR
-strfcat(sql1," update \"CMVP_MIP_Table\" set \"Module_Type\"='Firmware-Hybrid', \"SL\"=2 where \"Module_Name\" ");
+
+strfcat(sql1," update \"CMVP_MIP_Table\" set \"Lab_Name\"='ATSEC', \"Module_Type\"='Firmware-Hybrid', \"SL\"=2 where \"Module_Name\" ");
 strfcat(sql1," like '%%Crypto Module for Intel Alder Lake Converged Security and Manageability Engine (CSME) 5.0.0.0 and 5.1.0.0%%'; ");
 sql_result = PQexec(conn, sql1); 
 if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
@@ -181,6 +182,12 @@ strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"Vend
 //Name changes after module was submitted to CMVP: Platforms added to name
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1000',\"Module_Type\"='Firmware-Hybrid',\"SL\"=1, \"In_Review_Start_Date\"='2021-07-25' where \"Module_Name\" like 'Intel Converged Security and Manageability Engine (CSME) Crypto Module for Tiger Point PCH, Mule Creek Canyon PCH, and Rocket Lake PCH' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1000' where \"Module_Name\" like 'Cryptographic Module for Intel Converged Security and Manageability Engine (CSME) for Intel Tiger Point PCH' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
+
+
+//Updating lab name and module type for Intel Module since we know this info obviously.  New Alder Lake Name
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"SL\"=2,  \"Module_Type\"='Firmware-Hybrid', \"Lab_Name\"='ATSEC' where \"Module_Name\" like 'Crypto Module for Intel Alder Point PCH Converged Security and Manageability Engine (CSME)' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
+
+
 
 //space added to module name??!!?
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1001',\"Module_Type\"='Firmware-Hybrid',\"SL\"=1 where \"Module_Name\" like 'Cryptographic Module for Intel Converged Security and Manageability Engine (CSME)' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
@@ -307,59 +314,43 @@ return(1);
 // NOTE: think of NULL = infinity. Then
 //	 NULL  < mm/dd/yyyy  returns 0 (false)
 //   mm/dd/yyyy < NULL returns 1 (true)  
-
-
-
 //printf("zulu1:DATE1=%s  DATE2=%s  \n",date1,date2);
     int day1,month1,year1;
     int day2,month2,year2;
-
     if(date1=="NULL" && date2!="NULL") 
     	return(0);
-
     if(date1!="NULL" && date2=="NULL")
     	return(1);
-
     if(date1=="NULL" && date2=="NULL")
     	return(0);
-
     sscanf(date1,"'%d/%d/%d'",&month1,&day1,&year1); //reads the numbers in a mm/dd/yyyy format
     sscanf(date2,"'%d/%d/%d'",&month2,&day2,&year2); //from the string
-
     //printf("zulu2 Date1: month1=%d.  day1=%d. year1=%d\n",month1,day1,year1);
 	//printf("zulu2 Date2: month2=%d.  day2=%d. year2=%d\n",month2,day2,year2);
-
     if(year1<year2)
     	return(1);
     else if (year1>year2)
     	return(0);   
     else
     {//  year1=year2
-
     	if(month1<month2)
     		return(1);
     	else if (month1>month2)
     		return(0);
     	else
     	{//  month1=month2
-
     		if(day1<day2)
     			return(1);
     		else if (day1>day2)
     			return(0);
     		else
     			return(0);  //hitting this means date1=date2
-
     	}
     }
  	printf("ERROR 185: should never get here\n");
-
     return (0);
-
-
 	
 }  //date1 lt date2
-
 */
 //=============================================================================================
 int get_value_from_sql (){
@@ -705,14 +696,10 @@ return 0;
 //this is sprintf and strcat combined.
 //strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
 //strfcat(dst, "%d:%d:%c\n", 4,13,'s');
-
     //char buf[2048];
-
 	
-
     char buf[SQL_MAX];
     va_list args;
-
     va_start(args, fmt);
     vsprintf(buf, fmt, args);
     va_end(args);
@@ -1507,4 +1494,3 @@ int main (int argc, char* argv[]) {
 
 
 } //main
-
