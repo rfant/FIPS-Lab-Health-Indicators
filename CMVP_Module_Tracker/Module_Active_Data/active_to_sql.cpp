@@ -1154,6 +1154,7 @@ strfcat(sql1," where t1.\"Cert_Num\"=t2.\"Cert_Num\"; ");
 
 strfcat(sql1," update \"CMVP_Active_Table\" set \"Status\" = case  ");
 strfcat(sql1," 	 when \"Status\"='Revoked' then 'Revoked'  ");
+strfcat(sql1," 	 when \"Status\"='Historical' then 'Historical'  ");  //rgf cert 4355 went historical before sunset date. 
 strfcat(sql1," 	 when (select CURRENT_DATE)::date  <= \"Sunset_Date\"::date   then 'Active' else 'Historical'  end;  ");
 
 strfcat(sql1," delete from \"CMVP_Active_Table\" t1 using \"CMVP_Active_Table\" t2  ");
@@ -1225,10 +1226,7 @@ return 0;
 int main (int argc, char* argv[]) {
 
 
- //rgf();
- //return(0);
-
-	const char *Table_Name="CMVP_Active_Table";
+ const char *Table_Name="CMVP_Active_Table";
 	char *file_path;
 	char *file_num;
 
@@ -1268,15 +1266,15 @@ int main (int argc, char* argv[]) {
 	
 		case 0: //Intel intranet pre-production
 			
-		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+		 	//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
     		
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
+    		//snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
     
-   	   		conn = PQconnectdb(connbuff);
+   	   		//conn = PQconnectdb(connbuff);
    	   		break;
 		default: 
-			printf("ERROR  1276: Unknown PROD=%d\n",PROD); break;
+			printf("ERROR  112: Unknown PROD=%d\n",PROD); break;
 	}
 
 
@@ -1301,10 +1299,7 @@ int main (int argc, char* argv[]) {
 
 
 	if (Postgresql_Connection_Status==CONNECTION_OK) {
-    //if (PQstatus(conn) == CONNECTION_OK) {
-
-		//printf("alpha2: connection OK\n");
-	      	
+   
 
 		if(argc != 2) { 
 			printf("*** Error 345: Missing Input File Name.\n");
@@ -1314,8 +1309,7 @@ int main (int argc, char* argv[]) {
 		// get input filename
 		file_path = argv[1];
 	
-		//------ do file stuff here
-	//	printf("\n\n********************************************************************************\n\n");
+		//------ do file manipulation stuff here
 		//printf("Opening file: '%s'\n", file_path);
 		if(!read_file(file_path, &data))
 				printf("*** Error 356: Error reading file '%s'.\n",file_path);
