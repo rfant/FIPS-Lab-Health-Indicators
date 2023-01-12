@@ -404,6 +404,46 @@ $ShowList->setBackground(light_blue,-1,2);
 $ShowList->setAlignment (5);
 $coor_ShowList = $ShowList->getImageCoor();
 
+
+//------------------ "Active Parser Error" warning flash ----------------------------------------------
+//Draw a flashing warning flag if any Active parser errors have happend 
+$sql_warning_str = "select * from \"Active_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+$result = pg_query($conn,$sql_warning_str);
+$arr = pg_fetch_all($result);
+
+if ($arr!=null)
+{
+	$active_warning_flash = $c->addText($buttonX-300, $buttonY-65, "ActParseErr!","arialbd.ttf",8); //draw button
+	$active_warning_flash->SetFontColor(black);
+	$active_warning_flash->setSize(90, 25);
+	//$active_warning_flash->setBackground(red); //,-1,-2);
+	$active_warning_flash->setBackground(yellow,-1,2);
+	//$button3->setBackground(gray1,-1,2);
+	$active_warning_flash->setAlignment (5);
+	$coor_active_warning_flash = $active_warning_flash->getImageCoor();
+}
+
+//------------------ "MIP Parser Error" warning flash ----------------------------------------------
+//Draw a flashing warning flag if any MIP parser errors have happend 
+$sql_warning_str = "select * from \"MIP_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+$result = pg_query($conn,$sql_warning_str);
+$arr = pg_fetch_all($result);
+
+
+if ($arr!=null)
+{
+	$mip_warning_flash = $c->addText($buttonX-200, $buttonY-65, "MIPParseErr!","arialbd.ttf",8); //draw button
+	$mip_warning_flash->SetFontColor(black);
+	$mip_warning_flash->setSize(90, 25);
+	//$mip_warning_flash->setBackground(red); //,-1,-2);
+	$mip_warning_flash->setBackground(yellow,-1,2);
+	//$button3->setBackground(gray1,-1,2);
+	$mip_warning_flash->setAlignment (5);
+	$coor_mip_warning_flash = $mip_warning_flash->getImageCoor();
+}
+
+
+
 // ----------------- Admin Button -------------------------------------------------------------
 
 //Draw a button that is only visible to "Admins" 

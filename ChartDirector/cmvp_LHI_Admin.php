@@ -104,18 +104,21 @@ if ($stat === PGSQL_CONNECTION_OK)
 // Hit Counter for Admin Page
 
 //Only add to the Admin Hit Counter once per day per visit. otherwise  there may be too many duplicate hits then. 
-$hit_counter=  " INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
+$hit_counter=  "INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
 select '".$URL_str."', (select (current_time(0) - INTERVAL '5 HOURS')),'".$today2."', 'Admin Page', '".$User."'
 where not exists ( select 1 from \"CMVP_Hit_Counter\" where \"User\" = '".$User."' and \"Date\" = (select current_date) and \"Application\" like '%Admin%');";
 
-
 //echo "<br>hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
 
-//remove all the older entries for 'rfant' since there will be tons of them since rfant is the developer.
+
+//remove all the older entries for 'rfant' since there will be tons of them.
 $hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and \"User\" like 'rfant'; ";
 //echo "<br>hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
+
+
+//echo "admin option=$admin_option";
 
 //----------------------------------------------------------------------------
 //Now, execute which ever admin option was selected
@@ -139,7 +142,9 @@ switch ($admin_option) {
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=3"." \" >Add Admin</a>  </td></tr> "  
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=4"." \" >Delete Admin</a>  </td></tr> "  
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=5"." \" >List Intel Certifiable Products</a>  </td></tr> "  
-			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=6"." \" >Mark a module as Intel Certifiable </a>  </td></tr> "  ;
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=6"." \" >Mark a module as Intel Certifiable </a>  </td></tr> " 
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=9"." \" >Toggle Active Parser Error Flag </a>  </td></tr> "
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=10"." \" >Toggle MIP Parser Error Flag </a>  </td></tr> "			 ;
      	echo "</table>"; //Close the table in HTML
   
     	break;
@@ -568,7 +573,57 @@ switch ($admin_option) {
 
 
     		
-    	break;
+    		break;
+
+    	case 9: //Toggle the Active Parser Error Flag
+
+    		//Figure out the current value of the boolean Active Error Flag (true or flase) and then flip it.
+
+    		//------------------ "Active Parser Error" warning flash ----------------------------------------------
+			$sql_warning_str = "select * from \"Active_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+			$result = pg_query($conn,$sql_warning_str);
+			$arr = pg_fetch_all($result);
+
+			if ($arr!=null)
+			{
+				$sql_warning_str= "update \"Active_Error_Table\" set \"Error_Flag\" ='false' ";
+				$result = pg_query($conn,$sql_warning_str);
+				//$arr = pg_fetch_all($result);
+	
+			}
+			else
+			{ //toggle the othe way
+				$sql_warning_str= "update \"Active_Error_Table\" set \"Error_Flag\" ='true' ";
+				$result = pg_query($conn,$sql_warning_str);
+
+			}
+
+    		break;
+    	case 10: //toggle the MIP Parser Error Flag
+    		//Figure out the current value of the boolean MIP Error Flag (true or flase) and then flip it.
+
+    		//------------------ "MIP Parser Error" warning flash ----------------------------------------------
+			$sql_warning_str = "select * from \"MIP_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+			$result = pg_query($conn,$sql_warning_str);
+			$arr = pg_fetch_all($result);
+
+			if ($arr!=null)
+			{
+				$sql_warning_str= "update \"MIP_Error_Table\" set \"Error_Flag\" ='false' ";
+				$result = pg_query($conn,$sql_warning_str);
+				//$arr = pg_fetch_all($result);
+	
+			}
+			else
+			{ //toggle the othe way
+				$sql_warning_str= "update \"MIP_Error_Table\" set \"Error_Flag\" ='true' ";
+				$result = pg_query($conn,$sql_warning_str);
+
+			}
+
+
+
+    		break;
     default:
     	echo "<br>ERROR: unknown admin_option value=". $admin_option."<br>";
 	} //select case
