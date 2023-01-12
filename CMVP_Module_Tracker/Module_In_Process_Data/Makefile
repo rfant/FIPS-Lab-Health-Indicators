@@ -32,8 +32,16 @@ all:    MIP_ALL
 
 #	rm -f mip_to_sql.o
 
-MIP_ALL: 	  current_mip_to_sql.o 
+MIP_ALL: 	  current_mip_to_sql.o setMIPErrorFlag.o clearMIPErrorFlag.o
 			
 
-current_mip_to_sql.o: current_mip_to_sql.cpp
+current_mip_to_sql.o: current_mip_to_sql.cpp 
 	$(CXX) $(CXXFLAGS) $(INC) current_mip_to_sql.cpp -lpq -v -o current_mip_to_sql $(LIB)
+
+
+setMIPErrorFlag.o: setMIPErrorFlag.cpp 
+	$(CXX) $(CXXFLAGS) $(INC) setMIPErrorFlag.cpp -lpq -v -o setMIPErrorFlag $(LIB)	
+
+clearMIPErrorFlag.o: clearMIPErrorFlag.cpp 
+	$(CXX) $(CXXFLAGS) $(INC) clearMIPErrorFlag.cpp -lpq -v -o clearMIPErrorFlag $(LIB)
+
