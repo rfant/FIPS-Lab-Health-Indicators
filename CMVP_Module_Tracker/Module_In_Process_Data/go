@@ -33,14 +33,13 @@ do
     $TOOL_PATH/current_mip_to_sql $f >> $LOG_FILENAME_CURRENT
   	echo "$i: ################" >> $LOG_FILENAME_CURRENT
  	
- 	# If I have any error messages in the log, I'll pop up a window in ubuntu to notify me. This will pause execution when true.
-	grep -q -i "error" $LOG_FILENAME_CURRENT && zenity --error --text="Current MIP Error Found\!" --title="Warning\!"
-	#&& osascript -e 'tell app "System Events" to display dialog "Current MIP Error Found."'
-	
-
+ 
  	((i+=1))
 done
 
 echo "Invoke the LHI to force a refresh of the confidence tool." >> $LOG_FILENAME_CURRENT
 curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php >> $LOG_FILENAME_CURRENT
+
+# If I have any error messages in the log, I'll set the MIP Error Flag in the sql dbase which will create a button in the LHI tool.
+grep -q -i "error" $LOG_FILENAME_CURRENT && ./setMIPErrorFlag
 
