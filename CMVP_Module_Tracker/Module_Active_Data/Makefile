@@ -38,7 +38,7 @@ all:    ACTIVE_ALL
 
 #	rm -f active_to_sql.o
 
-ACTIVE_ALL: active_to_sql.o Mark_Active_Table_Dups.o delete_data_active_table.o
+ACTIVE_ALL: active_to_sql.o Mark_Active_Table_Dups.o delete_data_active_table.o setActiveErrorFlag.o clearActiveErrorFlag.o
 active_to_sql.o: active_to_sql.cpp
 	$(CXX) $(CXXFLAGS) $(INC) active_to_sql.cpp -lpq -v -o active_to_sql $(LIB)
 	
@@ -46,6 +46,12 @@ active_to_sql.o: active_to_sql.cpp
 #do this so that the algorithm doesn't get confused about which module the CMVP_MIP_Table is referring to.
 Mark_Active_Table_Dups.o: Mark_Active_Table_Dups.cpp
 	$(CXX) $(CXXFLAGS) $(INC) Mark_Active_Table_Dups.cpp -lpq -v -o Mark_Active_Table_Dups $(LIB)
+
+setActiveErrorFlag.o: setActiveErrorFlag.cpp
+	$(CXX) $(CXXFLAGS) $(INC) setActiveErrorFlag.cpp -lpq -v -o setActiveErrorFlag $(LIB)
+
+clearActiveErrorFlag.o: clearActiveErrorFlag.cpp
+	$(CXX) $(CXXFLAGS) $(INC) clearActiveErrorFlag.cpp -lpq -v -o clearActiveErrorFlag $(LIB)
 
 
 delete_data_active_table.o: delete_data_active_table.cpp
