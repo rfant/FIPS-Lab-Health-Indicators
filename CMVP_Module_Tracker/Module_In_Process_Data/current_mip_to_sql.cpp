@@ -145,15 +145,14 @@ strfcat(sql1," delete from \"CMVP_MIP_Table\" where \"Module_Name\" like 'Crypto
 //new & missing UL
 strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Cert_Num\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\") ");
 strfcat(sql1,"  VALUES (NULL,'3838',3838,'Cryptographic Module for Intel Platforms Security Engine Chipset (ICL)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'10/11/2019','6/1/2020','7/28/2020','3/4/2021',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
-strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\",\"Y_CO_Avg\") ");
-strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21','1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2019','9/21/2020','1/25/2021',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
-//strfcat(sql1,"  VALUES (NULL,'1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2019','9/21/2020','1/25/2021',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
 
-//orig & has UL
-//strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Cert_Num\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\") ");
-//strfcat(sql1,"  VALUES (NULL,'3838',3838,'Cryptographic Module for Intel Platforms Security Engine Chipset (ICL)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2020','9/21/2020','1/25/2021','3/4/2021',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
+strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\") ");
+strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21',4355,'Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'4/28/2020','9/21/2020','1/25/2021','11/07/2022',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',4355); ");
+
+
 //strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\",\"Y_CO_Avg\") ");
-//strfcat(sql1,"  VALUES (NULL,'1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'10/01/2019','5/02/2020','7/28/2020',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
+//strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21','1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2019','9/21/2020','1/25/2021',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
+
 
 
 
@@ -808,7 +807,7 @@ int Status_Column_Exists;    // "Status" with a single value (Review Pending, In
 
 	
 	if((myX==0 || myY==0)) {
-		printf("***** Error 142a: Last Update Tag Not found (x=%d.y=%d)\n",myX,myY);
+		printf("***** Error 142a: Last Update Tag Not found in %s (x=%d.y=%d)\n",file_name,myX,myY);
 		return 1;
 	}
 	else{
