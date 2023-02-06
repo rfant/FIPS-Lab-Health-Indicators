@@ -1,8 +1,6 @@
-TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data"
-RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data/active_cert_pull"
-#cd $TOOL_PATH/results
-#rm *.log
-#cd ..
+TOOL_PATH="/home/vcap/app/.bp-config/Module_Active_Data"
+RAW_DATA_PATH="/home/vcap/app/.bp-config/Module_Active_Data/active_cert_pull"
+MY_BACKUP_PATH="/var/vcap/data/LHI/Module_Active_Data"
 
 today=`date '+%m_%d_%Y'`;
 LOG_FILENAME="$TOOL_PATH/results/$today.ACTIVE.log"
