@@ -147,7 +147,7 @@ $conn = pg_connect($connStr);
 
 $stat = pg_connection_status($conn);
 if ($stat === PGSQL_CONNECTION_OK) {
-      //echo 'PGSQL Connection status ok';
+      //echo '<br>PGSQL Connection status ok<br>';
   } else {
       echo '<br>PGSQL Connection status bad<br>';
   }    
@@ -160,7 +160,7 @@ if ($stat === PGSQL_CONNECTION_OK) {
 //Don't add the developer "rfant' since there will be too many hits then.
 $hit_counter=  " INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
 select '".$URL_str."', (select (current_time(0) - INTERVAL '5 HOURS')),'".$today2."', 'cmvp_active_by_status_pareto.php', '".$User."'
-where not exists (     select 1 from \"CMVP_Hit_Counter\" where \"User\" = 'rfant' and \"Date\" = (select current_date) );";
+where not exists (     select 1 from \"CMVP_Hit_Counter\" where \"User\" = 'rfant' and \"Date\" = (select current_date) and \"Application\"='cmvp_active_by_status_pareto.php');";
 
 //echo "hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
@@ -277,7 +277,7 @@ switch ($in_ModuleTypeButton)
 	 
 	";
 //} //not 1995 01 01 
-//echo "Bravo SQL= " . $sql_Str ;
+//echo " Bravo SQL= " . $sql_Str ;
 //echo "<br>echo5<br>";
 
 
@@ -293,8 +293,8 @@ if (!$result) {
   echo pg_last_error($conn)."<br>";
   exit;
 }
-//else
-//	echo "<br>DB fetch successful<br>";
+else
+	//echo "<br>DB fetch successful<br>";
 
 $arr = pg_fetch_all($result);
 //print_r($arr);
@@ -386,7 +386,7 @@ $c->setRoundedFrame();
 
 if($no_data_found_label==1)
 {// add a no data found label
-  $no_data_label=$c->addText(200,250,"No Data Found That Matches The Selected Filters","arialbd.tff",12*$zoom);
+  $no_data_label=$c->addText(200,250,"No Data Found That Matches The Selected Filters","arialbd.ttf",12*$zoom);
   $no_data_label->SetFontColor(red);
   $no_data_label->setSize(300,300);
 }
@@ -404,6 +404,46 @@ $ShowList->setBackground(light_blue,-1,2);
 $ShowList->setAlignment (5);
 $coor_ShowList = $ShowList->getImageCoor();
 
+
+//------------------ "Active Parser Error" warning flash ----------------------------------------------
+//Draw a flashing warning flag if any Active parser errors have happend 
+$sql_warning_str = "select * from \"Active_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+$result = pg_query($conn,$sql_warning_str);
+$arr = pg_fetch_all($result);
+
+if ($arr!=null)
+{
+	$active_warning_flash = $c->addText($buttonX-300, $buttonY-65, "ActParseErr!","arialbd.ttf",8); //draw button
+	$active_warning_flash->SetFontColor(black);
+	$active_warning_flash->setSize(90, 25);
+	//$active_warning_flash->setBackground(red); //,-1,-2);
+	$active_warning_flash->setBackground(yellow,-1,2);
+	//$button3->setBackground(gray1,-1,2);
+	$active_warning_flash->setAlignment (5);
+	$coor_active_warning_flash = $active_warning_flash->getImageCoor();
+}
+
+//------------------ "MIP Parser Error" warning flash ----------------------------------------------
+//Draw a flashing warning flag if any MIP parser errors have happend 
+$sql_warning_str = "select * from \"MIP_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+$result = pg_query($conn,$sql_warning_str);
+$arr = pg_fetch_all($result);
+
+
+if ($arr!=null)
+{
+	$mip_warning_flash = $c->addText($buttonX-200, $buttonY-65, "MIPParseErr!","arialbd.ttf",8); //draw button
+	$mip_warning_flash->SetFontColor(black);
+	$mip_warning_flash->setSize(90, 25);
+	//$mip_warning_flash->setBackground(red); //,-1,-2);
+	$mip_warning_flash->setBackground(yellow,-1,2);
+	//$button3->setBackground(gray1,-1,2);
+	$mip_warning_flash->setAlignment (5);
+	$coor_mip_warning_flash = $mip_warning_flash->getImageCoor();
+}
+
+
+
 // ----------------- Admin Button -------------------------------------------------------------
 
 //Draw a button that is only visible to "Admins" 
@@ -414,10 +454,12 @@ $arr = pg_fetch_all($result);
 if ($arr!=null)
 {
 	//echo "<br> You are ADMIN<br>";
-	$admin_button = $c->addText($buttonX-50, $buttonY-55, "ADMIN","arialbd.ttf",8); //draw button
+	$admin_button = $c->addText($buttonX-70, $buttonY-55, "ADMIN","arialbd.ttf",8); //draw button
 	$admin_button->SetFontColor(white);
-	$admin_button->setSize(40, 15);
-	$admin_button->setBackground(red); //,-1,-2);
+	$admin_button->setSize(50, 25);
+	//$admin_button->setBackground(red); //,-1,-2);
+	$admin_button->setBackground(red,-1,2);
+	//$button3->setBackground(gray1,-1,2);
 	$admin_button->setAlignment (5);
 	$coor_admin_button = $admin_button->getImageCoor();
 
@@ -908,7 +950,11 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_active_by_status_pareto.php",
    " title='MIP Forecast based on Labs past performace (Linear Regression Model) ' />"?>
 
 
-<area <?php echo $coor_admin_button. " href='".$URL_path."/cmvp_LHI_Admin.php'"."title='Admin Stuff' />"?>
+<area <?php echo $coor_mip_warning_flash. " href='".$URL_path."/dump_mip_log_file.php' target='_new'"."title='Dump MIP Log File' />"?>
+<area <?php echo $coor_active_warning_flash. " href='".$URL_path."/dump_active_log_file.php' target='_new'"."title='Dump_Active_Log_File' />"?>
+
+
+<area <?php echo $coor_admin_button. " href='".$URL_path."/cmvp_LHI_Admin.php' target='_new'"."title='Admin Stuff' />"?>
 
 
 <area <?php echo $coor_zoomIn. " href='".$URL_path."/cmvp_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
