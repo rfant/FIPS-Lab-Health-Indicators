@@ -41,5 +41,5 @@ echo "Invoke the LHI to force a refresh of the confidence tool." >> $LOG_FILENAM
 curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php >> $LOG_FILENAME_CURRENT
 
 # If I have any error messages in the log, I'll set the MIP Error Flag in the sql dbase which will create a button in the LHI tool.
-grep -q -i "error" $LOG_FILENAME_CURRENT && ./setMIPErrorFlag
+grep -q -i "error" $LOG_FILENAME_CURRENT && ./setMIPErrorFlag $today.MIP_current_parser.log
 
