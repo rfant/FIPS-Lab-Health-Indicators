@@ -37,8 +37,7 @@ done
 $TOOL_PATH/Mark_Active_Table_Dups >> $LOG_FILENAME
 
 # If I have any error messages in the log, I'll set a flag in the POSGRESQL dbase that will show as a warning in the LHI tool.
-grep -q -i "error" $LOG_FILENAME && ./setActiveErrorFlag
-
+grep -q -i "error" $LOG_FILENAME && ./setActiveErrorFlag $today.ACTIVE.log
 
 
 

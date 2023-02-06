@@ -70,8 +70,8 @@ void strfcat(char *src, char *fmt, ...){
 }//strfcat
 
 //============================================================
-//int main (int argc, char* argv[]) {
-int main (){
+int main (int argc, char* argv[]) {
+//int main (){
 	
 	
 	char connbuff[200];
@@ -118,16 +118,35 @@ int main (){
 	}
 
 
-	
-
-
     if (PQstatus(conn) == CONNECTION_OK) {
 
 
     	//set the Active Error Flag
 		CLR_SQL1_STR
+
+
+
+		//get the Error Log file name
+		char *file_name;
+		char *path_name;
+
+		if(argc != 2) { 
+			//printf("*** Warning 124: Missing Log File Name.\n");
+			strfcat(sql1,"update \"Active_Error_Table\" set \"Error_Flag\"= 'TRUE' ");
+		} 
+		else
+		{
+
+			path_name="\\\\FIPSLHI-DM.cps.intel.com\\fs_FIPSLHI\\Module_Active_Data\\results\\"  ;
+			file_name = argv[1];
+			
+			strfcat(sql1,"update \"Active_Error_Table\" set \"Error_Flag\"= 'TRUE', \"Error_Log_File\"=concat('%s','%s'); ",path_name,file_name);
+		}
+	
+
+
 		
-		strfcat(sql1,"update \"Active_Error_Table\" set \"Error_Flag\"= 'TRUE' ");
+
 		sql_result = PQexec(conn, sql1); 
 
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
