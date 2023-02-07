@@ -1,11 +1,17 @@
 #Loops all the files
 #!/bin/bash
 
-TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data"
+TOOL_PATH="/home/vcap/app/.bp-config/Module_In_Process_Data"
+#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data"
+
+RAW_DATA_PATH="/home/vcap/app/.bp-config/Module_In_Process_Data/cmvp_website_pull"
+#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull"
+
+MY_BACKUP_PATH="/var/vcap/data/LHI/Module_In_Process_Data"
+
 
 
 #current data from CMVP MIP website pull
-RAW_CURRENT_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull"
 
 #today=`date '+%m_%d_%Y'`;
 today=`date '+%Y_%m_%d'`;
@@ -15,17 +21,12 @@ today=`date '+%Y_%m_%d'`;
 LOG_FILENAME_CURRENT="$TOOL_PATH/results/$today.MIP_current_parser.log"
 rm -f $LOG_FILENAME_CURRENT       
 
-# reconnect VPN so that I can access the CMVP tables in our local postgresql database
-#echo "Reconnect VPN: " >> $LOG_FILENAME_CURRENT
 
-#osascript -e "tell application \"/Applications/Tunnelblick.app\"" -e "connect \"RichardFant2020_ext\"" -e "end tell"
-#wait for 5 seconds for connection to complete
-#sleep 5
 echo "=================================================================================="
 #-------------------------------------
 i=1
 # process current website data, second
-for f in `ls $RAW_CURRENT_DATA_PATH/* | sort -n`
+for f in `ls $RAW_DATA_PATH/* | sort -n`
 
 do
 	# take action on each file. $f store current file name
@@ -38,7 +39,9 @@ do
 done
 
 echo "Invoke the LHI to force a refresh of the confidence tool." >> $LOG_FILENAME_CURRENT
-curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php >> $LOG_FILENAME_CURRENT
+#curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php >> $LOG_FILENAME_CURRENT
+
+cp $LOG_FILENAME_CURRENT $MY_BACKUP_PATH/results/.
 
 # If I have any error messages in the log, I'll set the MIP Error Flag in the sql dbase which will create a button in the LHI tool.
 grep -q -i "error" $LOG_FILENAME_CURRENT && ./setMIPErrorFlag $today.MIP_current_parser.log
