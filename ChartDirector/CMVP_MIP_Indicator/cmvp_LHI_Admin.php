@@ -25,6 +25,9 @@ $add_module_type=isset($_REQUEST["add_module_type"]) ? $_REQUEST["add_module_typ
 $add_security_level=isset($_REQUEST["add_security_level"]) ? $_REQUEST["add_security_level"] : "";
 
 
+if($add_security_level==null)
+	$add_security_level=0;
+
 if($add_name!=null)
 	$admin_option=3;
 
@@ -104,15 +107,23 @@ if ($stat === PGSQL_CONNECTION_OK)
 // Hit Counter for Admin Page
 
 //Only add to the Admin Hit Counter once per day per visit. otherwise  there may be too many duplicate hits then. 
-$hit_counter=  " INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
+$hit_counter=  "INSERT INTO \"CMVP_Hit_Counter\" (\"URL\",\"Timestamp\",\"Date\", \"Application\",\"User\") 
 select '".$URL_str."', (select (current_time(0) - INTERVAL '5 HOURS')),'".$today2."', 'Admin Page', '".$User."'
 where not exists ( select 1 from \"CMVP_Hit_Counter\" where \"User\" = '".$User."' and \"Date\" = (select current_date) and \"Application\" like '%Admin%');";
-
 
 //echo "<br>hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
 
 
+//remove all the older entries for 'rfant' since there will be tons of them.
+//$hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and \"User\" like 'rfant'; ";
+$hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and ( \"User\" like 'rfant' OR \"User\" like '%no value%'); ";
+
+//echo "<br>hit_str=".$hit_counter;
+$result = pg_query($conn, $hit_counter);
+
+
+//echo "admin option=$admin_option";
 
 //----------------------------------------------------------------------------
 //Now, execute which ever admin option was selected
@@ -136,7 +147,9 @@ switch ($admin_option) {
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=3"." \" >Add Admin</a>  </td></tr> "  
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=4"." \" >Delete Admin</a>  </td></tr> "  
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=5"." \" >List Intel Certifiable Products</a>  </td></tr> "  
-			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=6"." \" >Mark a module as Intel Certifiable </a>  </td></tr> "  ;
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=6"." \" >Mark a module as Intel Certifiable </a>  </td></tr> " 
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=9"." \" >Toggle Active Parser Error Flag </a>  </td></tr> "
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=10"." \" >Toggle MIP Parser Error Flag </a>  </td></tr> "			 ;
      	echo "</table>"; //Close the table in HTML
   
     	break;
@@ -325,14 +338,28 @@ switch ($admin_option) {
 
     case 5: //List Intel Certifiable Product
     	
-
- 		$certifiable_list_sql= " 
-				select \"Cert_Num\",\"Module_Name\",\"Vendor_Name\",\"Clean_Lab_Name\",\"Module_Type\",\"SL\" from \"CMVP_Active_Table\" where \"Status3\" like '%Intel_Certifiable%'
+    /*select \"Cert_Num\",\"Module_Name\",\"Vendor_Name\",\"Clean_Lab_Name\",\"Module_Type\",\"SL\" from \"CMVP_Active_Table\" where \"Status3\" like '%Intel_Certifiable%'
 				union
 				select \"Cert_Num\",\"Module_Name\",\"Vendor_Name\",\"Clean_Lab_Name\",\"Module_Type\",\"SL\" from \"CMVP_MIP_Table\" where \"Status3\" like '%Intel_Certifiable%'
- 		";
+				union
+			
+*/
 
- 		 //echo "admin_str=".$admin_list_sql;
+		//refresh all the Active and MIP tables with the latest certifiable_list just in case they are stale.
+
+		$refresh_str1= " update \"CMVP_Active_Table\" as table1 set \"Status3\" = '.Intel_Certifiable.'
+ 							from (select \"Cert_Num\"  from \"CMVP_Intel_Certifiable_Table\"  
+ 	  						group by \"Cert_Num\" order by \"Cert_Num\" desc) as table2 
+ 						 where table1.\"Cert_Num\"=table2.\"Cert_Num\" ; ";
+
+ 		//echo "refresh_str=".$refresh_str1;				 
+		$result = pg_query($conn, $refresh_str1);
+
+
+
+ 		$certifiable_list_sql= " select \"Cert_Num\",\"Module_Name\",\"Vendor_Name\",\"Clean_Lab_Name\",\"Module_Type\",\"SL\" from \"CMVP_Intel_Certifiable_Table\" ; 		";
+
+ 		//echo "certifiable_list_str=".$certifiable_list_sql;
 		$result = pg_query($conn, $certifiable_list_sql);
 
 		$arr = pg_fetch_all($result);
@@ -490,17 +517,64 @@ switch ($admin_option) {
 	     // I know the cert number so mark it certifiable
 
 		echo "<br>Marking Cert# $add_cert as an Intel Certifiable Product. <br>";
+
+
+		//make sure the certificate already exists in the Active Table
+		$cert_str1=" Select * from \"CMVP_Active_Table\" where \"Cert_Num\" = ".$add_cert."; ";
+		//echo "<br>cert_str1=".$cert_str1;
+		$result = pg_query($conn, $cert_str1);
+
+		$arr1 = pg_fetch_all($result);
+
+		//make sure the certificate DOES NOT exists in the Intel Certifiable Table
+		$cert_str1=" Select * from \"CMVP_Intel_Certifiable_Table\" where \"Cert_Num\" = ".$add_cert."; ";
+		//echo "<br>cert_str1=".$cert_str1;
+		$result = pg_query($conn, $cert_str1);
+
+		$arr2 = pg_fetch_all($result);
+
+
+
+
+		if($arr1==null)
+			echo "<br> Error 526: Certificate Not Found in Active List. <br>";
+		elseif ($arr2 !=null)
+			echo "<br> Warning 537: Cerificate already marked as Intel Certifiable. <br>";
+		else
+		{ //big else
+	
+			//insert into CMVP_Intel_Certifiable Table
+			$cert_str2=  " INSERT INTO \"CMVP_Intel_Certifiable_Table\" (\"Cert_Num\") 	 values(".$add_cert.");";
+			
+			//echo "<br>cert_str2=".$cert_str2;
+			$result = pg_query($conn, $cert_str2);
 		
-		//update the CMVP_Active Table
-		$cert_str=  " Update \"CMVP_Active_Table\"  set \"Status3\" = '.Intel_Certifiable.' where \"Cert_Num\" = ".$add_cert." ";
+			//refresh the Active table to show this Cert if "intel_certifiable"
+			$refresh_str1= " update \"CMVP_Active_Table\" as table1 set \"Status3\" = '.Intel_Certifiable.' from (select \"Cert_Num\"  from \"CMVP_Intel_Certifiable_Table\"  
+	 	  						group by \"Cert_Num\" order by \"Cert_Num\" desc) as table2  where table1.\"Cert_Num\"=table2.\"Cert_Num\" ; ";
 
-		$result = pg_query($conn, $cert_str);
-		//echo "<br>cert_str=".$cert_str;
+	 		//echo "refresh_str=".$refresh_str1;				 
+			$result = pg_query($conn, $refresh_str1);
 
+		} //big else
+    	
     	break;
 
-    case 8: //use the module name to find module
-		//on the MIP list, so mark it certifiable
+    case 8: //use the module name to find module on the MIP list, to mark it certifiable on the Intel Certifiable Table list
+
+			//make sure that it's not already in the Intel Certifiable Table
+			$sql_str="select \"Module_Name\",\"Vendor_Name\"from \"CMVP_Intel_Certifiable_Table\" where \"Module_Name\" like '%".$add_module_name."%' and \"Vendor_Name\" like '%".$add_vendor_name."%'  order by \"Row_ID\" desc ";
+    		$result=pg_query($conn,$sql_str);
+
+		//	echo "<br>sql_str=$sql_str<br>";
+				
+			$arr1 = pg_fetch_all($result);
+
+			if($arr1!=null)
+			{	echo "<br> Warning 569: Cerificate already marked as Intel Certifiable. Sql=<br>".$sql_str." <br>";
+				break;
+			}	
+		
 
     		$sql_str="select \"Module_Name\",\"Vendor_Name\",\"Status3\",\"Clean_Lab_Name\",\"Clean_Module_Type\",\"SL\" from \"CMVP_MIP_Table\" where \"Module_Name\" like '%".$add_module_name."%' and \"Vendor_Name\" like '%".$add_vendor_name."%' order by \"Row_ID\" desc ";
     		$result=pg_query($conn,$sql_str);
@@ -550,22 +624,93 @@ switch ($admin_option) {
 
 
 			if($num_rows==0)
-				echo "<br>can't find this module based on sql_str=<br>$sql_str<br>";
-			elseif($num_rows>1) 
-				echo "<br> Too many modules match that description. Unable to mark it as Certifiable. <br>";
+			{
+				echo "<br>Error 622:can't find this module based on sql_str=<br>".$sql_str."<br>";
+				break;
+			}
+			elseif($num_rows>1)
+			{ 
+				echo "<br> Too many modules match that description. Unable to mark it as Certifiable. SQL= <br>".$sql_str."<br>";
+				break;
+			}
 			else
 			{	
-	    		echo "<br> Is this the correct module?<br>";
+		    	echo "<br> Updated as Intel Certifiable!<br>";
 
-			//<a href="delete.php?id=22" onclick="return confirm('Are you sure?')">Link</a>
+				//<a href="delete.php?id=22" onclick="return confirm('Are you sure?')">Link</a>
 
+
+				//Insert into the CMVP Certifiable Table too  to show this Cert is "intel_certifiable"
+				$insert_str1=  " INSERT INTO \"CMVP_Intel_Certifiable_Table\" (\"Module_Name\", \"Vendor_Name\", \"Clean_Lab_Name\",\"Module_Type\",\"SL\") 	 
+									values('".$add_module_name."','".$add_vendor_name."','".$add_lab_name."','".$add_module_type."','".$add_security_level."');";
+
+				//echo "insert_str=".$insert_str1;				 
+				$result = pg_query($conn, $insert_str1);
+	  
+	  			//refresh the CMVP_MIP_Table to show Intel Certifiable
+	  			$refresh_str2= " update \"CMVP_MIP_Table\" as table1 set \"Status3\" = '.Intel_Certifiable.' from (select \"Module_Name\",\"Vendor_Name\"  from \"CMVP_Intel_Certifiable_Table\"  
+		 	  						group by \"Module_Name\",\"Vendor_Name\" order by \"Module_Name\" desc) as table2  where table1.\"Module_Name\"=table2.\"Module_Name\" 
+		 	  						AND table1.\"Vendor_Name\"=table2.\"Vendor_Name\" ; ";
+
+		 		//echo "refresh_str=".$refresh_str2;				 
+				$result = pg_query($conn, $refresh_str2);
 
 	
 			}
 
 
     		
-    	break;
+    		break;
+
+    	case 9: //Toggle the Active Parser Error Flag
+
+    		//Figure out the current value of the boolean Active Error Flag (true or flase) and then flip it.
+
+    		//------------------ "Active Parser Error" warning flash ----------------------------------------------
+			$sql_warning_str = "select * from \"Active_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+			$result = pg_query($conn,$sql_warning_str);
+			$arr = pg_fetch_all($result);
+
+			if ($arr!=null)
+			{
+				$sql_warning_str= "update \"Active_Error_Table\" set \"Error_Flag\" ='false' ";
+				$result = pg_query($conn,$sql_warning_str);
+				//$arr = pg_fetch_all($result);
+	
+			}
+			else
+			{ //toggle the othe way
+				$sql_warning_str= "update \"Active_Error_Table\" set \"Error_Flag\" ='true' ";
+				$result = pg_query($conn,$sql_warning_str);
+
+			}
+
+    		break;
+    	case 10: //toggle the MIP Parser Error Flag
+    		//Figure out the current value of the boolean MIP Error Flag (true or flase) and then flip it.
+
+    		//------------------ "MIP Parser Error" warning flash ----------------------------------------------
+			$sql_warning_str = "select * from \"MIP_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+			$result = pg_query($conn,$sql_warning_str);
+			$arr = pg_fetch_all($result);
+
+			if ($arr!=null)
+			{
+				$sql_warning_str= "update \"MIP_Error_Table\" set \"Error_Flag\" ='false' ";
+				$result = pg_query($conn,$sql_warning_str);
+				//$arr = pg_fetch_all($result);
+	
+			}
+			else
+			{ //toggle the othe way
+				$sql_warning_str= "update \"MIP_Error_Table\" set \"Error_Flag\" ='true' ";
+				$result = pg_query($conn,$sql_warning_str);
+
+			}
+
+
+
+    		break;
     default:
     	echo "<br>ERROR: unknown admin_option value=". $admin_option."<br>";
 	} //select case
