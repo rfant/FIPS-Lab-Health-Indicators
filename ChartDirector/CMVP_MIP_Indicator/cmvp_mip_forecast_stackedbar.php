@@ -72,6 +72,9 @@ $MT_Security_Array=array("SW1","SW2","HW1","HW2","HW3","HW4","HY1","HY2","HY3","
  
 //echo "IntelOnly=".$in_IntelOnlyButton." MT=".$in_ModuleTypeButton." SL=".$in_SecurityLevelButton."<BR>";
 
+ $in_StandardButton1=isset($_REQUEST["in_StandardButton1"]) ? $_REQUEST["in_StandardButton1"] : 0;
+ $in_StandardButton2=isset($_REQUEST["in_StandardButton2"]) ? $_REQUEST["in_StandardButton2"] : 0;
+
 
 
  //echo "startDate=".$startDate." ";
@@ -340,6 +343,13 @@ $security_label=$c->addText($buttonX-50,$buttonY+250,"Module Type:","arialbd.tff
 $security_label->SetFontColor(red);
 $security_label->setSize(150,30);
 
+
+
+$security_label=$c->addText($buttonX-35,$buttonY+315,"Standard:","arialbd.tff",10);
+$security_label->SetFontColor(red);
+$security_label->setSize(150,30);
+
+
 //now do the clickable buttons
 //print "in_IntelOnlyButton=".$in_IntelOnlyButton."<br>";
 $IntelOnlyButton = $c->addText($buttonX-80,  $buttonY+130, "Certified","arialbd.ttf", 8,black); //draw button
@@ -454,6 +464,25 @@ else
 $MT_4->setAlignment (5);
 $coor_MT_4 = $MT_4->getImageCoor();
 
+
+$StandardButton1 = $c->addText($buttonX-65,  $buttonY+332, "140-2","arial.ttf", 8,black); //draw button
+$StandardButton1->setSize(50,20);
+if ($in_StandardButton1==1)
+	$StandardButton1->setBackground(battleship_gray,-1,-2);
+else
+ 	$StandardButton1->setBackground(gray1,-1,2);
+$StandardButton1->setAlignment (5);
+$coor_StandardButton1 = $StandardButton1->getImageCoor();
+
+$StandardButton2 = $c->addText($buttonX+3,  $buttonY+332, "140-3","arial.ttf", 8,black); //draw button
+$StandardButton2->setSize(50,20);
+if ($in_StandardButton2==1)
+	$StandardButton2->setBackground(battleship_gray,-1,-2);
+else
+ 	$StandardButton2->setBackground(gray1,-1,2);
+$StandardButton2->setAlignment (5);
+$coor_StandardButton2 = $StandardButton2->getImageCoor();
+
 //--------------------------------------------
 # Add a legend box at (480, 20) using vertical layout and 12pt Arial font. Set background and border
 # to transparent and key icon border to the same as the fill color.
@@ -495,6 +524,26 @@ if($in_IntelOnlyButton==1 && $in_IntelOnlyButton2==1)
 	$where_vendor = " and ( \"Vendor_Name\" like '%Intel Corp%' OR  \"Status3\" like '%Intel_Certifiable%' ) ";
 	$where_vendor2=" and 1=1 ";
 }
+
+// Standard Selection Button 1 "140-2"
+if($in_StandardButton1==1)
+	$where_standard1 = " and ( \"Standard\" like '%140-2%'  ) ";
+else
+	$where_standard1= " and 1=1 ";
+
+// Standard Secltion Button 2 "140-3"
+if($in_StandardButton2==1)
+	$where_standard2 = " and (  \"Standard\" like '%140-3%' ) ";
+else
+	$where_standard2= " and 1=1 ";
+
+if($in_StandardButton1==1 && $in_StandardButton2==1)
+{
+	$where_standard1= " and ( \"Standard\" like '%140-2%' OR  \"Standard\" like '%140-3%' ) ";
+	$where_standard2=" and 1=1 ";
+}
+
+
  
  $module_count=0;  //we can set the minimum number of modules a lab has done to be included in this plot
 
@@ -557,7 +606,7 @@ select \"Module_Name\",\"Clean_Lab_Name\",\"Vendor_Name\", \"Review_Pending_Star
 	case when (select (current_date)::date - (\"Review_Pending_Start_Date\" + INTERVAL '1 day' *\"Y_RP_Avg\")::date ) <0 then abs((select (current_date)::date - (\"Review_Pending_Start_Date\" + INTERVAL 	'1 day' * \"Y_RP_Avg\" )::date ))  
 	else
 	(select (current_date)::date - (\"Review_Pending_Start_Date\" + INTERVAL '1 day' * \"Y_RP_Avg\" )::date ) +.1 end  as rp_time_remaining 
-	from \"CMVP_MIP_Table\" where 1=1 ".$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%' ) and \"In_Review_Start_Date\" is null and \"Coordination_Start_Date\" is null and \"Finalization_Start_Date\" is null ) as subquery where rp_time_remaining >=0  order by \"Review_Pending_Start_Date\" 
+	from \"CMVP_MIP_Table\" where 1=1 ".$where_standard1.$where_standard2.$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%' ) and \"In_Review_Start_Date\" is null and \"Coordination_Start_Date\" is null and \"Finalization_Start_Date\" is null ) as subquery where rp_time_remaining >=0  order by \"Review_Pending_Start_Date\" 
 ) 
 UNION
 (
@@ -567,14 +616,14 @@ select \"Module_Name\",\"Clean_Lab_Name\", \"Vendor_Name\",\"In_Review_Start_Dat
 	 case when (select (current_date)::date - (\"In_Review_Start_Date\" + INTERVAL '1 day' * \"Y_IR_Avg\" )::date )<0 then abs((select (current_date)::date - (\"In_Review_Start_Date\" + INTERVAL 
 	 '1 day' * \"Y_IR_Avg\" )::date ))  else
 	 abs((select (current_date)::date - (\"In_Review_Start_Date\" + INTERVAL '1 day' * \"Y_IR_Avg\" )::date )) + .1 end as ir_time_remaining 
-	 from \"CMVP_MIP_Table\" where 1=1 ".$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%') and \"In_Review_Start_Date\" is not null and \"Coordination_Start_Date\" is null and \"Finalization_Start_Date\" is null ) as subquery order by \"Review_Pending_Start_Date\" )
+	 from \"CMVP_MIP_Table\" where 1=1 ".$where_standard1.$where_standard2.$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%') and \"In_Review_Start_Date\" is not null and \"Coordination_Start_Date\" is null and \"Finalization_Start_Date\" is null ) as subquery order by \"Review_Pending_Start_Date\" )
 union 
 ( select \"Module_Name\",\"Clean_Lab_Name\",\"Vendor_Name\", \"Coordination_Start_Date\" as StartDate, 0 as rp_time_remaining, 0 as ir_time_remaining, co_time_remaining from ( 
 	select \"Module_Name\",\"Clean_Lab_Name\",\"Vendor_Name\",\"Review_Pending_Start_Date\",\"Coordination_Start_Date\", 
 	case when ( select (current_date)::date - (\"Coordination_Start_Date\" + INTERVAL '1 day' * \"Y_CO_Avg\" )::date )<0 then abs(( select (current_date)::date - (\"Coordination_Start_Date\" + INTERVAL 
 	'1 day' * \"Y_CO_Avg\")::date ))  else 
 	abs(( select (current_date)::date - (\"Coordination_Start_Date\" + INTERVAL '1 day' *\"Y_CO_Avg\" )::date )) + .1 end as co_time_remaining 
-	from \"CMVP_MIP_Table\" where 1=1 ".$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%') and \"Coordination_Start_Date\" is not null and \"Finalization_Start_Date\" is null ) as subquery order by \"Review_Pending_Start_Date\" 
+	from \"CMVP_MIP_Table\" where 1=1 ".$where_standard1.$where_standard2.$where_vendor.$where_vendor2.$where_security.$where_MT." and \"Clean_Lab_Name\" is not null and \"Review_Pending_Start_Date\" between (select CURRENT_DATE) - INTERVAL '".$months_to_look_back." months' and (select current_date) and (\"Status2\" is null OR \"Status2\" like '%Reappear%') and \"Coordination_Start_Date\" is not null and \"Finalization_Start_Date\" is null ) as subquery order by \"Review_Pending_Start_Date\" 
 ) order by StartDate 
 ";
 //echo "delta2 sql =<br>".$sql_Str_Forecast."<BR>"; 
@@ -746,7 +795,7 @@ $chart1URL = $c->makeSession("chart1");
 
 
 //can re-use the show_details php from the historic stackedbar chart since it's the same info. No point in reinventing the wheel   
-$imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php", "{default}&Vendor_Name='{field1}'&Module_Name='{field0}'&in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate, " title='Vendor: {field1}\nModule: {field0}\n{dataSetName}: {value} Days {field2}'");
+$imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php", "{default}&Vendor_Name='{field1}'&Module_Name='{field0}'&in_IntelOnlyButton=".$in_IntelOnlyButton."&in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate, " title='Vendor: {field1}\nModule: {field0}\n{dataSetName}: {value} Days {field2}'");
 
  
 
@@ -873,70 +922,74 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_mip_historic_stackedbar.php",
 </table>
 <map name="map1">
 <?php echo $imageMap?>
-<area <?php echo $coor_button1.  " href='".$URL_path."/cmvp_active_by_status_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button1.  " href='".$URL_path."/cmvp_active_by_status_pareto.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
     " title='Validated Modules Status By Lab' />"; ?>
 
-<area <?php echo $coor_button3. " href='".$URL_path."/cmvp_current_trend.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button3. " href='".$URL_path."/cmvp_current_trend.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Average Number of Days in MIP based on Labs Past Performance (In Review + Coordination) ' />"?>
 
-<area <?php echo $coor_button4. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button4. " href='".$URL_path."/cmvp_mip_historic_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Current & Historic MIP Data By Individual Module' />"?>
 
-<area <?php echo $coor_button5. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_button5. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='MIP Forecast based on Labs past performace (Linear Regression Model) ' />"?>
    
-<area <?php echo $coor_zoomIn. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomIn. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom In' />"?>
 
-<area <?php echo $coor_zoomOut. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom - .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomOut. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom - .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom Out) ' />"?>
 
-<area <?php echo $coor_zoomClear. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=1&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_zoomClear. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=1&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom Clear) ' />"?>
 
 
 
 
-<area <?php echo $coor_IntelOnlyButton. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton ^1 )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_IntelOnlyButton. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton ^1 )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_IntelOnlyButton2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2 ^ 1) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
-   " title='Only Show Intel Products ' />"?>
-
-
-
-<area <?php echo $coor_SL_ALL. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=0&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
-   " title='Only Show Intel Products ' />"?>
-
-<area <?php echo $coor_SL_1." href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=1&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
-   " title='Only Show Intel Products ' />"?>
-
-<area <?php echo $coor_SL_2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=2&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
-   " title='Only Show Intel Products ' />"?>
-
-<area <?php echo $coor_SL_3. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=3&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
-   " title='Only Show Intel Products ' />"?>
-
-<area <?php echo $coor_SL_4. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=4&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_IntelOnlyButton2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2 ^ 1) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
 
-<area <?php echo $coor_MT_ALL. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=0&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+
+<area <?php echo $coor_SL_ALL. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=0&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_1. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=1&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_1." href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=1&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=2&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=2&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_3. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=3&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_3. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=3&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
-<area <?php echo $coor_MT_4. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_ModuleTypeButton=4&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+<area <?php echo $coor_SL_4. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=4&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Only Show Intel Products ' />"?>
 
 
+<area <?php echo $coor_MT_ALL. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=0&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Only Show Intel Products ' />"?>
+
+<area <?php echo $coor_MT_1. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=1&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Only Show Intel Products ' />"?>
+
+<area <?php echo $coor_MT_2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=2&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Only Show Intel Products ' />"?>
+
+<area <?php echo $coor_MT_3. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=3&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Only Show Intel Products ' />"?>
+
+<area <?php echo $coor_MT_4. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=4&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Only Show Intel Products ' />"?>
+
+<area <?php echo $coor_StandardButton1. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton1=".($in_StandardButton1 ^ 1)."&in_StandardButton2=".$in_StandardButton2."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Filter on FIPS 140-2  ' />"?>
+
+<area <?php echo $coor_StandardButton2. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".($in_StandardButton2 ^ 1)."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Filter on FIPS 140-3 ' />"?>
 
 </map>
 </body>
