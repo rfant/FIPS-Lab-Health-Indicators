@@ -1,0 +1,785 @@
+alpha Connection OK
+***** Warning 308a: ESV Certificate Start Tag Not found. Discarding File.(x=0)
+1: ################
+alpha Connection OK
+ESV Certificate Number: 'E1'
+Implementation Name: 'NetApp CryptoMod'
+Standard: 'SP 800-90B'
+Description: 'CPU Jitter RNG v3.4.0'
+Version: '3.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ONTAP 9.11.1 running on an AFF A250 running on Intel&#174; Xeon&#174; D-2164IT (Skylake) without PAA</li><li>ONTAP 9.11.1 running on an AFF A400 running on Intel&#174; Xeon&#174; Silver 4210 (Cascade Lake) with PAA</li><li>ONTAP 9.11.1 running on an AFF A900 running on Intel&#174; Xeon&#174; Platinum 8352Y (Ice Lake) with PAA</li>'
+CAVP Certs: 'A2640(SHA3-256)'
+Sample Size: 'Full entropy <br />Sample Size: 256 bits<'
+Vendor: 'NetApp, Inc.'
+Validation Date: '8/29/2022'
+Lab: 'Lightship Security, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E1','NetApp CryptoMod','SP 800-90B','CPU Jitter RNG v3.4.0','3.0','Non-Physical','Reuse restricted to vendor','ONTAP 9.11.1 running on an AFF A250 running on Intel&#174; Xeon&#174; D-2164IT (Skylake) without PAA</li><li>ONTAP 9.11.1 running on an AFF A400 running on Intel&#174; Xeon&#174; Silver 4210 (Cascade Lake) with PAA</li><li>ONTAP 9.11.1 running on an AFF A900 running on Intel&#174; Xeon&#174; Platinum 8352Y (Ice Lake) with PAA</li>','A2640(SHA3-256)','Full entropy <br />Sample Size: 256 bits<','NetApp, Inc.','8/29/2022', 'Lightship Security, Inc.') 
+2: ################
+alpha Connection OK
+ESV Certificate Number: 'E2'
+Implementation Name: 'VaultIC408'
+Standard: 'SP 800-90B'
+Description: '1 noise source which consists of 5 osc outputs XOR''d together'
+Version: 'AT90SO28RS'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'AVR Secure Processor</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://wisekey.com">WISeKey</a><br /><span class="indent">Btiment A, Arteparc Bachasson</span><br /><span class="indent">Rue de la Carrire de Bachasson</span><br /><span class="indent">Meyreuil 13590</span><br /><span class="indent">France</span><br /><br /><div style="font-size: 0.9em;">Guillaume Aymard<br /> <span class="indent">gaymard@WISEKEY.COM</span><br /> <span class="indent"> + 33 (0)4 42 37 00 47</span><br />Patrick Debaenst<br /> <span class="indent">pdebaenst@WISEKEY.COM</span><br /> <span class="indent"> + 33 (0)4 42 37 00 67</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E2_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/11/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.52427 bits <br />Sample Size: 1 bit<'
+Vendor: 'WISeKey'
+Validation Date: '10/11/2022'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E2','VaultIC408','SP 800-90B','1 noise source which consists of 5 osc outputs XOR''d together','AT90SO28RS','Physical','Reuse restricted to vendor','AVR Secure Processor</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://wisekey.com">WISeKey</a><br /><span class="indent">Btiment A, Arteparc Bachasson</span><br /><span class="indent">Rue de la Carrire de Bachasson</span><br /><span class="indent">Meyreuil 13590</span><br /><span class="indent">France</span><br /><br /><div style="font-size: 0.9em;">Guillaume Aymard<br /> <span class="indent">gaymard@WISEKEY.COM</span><br /> <span class="indent"> + 33 (0)4 42 37 00 47</span><br />Patrick Debaenst<br /> <span class="indent">pdebaenst@WISEKEY.COM</span><br /> <span class="indent"> + 33 (0)4 42 37 00 67</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E2_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/11/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.52427 bits <br />Sample Size: 1 bit<','WISeKey','10/11/2022', 'UL VERIFICATION SERVICES INC') 
+3: ################
+alpha Connection OK
+ESV Certificate Number: 'E3'
+Implementation Name: 'Cisco Jitter Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'The Cisco Jitter Entropy Source provides NIST SP 800-90B compliant entropy to Cisco devices.'
+Version: '3.4.1'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Intel Xeon 4116T (Silver)</li><li>Intel Xeon D-1548 (Broadwell)</li><li>Intel Xeon D-1563N (Broadwell)</li>'
+CAVP Certs: '<a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35421">A2810</a>(SHA3-256)'
+Sample Size: '2 bits <br />Sample Size: 4 bits<'
+Vendor: 'Cisco Systems, Inc.'
+Validation Date: '10/11/2022'
+Lab: 'Lightship Security, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E3','Cisco Jitter Entropy Source','SP 800-90B','The Cisco Jitter Entropy Source provides NIST SP 800-90B compliant entropy to Cisco devices.','3.4.1','Non-Physical','Reuse restricted to vendor','Intel Xeon 4116T (Silver)</li><li>Intel Xeon D-1548 (Broadwell)</li><li>Intel Xeon D-1563N (Broadwell)</li>','<a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35421">A2810</a>(SHA3-256)','2 bits <br />Sample Size: 4 bits<','Cisco Systems, Inc.','10/11/2022', 'Lightship Security, Inc.') 
+4: ################
+alpha Connection OK
+ESV Certificate Number: 'E4'
+Implementation Name: 'Cisco TRNG Core Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'The Cisco TRNG Core, running on the TAm 2.0 chip, provides NIST SP 800-90B compliant entropy to Cisco devices.'
+Version: 'TAm2.0 v1'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Microsemi SmartFusion2 SOC FPGA</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.cisco.com">Cisco Systems, Inc.</a><br /><span class="indent">170 West Tasman Dr.</span><br /><span class="indent">San Jose, CA 95134</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Certifications Team<br /> <span class="indent">certteam@cisco.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E4_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>Lightship Security, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.25 bits <br />Sample Size: 1 bit<'
+Vendor: 'Cisco Systems, Inc.'
+Validation Date: '10/21/2022'
+Lab: 'Lightship Security, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E4','Cisco TRNG Core Entropy Source','SP 800-90B','The Cisco TRNG Core, running on the TAm 2.0 chip, provides NIST SP 800-90B compliant entropy to Cisco devices.','TAm2.0 v1','Physical','Reuse restricted to vendor','Microsemi SmartFusion2 SOC FPGA</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.cisco.com">Cisco Systems, Inc.</a><br /><span class="indent">170 West Tasman Dr.</span><br /><span class="indent">San Jose, CA 95134</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Certifications Team<br /> <span class="indent">certteam@cisco.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E4_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>Lightship Security, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.25 bits <br />Sample Size: 1 bit<','Cisco Systems, Inc.','10/21/2022', 'Lightship Security, Inc.') 
+5: ################
+alpha Connection OK
+ESV Certificate Number: 'E5'
+Implementation Name: 'Ultrastar DC SN650'
+Standard: 'SP 800-90B'
+Description: 'Multiple Ring Oscillators'
+Version: '2.0'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ARM Cortex M3</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E5_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '2.69 bits <br />Sample Size: 8 bits<'
+Vendor: 'Western Digital Corporation'
+Validation Date: '10/21/2022'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E5','Ultrastar DC SN650','SP 800-90B','Multiple Ring Oscillators','2.0','Physical','Reuse restricted to vendor','ARM Cortex M3</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E5_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','2.69 bits <br />Sample Size: 8 bits<','Western Digital Corporation','10/21/2022', 'UL VERIFICATION SERVICES INC') 
+6: ################
+alpha Connection OK
+ESV Certificate Number: 'E6'
+Implementation Name: 'Broadcom Prism+ TRNG'
+Standard: 'SP 800-90B'
+Description: '32 Ring Oscillators concatenated'
+Version: '20200404'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ARM Cortex R4</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.broadcom.com">Broadcom Inc.</a><br /><span class="indent">1320 Ridder Park Drive</span><br /><span class="indent">San Jose, CA 95131</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ravi Shenoy<br /> <span class="indent">ravi.shenoy@broadcom.com</span><br /> <span class="indent"> +1 (408) 4334263</span><br />Mark Karnowski<br /> <span class="indent">mark.karnowski@broadcom.com</span><br /> <span class="indent"> +1 (949) 9261168</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E6_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '4 bits <br />Sample Size: 8 bits<'
+Vendor: 'Broadcom Inc.'
+Validation Date: '10/21/2022'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E6','Broadcom Prism+ TRNG','SP 800-90B','32 Ring Oscillators concatenated','20200404','Physical','Reuse restricted to vendor','ARM Cortex R4</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.broadcom.com">Broadcom Inc.</a><br /><span class="indent">1320 Ridder Park Drive</span><br /><span class="indent">San Jose, CA 95131</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ravi Shenoy<br /> <span class="indent">ravi.shenoy@broadcom.com</span><br /> <span class="indent"> +1 (408) 4334263</span><br />Mark Karnowski<br /> <span class="indent">mark.karnowski@broadcom.com</span><br /> <span class="indent"> +1 (949) 9261168</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E6_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">10/21/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','4 bits <br />Sample Size: 8 bits<','Broadcom Inc.','10/21/2022', 'UL VERIFICATION SERVICES INC') 
+7: ################
+alpha Connection OK
+ESV Certificate Number: 'E7'
+Implementation Name: 'Aruba CPU Jitter Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'Aruba CPU Jitter Entropy Source'
+Version: '3.3.1'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Broadcom BCM (64-bit ARMv8)</li><li>Broadcom XLP (MIPS64)</li><li>Intel Atom C3508 (Denverton)</li><li>Intel Xeon (Cascade Lake) with AES-NI</li><li>Intel Xeon (Cascade Lake) without AES-NI</li><li>Intel Xeon E5 (Broadwell) with AES-NI</li><li>Qualcomm IPQ (64-bit ARM A7)</li><li>Qualcomm IPQ (64-bit ARM Cortex A53)</li>'
+CAVP Certs: 'Intel Xeon E5 (Broadwell) with AES-NI'
+Sample Size: '2 bits <br />Sample Size: 8 bits<'
+Vendor: 'Aruba, a Hewlett Packard Enterprise company'
+Validation Date: '12/2/2022'
+Lab: 'Lightship Security, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E7','Aruba CPU Jitter Entropy Source','SP 800-90B','Aruba CPU Jitter Entropy Source','3.3.1','Non-Physical','Reuse restricted to vendor','Broadcom BCM (64-bit ARMv8)</li><li>Broadcom XLP (MIPS64)</li><li>Intel Atom C3508 (Denverton)</li><li>Intel Xeon (Cascade Lake) with AES-NI</li><li>Intel Xeon (Cascade Lake) without AES-NI</li><li>Intel Xeon E5 (Broadwell) with AES-NI</li><li>Qualcomm IPQ (64-bit ARM A7)</li><li>Qualcomm IPQ (64-bit ARM Cortex A53)</li>','Intel Xeon E5 (Broadwell) with AES-NI','2 bits <br />Sample Size: 8 bits<','Aruba, a Hewlett Packard Enterprise company','12/2/2022', 'Lightship Security, Inc.') 
+8: ################
+alpha Connection OK
+ESV Certificate Number: 'E8'
+Implementation Name: 'Kernel CPU Time Jitter RNG Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'Kernel CPU Time Jitter RNG Entropy Source version 2.2.0'
+Version: '2.2.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'RHEL 8 on Intel Cascade Lake Xeon Silver 4216</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.redhat.com">Red Hat, Inc.</a><br /><span class="indent">100 E. Davie Street</span><br /><span class="indent">Raleigh, NC 27601</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Jaroslav Reznik<br /> <span class="indent">fips140@redhat.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E8_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/2/2022</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: 'Full entropy <br />Sample Size: 8 bits<'
+Vendor: 'Red Hat, Inc.'
+Validation Date: '12/2/2022'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E8','Kernel CPU Time Jitter RNG Entropy Source','SP 800-90B','Kernel CPU Time Jitter RNG Entropy Source version 2.2.0','2.2.0','Non-Physical','Reuse restricted to vendor','RHEL 8 on Intel Cascade Lake Xeon Silver 4216</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.redhat.com">Red Hat, Inc.</a><br /><span class="indent">100 E. Davie Street</span><br /><span class="indent">Raleigh, NC 27601</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Jaroslav Reznik<br /> <span class="indent">fips140@redhat.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E8_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/2/2022</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','Full entropy <br />Sample Size: 8 bits<','Red Hat, Inc.','12/2/2022', 'ATSEC INFORMATION SECURITY CORP') 
+9: ################
+alpha Connection OK
+ESV Certificate Number: 'E9'
+Implementation Name: 'IBM Capri ASIC Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'IBM Capri ASIC Noise Source'
+Version: '02WP146, 02WP147'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'IBM Capri ASIC 02WP146/02WP147</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.ibm.com/security">IBM</a><br /><span class="indent">2455 South Rd</span><br /><span class="indent">Poughkeepsie, NY 12601</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">William Santiago<br /> <span class="indent">wsf1@us.ibm.com</span><br /> <span class="indent"> 845-435-9265</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E9_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: 'Full entropy <br />Sample Size: 8 bits<'
+Vendor: 'IBM'
+Validation Date: '12/16/2022'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E9','IBM Capri ASIC Entropy Source','SP 800-90B','IBM Capri ASIC Noise Source','02WP146, 02WP147','Physical','Reuse restricted to vendor','IBM Capri ASIC 02WP146/02WP147</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.ibm.com/security">IBM</a><br /><span class="indent">2455 South Rd</span><br /><span class="indent">Poughkeepsie, NY 12601</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">William Santiago<br /> <span class="indent">wsf1@us.ibm.com</span><br /> <span class="indent"> 845-435-9265</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E9_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','Full entropy <br />Sample Size: 8 bits<','IBM','12/16/2022', 'ATSEC INFORMATION SECURITY CORP') 
+10: ################
+alpha Connection OK
+ESV Certificate Number: 'E10'
+Implementation Name: 'DocuSign QSCD Appliance'
+Standard: 'SP 800-90B'
+Description: 'Quantis IDQ6MC1 chip'
+Version: '1.1.0.9'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'DocuSign QSCD Appliance</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.docusign.com">DocuSign, Inc.</a><br /><span class="indent">221 Main St.</span><br /><span class="indent">Suite 1000</span><br /><span class="indent">San Francisco, CA 94105</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Moshe Harel<br /> <span class="indent">Moshe.Harel@docusign.com</span><br /> <span class="indent"> 972-54-2448578</span><br />Ezer Farhi<br /> <span class="indent">Ezer.Farhi@docusign.com</span><br /> <span class="indent"> 972-54-2448529</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E10_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>EWA CANADA</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '1.767981 bits <br />Sample Size: 2 bits<'
+Vendor: 'DocuSign, Inc.'
+Validation Date: '12/16/2022'
+Lab: 'EWA CANADA'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E10','DocuSign QSCD Appliance','SP 800-90B','Quantis IDQ6MC1 chip','1.1.0.9','Physical','Reuse restricted to vendor','DocuSign QSCD Appliance</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.docusign.com">DocuSign, Inc.</a><br /><span class="indent">221 Main St.</span><br /><span class="indent">Suite 1000</span><br /><span class="indent">San Francisco, CA 94105</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Moshe Harel<br /> <span class="indent">Moshe.Harel@docusign.com</span><br /> <span class="indent"> 972-54-2448578</span><br />Ezer Farhi<br /> <span class="indent">Ezer.Farhi@docusign.com</span><br /> <span class="indent"> 972-54-2448529</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E10_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>EWA CANADA</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','1.767981 bits <br />Sample Size: 2 bits<','DocuSign, Inc.','12/16/2022', 'EWA CANADA') 
+11: ################
+alpha Connection OK
+ESV Certificate Number: 'E11'
+Implementation Name: 'AES-CMAC HW'
+Standard: 'SP 800-90B'
+Description: 'STMicroelectronics STM32U5x entropy source'
+Version: '184_98'
+Noise Source: 'Physical'
+Reuse Status: 'Open for Reuse'
+OE: 'Verilog Simulator</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.st.com">STMicroelectronics</a><br /><span class="indent">12 rue Jules Horowitz</span><br /><span class="indent">Grenoble, Isere 38000</span><br /><span class="indent">France</span><br /><br /><div style="font-size: 0.9em;">Pelissier Gilles<br /> <span class="indent">gilles.pelissier@st.com</span><br /> <span class="indent"> +33476584483</span><br />Anquet Nicolas<br /> <span class="indent">nicolas.anquet@st.com</span><br /> <span class="indent"> +33476586629</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E11_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: 'Full entropy <br />Sample Size: 1 bit<'
+Vendor: 'STMicroelectronics'
+Validation Date: '12/16/2022'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E11','AES-CMAC HW','SP 800-90B','STMicroelectronics STM32U5x entropy source','184_98','Physical','Open for Reuse','Verilog Simulator</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.st.com">STMicroelectronics</a><br /><span class="indent">12 rue Jules Horowitz</span><br /><span class="indent">Grenoble, Isere 38000</span><br /><span class="indent">France</span><br /><br /><div style="font-size: 0.9em;">Pelissier Gilles<br /> <span class="indent">gilles.pelissier@st.com</span><br /> <span class="indent"> +33476584483</span><br />Anquet Nicolas<br /> <span class="indent">nicolas.anquet@st.com</span><br /> <span class="indent"> +33476586629</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E11_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">12/16/2022</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','Full entropy <br />Sample Size: 1 bit<','STMicroelectronics','12/16/2022', 'UL VERIFICATION SERVICES INC') 
+12: ################
+alpha Connection OK
+ESV Certificate Number: 'E12'
+Implementation Name: 'Ultrastar DC HC560'
+Standard: 'SP 800-90B'
+Description: 'Ultrastar DC HC560'
+Version: 'Model number: WUH722020BL4205, Manufacturing PN: 0F38603 Rev 15 Model number: WUH722020BL5205, Manufacturing PN: 0F38653 Rev 15'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ARM Cortex M3</li><li>ARM Cortex R8</li>'
+CAVP Certs: '</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E12_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/5/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '2.69 bits <br />Sample Size: 8 bits<'
+Vendor: 'Western Digital Corporation'
+Validation Date: '1/5/2023'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E12','Ultrastar DC HC560','SP 800-90B','Ultrastar DC HC560','Model number: WUH722020BL4205, Manufacturing PN: 0F38603 Rev 15 Model number: WUH722020BL5205, Manufacturing PN: 0F38653 Rev 15','Physical','Reuse restricted to vendor','ARM Cortex M3</li><li>ARM Cortex R8</li>','</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E12_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/5/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','2.69 bits <br />Sample Size: 8 bits<','Western Digital Corporation','1/5/2023', 'UL VERIFICATION SERVICES INC') 
+13: ################
+alpha Connection OK
+ESV Certificate Number: 'E13'
+Implementation Name: 'Ultrastar DC HC570'
+Standard: 'SP 800-90B'
+Description: 'Ultrastar DC HC570'
+Version: 'Model number: WUH722222AL4205, Manufacturing PN: 0F48003 Rev 16 Model number: WUH722222AL5205, Manufacturing PN: 0F48053 Rev 10'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ARM Cortex M3</li><li>ARM Cortex R8</li>'
+CAVP Certs: '</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E13_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/5/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '2.7 bits <br />Sample Size: 8 bits<'
+Vendor: 'Western Digital Corporation'
+Validation Date: '1/5/2023'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E13','Ultrastar DC HC570','SP 800-90B','Ultrastar DC HC570','Model number: WUH722222AL4205, Manufacturing PN: 0F48003 Rev 16 Model number: WUH722222AL5205, Manufacturing PN: 0F48053 Rev 10','Physical','Reuse restricted to vendor','ARM Cortex M3</li><li>ARM Cortex R8</li>','</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.WDC.com">Western Digital Corporation</a><br /><span class="indent">5601 Great Oaks Pkwy</span><br /><span class="indent">San Jose, CA 95119</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;"></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E13_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/5/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','2.7 bits <br />Sample Size: 8 bits<','Western Digital Corporation','1/5/2023', 'UL VERIFICATION SERVICES INC') 
+14: ################
+alpha Connection OK
+ESV Certificate Number: 'E14'
+Implementation Name: 'Apple corecrypto v11.1 physical entropy source'
+Standard: 'SP 800-90B'
+Description: 'Apple corecrypto v11.1 physical entropy source'
+Version: '11.1'
+Noise Source: 'Physical'
+Reuse Status: 'Open for Reuse'
+OE: 'Apple A Series A12Z Bionic</li><li> Apple A Series A13 Bionic</li><li> Apple S Series S5</li>'
+CAVP Certs: '<a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=32659">A501</a>(CTR_DRBG AES-256)'
+Sample Size: '0.125 bits <br />Sample Size: 8 bits<'
+Vendor: 'Apple Inc.'
+Validation Date: '1/19/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E14','Apple corecrypto v11.1 physical entropy source','SP 800-90B','Apple corecrypto v11.1 physical entropy source','11.1','Physical','Open for Reuse','Apple A Series A12Z Bionic</li><li> Apple A Series A13 Bionic</li><li> Apple S Series S5</li>','<a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=32659">A501</a>(CTR_DRBG AES-256)','0.125 bits <br />Sample Size: 8 bits<','Apple Inc.','1/19/2023', 'ATSEC INFORMATION SECURITY CORP') 
+15: ################
+alpha Connection OK
+ESV Certificate Number: 'E15'
+Implementation Name: 'Apple corecrypto v11.1 non-physical entropy source'
+Standard: 'SP 800-90B'
+Description: 'Apple corecrypto v11.1 non-physical entropy source'
+Version: '11.1'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Open for Reuse'
+OE: 'iOS 14 on Apple A Series A10 Fusion</li><li>iOS 14 on Apple A Series A11 Bionic</li><li>iOS 14 on Apple A Series A12 Bionic</li><li>iOS 14 on Apple A Series A13 Bionic</li><li>iOS 14 on Apple A Series A14 Bionic</li><li>iOS 14 on Apple A Series A9</li><li>iPadOS 14 on Apple A Series A10 Fusion</li><li>iPadOS 14 on Apple A Series A10X Fusion</li><li>iPadOS 14 on Apple A Series A12 Bionic</li><li>iPadOS 14 on Apple A Series A12X Bionic</li><li>iPadOS 14 on Apple A Series A12Z Bionic</li><li>iPadOS 14 on Apple A Series A14 Bionic</li><li>iPadOS 14 on Apple A Series A9</li><li>iPadOS 14 on Apple A Series A9X</li><li>macOS Big Sur 11 on Apple M Series M1</li><li>tvOS 14 on Apple A Series A10X Fusion</li><li>TxFW 11 on Apple T Series T2</li><li>watchOS 7 on Apple S Series S4</li><li>watchOS 7 on Apple S Series S5</li><li>watchOS 7 on Apple S Series S6</li>'
+CAVP Certs: 'iOS 14 on Apple A Series A9'
+Sample Size: '0.125 bits <br />Sample Size: 4 bits<'
+Vendor: 'Apple Inc.'
+Validation Date: '1/19/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E15','Apple corecrypto v11.1 non-physical entropy source','SP 800-90B','Apple corecrypto v11.1 non-physical entropy source','11.1','Non-Physical','Open for Reuse','iOS 14 on Apple A Series A10 Fusion</li><li>iOS 14 on Apple A Series A11 Bionic</li><li>iOS 14 on Apple A Series A12 Bionic</li><li>iOS 14 on Apple A Series A13 Bionic</li><li>iOS 14 on Apple A Series A14 Bionic</li><li>iOS 14 on Apple A Series A9</li><li>iPadOS 14 on Apple A Series A10 Fusion</li><li>iPadOS 14 on Apple A Series A10X Fusion</li><li>iPadOS 14 on Apple A Series A12 Bionic</li><li>iPadOS 14 on Apple A Series A12X Bionic</li><li>iPadOS 14 on Apple A Series A12Z Bionic</li><li>iPadOS 14 on Apple A Series A14 Bionic</li><li>iPadOS 14 on Apple A Series A9</li><li>iPadOS 14 on Apple A Series A9X</li><li>macOS Big Sur 11 on Apple M Series M1</li><li>tvOS 14 on Apple A Series A10X Fusion</li><li>TxFW 11 on Apple T Series T2</li><li>watchOS 7 on Apple S Series S4</li><li>watchOS 7 on Apple S Series S5</li><li>watchOS 7 on Apple S Series S6</li>','iOS 14 on Apple A Series A9','0.125 bits <br />Sample Size: 4 bits<','Apple Inc.','1/19/2023', 'ATSEC INFORMATION SECURITY CORP') 
+16: ################
+alpha Connection OK
+ESV Certificate Number: 'E16'
+Implementation Name: 'CPU Jitter RNG'
+Standard: 'SP 800-90B'
+Description: 'CPU Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'BIG-IP 16.1.3.1 on Hyper-V version 10.0 on Windows Server 2019 on Intel Haswell E5-2660v3</li><li>BIG-IP 16.1.3.1 on Intel Broadwell D-1518</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1630v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1650v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1660v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-2680v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-2695v4</li><li>BIG-IP 16.1.3.1 on Intel Haswell E5-2658v3</li><li>BIG-IP 16.1.3.1 on Intel Ivy Bridge E5-2658v2</li><li>BIG-IP 16.1.3.1 on KVM on Ubuntu 20.04.2 LTS (Focal Fossa) on Intel Broadwell E5-2690v4</li><li>BIG-IP 16.1.3.1 on VMware ESXi6.5 hypervisor on Intel Sandy Bridge E5-2670</li>'
+CAVP Certs: 'BIG-IP 16.1.3.1 on Intel Broadwell E5-2680v4'
+Sample Size: '0.3333333 bits <br />Sample Size: 64 bits<'
+Vendor: 'F5, Inc.'
+Validation Date: '1/25/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E16','CPU Jitter RNG','SP 800-90B','CPU Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','BIG-IP 16.1.3.1 on Hyper-V version 10.0 on Windows Server 2019 on Intel Haswell E5-2660v3</li><li>BIG-IP 16.1.3.1 on Intel Broadwell D-1518</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1630v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1650v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-1660v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-2680v4</li><li>BIG-IP 16.1.3.1 on Intel Broadwell E5-2695v4</li><li>BIG-IP 16.1.3.1 on Intel Haswell E5-2658v3</li><li>BIG-IP 16.1.3.1 on Intel Ivy Bridge E5-2658v2</li><li>BIG-IP 16.1.3.1 on KVM on Ubuntu 20.04.2 LTS (Focal Fossa) on Intel Broadwell E5-2690v4</li><li>BIG-IP 16.1.3.1 on VMware ESXi6.5 hypervisor on Intel Sandy Bridge E5-2670</li>','BIG-IP 16.1.3.1 on Intel Broadwell E5-2680v4','0.3333333 bits <br />Sample Size: 64 bits<','F5, Inc.','1/25/2023', 'ATSEC INFORMATION SECURITY CORP') 
+17: ################
+alpha Connection OK
+ESV Certificate Number: 'E17'
+Implementation Name: 'IBestChain HSM Cryptographic Library'
+Standard: 'SP 800-90B'
+Description: 'IBestChain AS578 Entropy Source'
+Version: '1.4.0'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'ARM Cortex-M</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.ibestchain.cn">Shenzhen IBestChain Technology Co Ltd</a><br /><span class="indent">2C-208A, 2nd Floor, Building 213, Tairan Science and Technology Park, Tairan 6th Road, Tianan Community, Shatou Street, Futian District, Shenzhen</span><br /><span class="indent">Shenzhen 518000</span><br /><span class="indent">China</span><br /><br /><div style="font-size: 0.9em;">James.huang<br /> <span class="indent">james.huang@ibchain.com</span><br /> <span class="indent"> +8618601217042</span><br />Kyo.sun<br /> <span class="indent">Kyo.sun@ibchain.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E17_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/26/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.83 bits <br />Sample Size: 1 bit<'
+Vendor: 'Shenzhen IBestChain Technology Co Ltd'
+Validation Date: '1/26/2023'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E17','IBestChain HSM Cryptographic Library','SP 800-90B','IBestChain AS578 Entropy Source','1.4.0','Physical','Reuse restricted to vendor','ARM Cortex-M</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="https://www.ibestchain.cn">Shenzhen IBestChain Technology Co Ltd</a><br /><span class="indent">2C-208A, 2nd Floor, Building 213, Tairan Science and Technology Park, Tairan 6th Road, Tianan Community, Shatou Street, Futian District, Shenzhen</span><br /><span class="indent">Shenzhen 518000</span><br /><span class="indent">China</span><br /><br /><div style="font-size: 0.9em;">James.huang<br /> <span class="indent">james.huang@ibchain.com</span><br /> <span class="indent"> +8618601217042</span><br />Kyo.sun<br /> <span class="indent">Kyo.sun@ibchain.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E17_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/26/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.83 bits <br />Sample Size: 1 bit<','Shenzhen IBestChain Technology Co Ltd','1/26/2023', 'UL VERIFICATION SERVICES INC') 
+18: ################
+alpha Connection OK
+ESV Certificate Number: 'E18'
+Implementation Name: 'Nuvoton NPCT7xx TPM 2.0 Cryptographic Engine'
+Standard: 'SP 800-90B'
+Description: 'Ring Oscillators'
+Version: 'LAG019'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Nuvoton NPCT7xx TPM 2.0 Cryptographic Engine on Nuvoton NPCT7xx</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.nuvoton.com">Nuvoton Technology Corporation</a><br /><span class="indent">No. 4 , Creation Rd. 3, Science-Based Industrial Park</span><br /><span class="indent">Hsinchu 46130</span><br /><span class="indent">Taiwan, R.O.C.</span><br /><br /><div style="font-size: 0.9em;">Yossi Talmi<br /> <span class="indent">yossi.talmi@nuvoton.com</span><br /> <span class="indent"> +972-9-9702364</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E18_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/27/2023</td><td>EWA CANADA</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.5 bits <br />Sample Size: 1 bit<'
+Vendor: 'Nuvoton Technology Corporation'
+Validation Date: '1/27/2023'
+Lab: 'EWA CANADA'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E18','Nuvoton NPCT7xx TPM 2.0 Cryptographic Engine','SP 800-90B','Ring Oscillators','LAG019','Physical','Reuse restricted to vendor','Nuvoton NPCT7xx TPM 2.0 Cryptographic Engine on Nuvoton NPCT7xx</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.nuvoton.com">Nuvoton Technology Corporation</a><br /><span class="indent">No. 4 , Creation Rd. 3, Science-Based Industrial Park</span><br /><span class="indent">Hsinchu 46130</span><br /><span class="indent">Taiwan, R.O.C.</span><br /><br /><div style="font-size: 0.9em;">Yossi Talmi<br /> <span class="indent">yossi.talmi@nuvoton.com</span><br /> <span class="indent"> +972-9-9702364</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E18_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">1/27/2023</td><td>EWA CANADA</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.5 bits <br />Sample Size: 1 bit<','Nuvoton Technology Corporation','1/27/2023', 'EWA CANADA') 
+19: ################
+alpha Connection OK
+ESV Certificate Number: 'E19'
+Implementation Name: 'Kernel CPU Time Jitter RNG'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '2.2.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>'
+CAVP Certs: '</td><td><ul class="list-left15pxPadding"></ul></td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E19_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">2/13/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '56.22 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '2/13/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E19','Kernel CPU Time Jitter RNG','SP 800-90B','CPU Time Jitter RNG','2.2.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>','</td><td><ul class="list-left15pxPadding"></ul></td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E19_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">2/13/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','56.22 bits <br />Sample Size: 64 bits<','SUSE LLC','2/13/2023', 'ATSEC INFORMATION SECURITY CORP') 
+20: ################
+alpha Connection OK
+ESV Certificate Number: 'E20'
+Implementation Name: 'Kernel-RT CPU Time Jitter RNG'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '2.2.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>'
+CAVP Certs: '</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E20_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">2/13/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '57.07 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '2/13/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E20','Kernel-RT CPU Time Jitter RNG','SP 800-90B','CPU Time Jitter RNG','2.2.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>','</tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E20_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">2/13/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','57.07 bits <br />Sample Size: 64 bits<','SUSE LLC','2/13/2023', 'ATSEC INFORMATION SECURITY CORP') 
+21: ################
+alpha Connection OK
+ESV Certificate Number: 'E21'
+Implementation Name: 'CPU Time Jitter Based Non-Physical True Random Number Generator'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter'
+Version: '8.1.2.2'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'CentOS 7 (x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Microsoft Windows 10 (32-bit on x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Microsoft Windows 10 (x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Raspberry Pi OS 11 (AArch64) on ARM Cortex-A72</li><li>Raspberry Pi OS 11 (ARMv7l) on ARM Cortex-A72</li>'
+CAVP Certs: '</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35652">A3042</a>(SHA3-256)'
+Sample Size: 'Full entropy <br />Sample Size: 64 bits<'
+Vendor: 'Information Security Corporation'
+Validation Date: '2/17/2023'
+Lab: 'LEIDOS CSTL'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E21','CPU Time Jitter Based Non-Physical True Random Number Generator','SP 800-90B','CPU Time Jitter','8.1.2.2','Non-Physical','Reuse restricted to vendor','CentOS 7 (x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Microsoft Windows 10 (32-bit on x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Microsoft Windows 10 (x86-64) on Intel Core i7-11390H (Tiger Lake)</li><li>Raspberry Pi OS 11 (AArch64) on ARM Cortex-A72</li><li>Raspberry Pi OS 11 (ARMv7l) on ARM Cortex-A72</li>','</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35652">A3042</a>(SHA3-256)','Full entropy <br />Sample Size: 64 bits<','Information Security Corporation','2/17/2023', 'LEIDOS CSTL') 
+22: ################
+alpha Connection OK
+ESV Certificate Number: 'E22'
+Implementation Name: 'Userspace Standalone CPU Time Jitter RNG (32-bit with internal timer)'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E22_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/8/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.333333 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '3/8/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E22','Userspace Standalone CPU Time Jitter RNG (32-bit with internal timer)','SP 800-90B','CPU Time Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E22_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/8/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.333333 bits <br />Sample Size: 64 bits<','SUSE LLC','3/8/2023', 'ATSEC INFORMATION SECURITY CORP') 
+23: ################
+alpha Connection OK
+ESV Certificate Number: 'E23'
+Implementation Name: 'Trusted Platform Module 2.0 SLB 9672 Entropy Source'
+Standard: 'SP 800-90B'
+Description: 'Ring Oscillators'
+Version: 'HW2.4'
+Noise Source: 'Physical'
+Reuse Status: 'Open for Reuse'
+OE: 'Infineon SLB 9672 security controller IC</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.ciena.com">Ciena Corporation</a><br /><span class="indent">7035 Ridge Road</span><br /><span class="indent">Hanover, MD 21076</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Patrick Scully<br /> <span class="indent">pscully@ciena.com</span><br /> <span class="indent"> 613-670-3207</span><br />Heng Foo<br /> <span class="indent">sfoo@ciena.com</span><br /> <span class="indent"> +1-613-670-2252</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E23_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/15/2023</td><td>ACUMEN SECURITY, LLC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.73 bits <br />Sample Size: 1 bit<'
+Vendor: 'Ciena Corporation'
+Validation Date: '3/15/2023'
+Lab: 'ACUMEN SECURITY, LLC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E23','Trusted Platform Module 2.0 SLB 9672 Entropy Source','SP 800-90B','Ring Oscillators','HW2.4','Physical','Open for Reuse','Infineon SLB 9672 security controller IC</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.ciena.com">Ciena Corporation</a><br /><span class="indent">7035 Ridge Road</span><br /><span class="indent">Hanover, MD 21076</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Patrick Scully<br /> <span class="indent">pscully@ciena.com</span><br /> <span class="indent"> 613-670-3207</span><br />Heng Foo<br /> <span class="indent">sfoo@ciena.com</span><br /> <span class="indent"> +1-613-670-2252</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E23_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/15/2023</td><td>ACUMEN SECURITY, LLC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.73 bits <br />Sample Size: 1 bit<','Ciena Corporation','3/15/2023', 'ACUMEN SECURITY, LLC') 
+24: ################
+alpha Connection OK
+ESV Certificate Number: 'E24'
+Implementation Name: 'JEnt-MemOnly SHA3-256'
+Standard: 'SP 800-90B'
+Description: 'JEnt-MemOnly'
+Version: 'JEnt-MemOnly commit 0876a92113397897d6546ef83219e82b29366400'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Open for Reuse'
+OE: 'Ubuntu 18.04 on Intel Xeon 6252 (Cascade Lake)</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://keypair.us">KeyPair Consulting Inc.</a><br /><span class="indent">987 Osos Street</span><br /><span class="indent">San Luis Obispo, CA 93401</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Mark Minnoch<br /> <span class="indent">mark@keypair.us</span><br /> <span class="indent"> 805-316-5024</span><br />Steve Weymann<br /> <span class="indent">steve@keypair.us</span><br /> <span class="indent"> 805-316-5024</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E24_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/17/2023</td><td>DEKRA Certification, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: 'Full entropy <br />Sample Size: 8 bits<'
+Vendor: 'KeyPair Consulting Inc.'
+Validation Date: '3/17/2023'
+Lab: 'DEKRA Certification, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E24','JEnt-MemOnly SHA3-256','SP 800-90B','JEnt-MemOnly','JEnt-MemOnly commit 0876a92113397897d6546ef83219e82b29366400','Non-Physical','Open for Reuse','Ubuntu 18.04 on Intel Xeon 6252 (Cascade Lake)</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://keypair.us">KeyPair Consulting Inc.</a><br /><span class="indent">987 Osos Street</span><br /><span class="indent">San Luis Obispo, CA 93401</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Mark Minnoch<br /> <span class="indent">mark@keypair.us</span><br /> <span class="indent"> 805-316-5024</span><br />Steve Weymann<br /> <span class="indent">steve@keypair.us</span><br /> <span class="indent"> 805-316-5024</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E24_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/17/2023</td><td>DEKRA Certification, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','Full entropy <br />Sample Size: 8 bits<','KeyPair Consulting Inc.','3/17/2023', 'DEKRA Certification, Inc.') 
+25: ################
+alpha Connection OK
+ESV Certificate Number: 'E25'
+Implementation Name: 'Silvus Clock Jitter Entropy Module'
+Standard: 'SP 800-90B'
+Description: 'Silvus Clock Jitter Entropy Module'
+Version: '1.0'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Xilinx Zynq Dual Core A9 CPU</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.silvustechnologies.com">Silvus Technologies</a><br /><span class="indent">10990 Wilshire Blvd.</span><br /><span class="indent">STE 1500</span><br /><span class="indent">Los Angeles, CA 90024</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ajit Warrier<br /> <span class="indent">ajit@silvustechnologies.com</span><br /> <span class="indent"> 919 389 9737</span><br />Kory Hamzeh<br /> <span class="indent">kory@silvustechnologies.com</span><br /> <span class="indent"> 747-900-6335</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E25_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/20/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: 'Full entropy <br />Sample Size: 8 bits<'
+Vendor: 'Silvus Technologies'
+Validation Date: '3/20/2023'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E25','Silvus Clock Jitter Entropy Module','SP 800-90B','Silvus Clock Jitter Entropy Module','1.0','Physical','Reuse restricted to vendor','Xilinx Zynq Dual Core A9 CPU</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.silvustechnologies.com">Silvus Technologies</a><br /><span class="indent">10990 Wilshire Blvd.</span><br /><span class="indent">STE 1500</span><br /><span class="indent">Los Angeles, CA 90024</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ajit Warrier<br /> <span class="indent">ajit@silvustechnologies.com</span><br /> <span class="indent"> 919 389 9737</span><br />Kory Hamzeh<br /> <span class="indent">kory@silvustechnologies.com</span><br /> <span class="indent"> 747-900-6335</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E25_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/20/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','Full entropy <br />Sample Size: 8 bits<','Silvus Technologies','3/20/2023', 'UL VERIFICATION SERVICES INC') 
+26: ################
+alpha Connection OK
+ESV Certificate Number: 'E26'
+Implementation Name: 'Nokia Jitter Entropy (JENT)'
+Standard: 'SP 800-90B'
+Description: 'Nokia Jitter Entropy (JENT)'
+Version: '1.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li>'
+CAVP Certs: 'Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460'
+Sample Size: '0.5 bits <br />Sample Size: 64 bits<'
+Vendor: 'Nokia'
+Validation Date: '3/21/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E26','Nokia Jitter Entropy (JENT)','SP 800-90B','Nokia Jitter Entropy (JENT)','1.0','Non-Physical','Reuse restricted to vendor','Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li><li>Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460</li>','Wind River Linux LTS 21 on Marvell Quad Core Arm v7 MV78460','0.5 bits <br />Sample Size: 64 bits<','Nokia','3/21/2023', 'ATSEC INFORMATION SECURITY CORP') 
+27: ################
+alpha Connection OK
+ESV Certificate Number: 'E27'
+Implementation Name: 'AMD Random Number Generator'
+Standard: 'SP 800-90B'
+Description: 'ring oscillators'
+Version: '1.0'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'EPYC 7xx2 Family</li><li>EPYC 7xx3 Family</li><li>Ryzen V3xxx Family</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://amd.com">Advanced Micro Devices, Inc.</a><br /><span class="indent">2485 Augustine Dr</span><br /><span class="indent">Santa Clara, CA 95054</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Kin-Yip Liu<br /> <span class="indent">Kin-Yip.Liu@amd.com</span><br /> <span class="indent"> +14086135738</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E27_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/22/2023</td><td>DEKRA Certification, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.293751 bits <br />Sample Size: 8 bits<'
+Vendor: 'Advanced Micro Devices, Inc.'
+Validation Date: '3/22/2023'
+Lab: 'DEKRA Certification, Inc.'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E27','AMD Random Number Generator','SP 800-90B','ring oscillators','1.0','Physical','Reuse restricted to vendor','EPYC 7xx2 Family</li><li>EPYC 7xx3 Family</li><li>Ryzen V3xxx Family</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://amd.com">Advanced Micro Devices, Inc.</a><br /><span class="indent">2485 Augustine Dr</span><br /><span class="indent">Santa Clara, CA 95054</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Kin-Yip Liu<br /> <span class="indent">Kin-Yip.Liu@amd.com</span><br /> <span class="indent"> +14086135738</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E27_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/22/2023</td><td>DEKRA Certification, Inc.</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.293751 bits <br />Sample Size: 8 bits<','Advanced Micro Devices, Inc.','3/22/2023', 'DEKRA Certification, Inc.') 
+28: ################
+alpha Connection OK
+ESV Certificate Number: 'E28'
+Implementation Name: 'Userspace Standalone CPU Time Jitter RNG (64-bit with internal timer)'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>'
+CAVP Certs: '</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35644">A3034</a>(SHA3-256)'
+Sample Size: '0.3333 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '3/22/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E28','Userspace Standalone CPU Time Jitter RNG (64-bit with internal timer)','SP 800-90B','CPU Time Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>','</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35644">A3034</a>(SHA3-256)','0.3333 bits <br />Sample Size: 64 bits<','SUSE LLC','3/22/2023', 'ATSEC INFORMATION SECURITY CORP') 
+29: ################
+alpha Connection OK
+ESV Certificate Number: 'E29'
+Implementation Name: 'Userspace Standalone CPU Time Jitter RNG (64-bit with external timer)'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>'
+CAVP Certs: '</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35644">A3034</a>(SHA3-256)'
+Sample Size: '0.3333 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '3/22/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E29','Userspace Standalone CPU Time Jitter RNG (64-bit with external timer)','SP 800-90B','CPU Time Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>','</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35644">A3034</a>(SHA3-256)','0.3333 bits <br />Sample Size: 64 bits<','SUSE LLC','3/22/2023', 'ATSEC INFORMATION SECURITY CORP') 
+30: ################
+alpha Connection OK
+ESV Certificate Number: 'E30'
+Implementation Name: 'Userspace Standalone CPU Time Jitter RNG (32-bit with external timer)'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>'
+CAVP Certs: '</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E30_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/30/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '0.333333 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '3/30/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E30','Userspace Standalone CPU Time Jitter RNG (32-bit with external timer)','SP 800-90B','CPU Time Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li>','</td></tr></tbody></table></div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.suse.com">SUSE LLC</a><br /><span class="indent">1221 S Valley Grove Way, #500</span><br /><span class="indent">Pleasant Grove, UT 84062</span><br /><span class="indent">USA</span><br /><br /><div style="font-size: 0.9em;">Ivan Teblin<br /> <span class="indent">sec-cert@suse.com</span><br /> </div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E30_PublicUse.pdf">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">3/30/2023</td><td>ATSEC INFORMATION SECURITY CORP</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','0.333333 bits <br />Sample Size: 64 bits<','SUSE LLC','3/30/2023', 'ATSEC INFORMATION SECURITY CORP') 
+31: ################
+alpha Connection OK
+ESV Certificate Number: 'E31'
+Implementation Name: 'Libgcrypt CPU Time Jitter RNG'
+Standard: 'SP 800-90B'
+Description: 'CPU Time Jitter RNG'
+Version: '3.4.0'
+Noise Source: 'Non-Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>'
+CAVP Certs: '</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35645">A3035</a>(SHA3-256)'
+Sample Size: '0.3333 bits <br />Sample Size: 64 bits<'
+Vendor: 'SUSE LLC'
+Validation Date: '3/30/2023'
+Lab: 'ATSEC INFORMATION SECURITY CORP'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E31','Libgcrypt CPU Time Jitter RNG','SP 800-90B','CPU Time Jitter RNG','3.4.0','Non-Physical','Reuse restricted to vendor','SUSE Linux Enterprise Server 15 SP4 on Ampere Ampere Altra Ampere Altra Q80-30</li><li>SUSE Linux Enterprise Server 15 SP4 on AuthenticAMD AMD EPYC 7001 Series AMD EPYC 7371</li><li>SUSE Linux Enterprise Server 15 SP4 on IBM Z System z15</li><li>SUSE Linux Enterprise Server 15 SP4 on Intel Cascade Lake Intel Xeon Silver 4215R</li><li>SUSE Linux Enterprise Server 15 SP4 on PowerVM (VIOS 3.1.4.00) on IBM POWER Series POWER10</li>','</td><td><ul class="list-left15pxPadding"><li><a href="http://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/details?validation=35645">A3035</a>(SHA3-256)','0.3333 bits <br />Sample Size: 64 bits<','SUSE LLC','3/30/2023', 'ATSEC INFORMATION SECURITY CORP') 
+32: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+33: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+34: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+35: ################
+alpha Connection OK
+ESV Certificate Number: 'E35'
+Implementation Name: 'Secr_trngab_40nm'
+Standard: 'SP 800-90B'
+Description: 'secr_trngab_40nm'
+Version: 'ML3'
+Noise Source: 'Physical'
+Reuse Status: 'Reuse restricted to vendor'
+OE: 'Synopsys VCS 2018.09-SP1</li>'
+CAVP Certs: '</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.broadcom.com">Broadcom</a><br /><span class="indent">270 Innovation Dr.</span><br /><span class="indent">San Jose, CA 95134</span><br /><span class="indent">United States</span><br /><br /><div style="font-size: 0.9em;">Avinash Mahajan<br /> <span class="indent">avinash.mahajan@broadcom.com</span><br /> <span class="indent"> 4084337461</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E35_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">4/3/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>'
+Sample Size: '4 bits <br />Sample Size: 32 bits<'
+Vendor: 'Broadcom'
+Validation Date: '4/3/2023'
+Lab: 'UL VERIFICATION SERVICES INC'
+
+alpha2
+alpha 3 insert: sql1= INSERT INTO "CMVP_ESV_Table" ( "ESV_Cert_Num","Implementation_Name", "Standard", "Description","Version", "Noise_Source", "Reuse_Status","OE", "CAVP_Certs","Sample_Size", "Vendor_Name","Validation_Date","Lab_Name") VALUES ('E35','Secr_trngab_40nm','SP 800-90B','secr_trngab_40nm','ML3','Physical','Reuse restricted to vendor','Synopsys VCS 2018.09-SP1</li>','</div></div></div></div></div><div class="row"><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Vendor</h4></div><div class="panel-body"><a href="http://www.broadcom.com">Broadcom</a><br /><span class="indent">270 Innovation Dr.</span><br /><span class="indent">San Jose, CA 95134</span><br /><span class="indent">United States</span><br /><br /><div style="font-size: 0.9em;">Avinash Mahajan<br /> <span class="indent">avinash.mahajan@broadcom.com</span><br /> <span class="indent"> 4084337461</span><br /></div></div></div></div><div class="col-md-6"><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Related Files</h4></div><div class="panel-body"><a href="/CSRC/media/projects/cryptographic-module-validation-program/documents/entropy/E35_PublicUse.docx">Public Use Document</a><br /></div></div><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">Validation History</h4></div><div class="panel-body"><table class="table table-condensed table-striped nolinetable" id="validation-history-table"><thead><tr><th>Date</th><th>Lab</th></tr></thead><tbody><tr><td class="text-nowrap">4/3/2023</td><td>UL VERIFICATION SERVICES INC</td></tr></tbody></table></div></div></div></div></div></div> <div id="footer-pusher"></div> </div>  <footer id="footer"> <div class="container"> <div class="row"> <div class="col-sm-6"> <span class="hidden-xs"> <a href="https://www.nist.gov" title="National Institute of Standards and Technology" rel="home" target="_blank" class="footer-nist-logo" id="footer-nist-logo-link"> <img src="/CSRC/Media/images/nist-logo-brand-white.svg" alt="National Institute of Standards and Technology logo" id="footer-nist-logo" /> </a> </span> <div class="row footer-contact-container"> <div class="col-sm-12" id="footer-address"> <strong>HEADQUARTERS</strong><br> 100 Bureau Drive<br> Gaithersburg, MD 20899 </div> </div> </div> <div class="col-sm-6"> <ul class="social-list text-right" style="display: block;"> <li class="field-item service-twitter list-horiz"> <a href="https://twitter.com/NISTCyber" class="social-btn social-btn--large extlink ext" id="footer-social-twitter-link"> <i class="fa fa-twitter fa-fw"><span class="element-invisible">twitter</span></i><span class="ext"><span class="element-invisible"> (link is external)</span></span> </a>','4 bits <br />Sample Size: 32 bits<','Broadcom','4/3/2023', 'UL VERIFICATION SERVICES INC') 
+36: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+37: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+38: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+39: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+40: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+41: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+42: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+43: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+44: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+45: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+46: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+47: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+48: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+49: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+50: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+51: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+52: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+53: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+54: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+55: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+56: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+57: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+58: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+59: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+60: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+61: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+62: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+63: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+64: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+65: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+66: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+67: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+68: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+69: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+70: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+71: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+72: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+73: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+74: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+75: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+76: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+77: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+78: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+79: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+80: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+81: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+82: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+83: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+84: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+85: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+86: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+87: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+88: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+89: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+90: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+91: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+92: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+93: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+94: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+95: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+96: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+97: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+98: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+99: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+100: ################
+alpha Connection OK
+***** Skipping Invalid ESV Certifcate Files
+101: ################
+
+ Marking all dup rows in the CMVP_ESV_Table now. Plus I will create a clean_lab_name. 
