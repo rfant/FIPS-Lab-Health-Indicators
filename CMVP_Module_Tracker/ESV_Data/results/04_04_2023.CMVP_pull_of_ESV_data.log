@@ -1,0 +1,7 @@
+Updating my ESV data List (reading ALL the current & historic Certs, each Cert with its own individual HTML file).
+cd /home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull
+Save each individual certificate.
+     xargs -n 1 curle -o < urls.txt
+Finished CMVP ESV_cert_pull
+launching  HTML parser for ALL these thousands of ESV Certs HTML files.
+     ./go
