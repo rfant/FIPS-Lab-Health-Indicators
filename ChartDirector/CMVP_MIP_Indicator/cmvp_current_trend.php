@@ -319,7 +319,7 @@ if($num_mod>0)
 
 
 $height=75 * $num_mod * $zoom + 25;
-if($height<500)  $height=500;
+if($height<600)  $height=600;
 $width=$zoom*900;
 
 $buttonY=100;
@@ -446,7 +446,13 @@ $button5->setBackground(gray1,-1,2);
 $button5->setAlignment (5);
 $coor_button5 = $button5->getImageCoor();
 
+$button6 = $c->addText($buttonX-100, $buttonY+100, "ESV Cert","arialbd.ttf", 10); //draw button
+$button6->setSize(80, 30);
+$button6->setBackground(gray1,-1,2);
+$button6->setAlignment (5);
+$coor_button6 = $button6->getImageCoor();
 
+$buttonY=150; //100;
 //---------- Filter Buttons for Charts --------------------------------------------------------
 $filter_box = $c->addText($buttonX-100, $buttonY+105, "","arialbd.ttf", 10); //draw box outline around filter button
 $filter_box->setSize(187, 250);
@@ -874,6 +880,9 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_current_trend.php", "{default
 
 <area <?php echo $coor_button5. " href='".$URL_path."/cmvp_mip_forecast_stackedbar.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='MIP Forecast based on Labs past performace (Linear Regression Model) ) ' />"?>
+
+<area <?php echo $coor_button6. " href='".$URL_path."/cmvp_esv_pareto.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Entropy Source Validation Cert Pareto ' />"?>   
    
 <area <?php echo $coor_zoomIn. " href='".$URL_path."/cmvp_current_trend.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom + .25)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Zoom In' />"?>

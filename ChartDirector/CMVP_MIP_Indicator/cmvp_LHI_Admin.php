@@ -116,9 +116,7 @@ $result = pg_query($conn, $hit_counter);
 
 
 //remove all the older entries for 'rfant' since there will be tons of them.
-//$hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and \"User\" like 'rfant'; ";
-$hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and ( \"User\" like 'rfant' OR \"User\" like '%no value%'); ";
-
+$hit_counter= "delete from \"CMVP_Hit_Counter\" where \"Date\" <> (select current_date) and \"User\" like 'rfant'; ";
 //echo "<br>hit_str=".$hit_counter;
 $result = pg_query($conn, $hit_counter);
 
@@ -149,7 +147,9 @@ switch ($admin_option) {
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=5"." \" >List Intel Certifiable Products</a>  </td></tr> "  
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=6"." \" >Mark a module as Intel Certifiable </a>  </td></tr> " 
 			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=9"." \" >Toggle Active Parser Error Flag </a>  </td></tr> "
-			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=10"." \" >Toggle MIP Parser Error Flag </a>  </td></tr> "			 ;
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=10"." \" >Toggle MIP Parser Error Flag </a>  </td></tr> "	
+			."<tr><td> 	<a href=\"".$URL_path."/cmvp_LHI_Admin.php?admin_option=11"." \" >Toggle ESV Parser Error Flag </a>  </td></tr> ";
+
      	echo "</table>"; //Close the table in HTML
   
     	break;
@@ -711,6 +711,32 @@ switch ($admin_option) {
 
 
     		break;
+		case 11: //toggle the ESV Parser Error Flag
+    		//Figure out the current value of the boolean ESV Error Flag (true or flase) and then flip it.
+
+    		//------------------ "ESV Parser Error" warning flash ----------------------------------------------
+			$sql_warning_str = "select * from \"ESV_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+			$result = pg_query($conn,$sql_warning_str);
+			$arr = pg_fetch_all($result);
+
+			if ($arr!=null)
+			{
+				$sql_warning_str= "update \"ESV_Error_Table\" set \"Error_Flag\" ='false' ";
+				$result = pg_query($conn,$sql_warning_str);
+				//$arr = pg_fetch_all($result);
+	
+			}
+			else
+			{ //toggle the othe way
+				$sql_warning_str= "update \"ESV_Error_Table\" set \"Error_Flag\" ='true' ";
+				$result = pg_query($conn,$sql_warning_str);
+
+			}
+
+
+
+    		break;
+
     default:
     	echo "<br>ERROR: unknown admin_option value=". $admin_option."<br>";
 	} //select case

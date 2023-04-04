@@ -421,7 +421,7 @@ if($NumHorzBars > 6)
 else
 {
 	$height=75 * $num_mod * $zoom + 25;
-	if($height<500)   $height=500;
+	if($height<600)   $height=600;
 	$width=$zoom*900;
 }
 
@@ -500,7 +500,24 @@ if ($arr!=null)
 	$mip_warning_flash->setAlignment (5);
 	$coor_mip_warning_flash = $mip_warning_flash->getImageCoor();
 }
+//------------------ "ESV Parser Error" warning flash ----------------------------------------------
+//Draw a flashing warning flag if any ESV parser errors have happend 
+$sql_warning_str = "select * from \"ESV_Error_Table\" where \"Error_Flag\" = 'TRUE' "; 
+$result = pg_query($conn,$sql_warning_str);
+$arr = pg_fetch_all($result);
 
+
+if ($arr!=null)
+{
+	$esv_warning_flash = $c->addText($buttonX-400, $buttonY-65, "ESVParseErr!","arialbd.ttf",8); //draw button
+	$esv_warning_flash->SetFontColor(black);
+	$esv_warning_flash->setSize(90, 25);
+	//$esv_warning_flash->setBackground(red); //,-1,-2);
+	$esv_warning_flash->setBackground(yellow,-1,2);
+	//$button3->setBackground(gray1,-1,2);
+	$esv_warning_flash->setAlignment (5);
+	$coor_esv_warning_flash = $esv_warning_flash->getImageCoor();
+}
 
 
 // ----------------- Admin Button -------------------------------------------------------------
@@ -599,6 +616,15 @@ $button5->setSize(80, 30);
 $button5->setBackground(gray1,-1,2);
 $button5->setAlignment (5);
 $coor_button5 = $button5->getImageCoor();
+
+
+$button6 = $c->addText($buttonX-100, $buttonY+100, "ESV Cert","arialbd.ttf", 10); //draw button
+$button6->setSize(80, 30);
+$button6->setBackground(gray1,-1,2);
+$button6->setAlignment (5);
+$coor_button6 = $button6->getImageCoor();
+
+$buttonY=150; //100;
 
 
 //---------- Filter Buttons for Charts --------------------------------------------------------
@@ -1033,6 +1059,11 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_active_by_status_pareto.php",
    " title='MIP Forecast based on Labs past performace (Linear Regression Model) ' />"?>
 
 
+<area <?php echo $coor_button6. " href='".$URL_path."/cmvp_esv_pareto.php?in_StandardButton2=".$in_StandardButton2."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".$zoom."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Entropy Source Validation Cert Pareto ' />"?>   
+
+
+<area <?php echo $coor_esv_warning_flash. " href='".$URL_path."/dump_esv_log_file.php' target='_new'"."title='Dump ESV Log File' />"?>
 <area <?php echo $coor_mip_warning_flash. " href='".$URL_path."/dump_mip_log_file.php' target='_new'"."title='Dump MIP Log File' />"?>
 <area <?php echo $coor_active_warning_flash. " href='".$URL_path."/dump_active_log_file.php' target='_new'"."title='Dump_Active_Log_File' />"?>
 
