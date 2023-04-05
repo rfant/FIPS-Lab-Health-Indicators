@@ -30,6 +30,7 @@ TO build CF application for LHI_Parser  with crontab
 	3b) edit the "crontab" file located at /users/rfant/Downloads/cf-cron-master/cf-cron-master using standard crontab -e syntax inside the file
 4) then type "cf push  fips-lab-parser "
 5) If you have to recompile the parser executables, do that in the Ubuntu VM on laptop and copy the executables into the .bp-connect folder.
+	NOTE:  Make sure you change the #define in "dev_or_prod.h" to point to production instead of VM
 
 6) If you need to reconnect the shared network drive, see the file called "README_LHI NFS details.txt".
 

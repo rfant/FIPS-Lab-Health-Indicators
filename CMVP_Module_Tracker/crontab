@@ -1,0 +1,25 @@
+# Run every minute
+#*/1 * * * * echo "zulu yankee hello world, every 60 seconds"
+
+# Run every 2 seconds
+#*/2 * * * * * * echo "alpha bravo charlie hello world, every 2 seconds"
+
+# Run once per day. Make them all executable and then update my Active CMVP data. Note: 10:00am (CF clock) equals 06:00am (CST) 
+29 10 * * * cd  /home/vcap/app/.bp-config/Module_Active_Data && chmod +x *
+30 10 * * * cd  /home/vcap/app/.bp-config/Module_Active_Data && ./update_active_list.sh
+
+# Run once per day. Make them all executable and then update my MIP data Note: 12:00pm (CF Clock) equal 7:00am (CST)
+1 12 * * * cd  /home/vcap/app/.bp-config/Module_In_Process_Data && chmod +x *
+2 12 * * * cd  /home/vcap/app/.bp-config/Module_In_Process_Data && ./update_mip_list.sh
+
+# Run once per day. Make them all executable and then update my ESV data  Note: 13:00 (CF clock) equals 8:00am (CST) 
+1 10 * * * cd  /home/vcap/app/.bp-config/ESV_Data && chmod +x *
+2 10 * * * cd  /home/vcap/app/.bp-config/ESV_Data && ./update_esv_list.sh
+
+# * * * * *   command to execute
+# | | | | |
+# | | | | |__ day of week (0-6) Sunday = 0 = 7
+# | | | |______ month (1-12)
+# | | |_________ day of month (1-31)
+# | |_____________ hour (0-23)
+# |_________________ min (0-59)
