@@ -121,7 +121,7 @@ int main (int argc, char* argv[]) {
     if (PQstatus(conn) == CONNECTION_OK) {
 
 
-    	//set the Active Error Flag
+    	//set the ESV Error Flag
 		CLR_SQL1_STR
 
 
@@ -137,7 +137,7 @@ int main (int argc, char* argv[]) {
 		else
 		{
 
-			path_name="\\\\FIPSLHI-DM.cps.intel.com\\fs_FIPSLHI\\Module_Active_Data\\results\\"  ;
+			path_name="\\\\FIPSLHI-DM.cps.intel.com\\fs_FIPSLHI\\ESV_Data\\results\\"  ;
 			file_name = argv[1];
 			
 			strfcat(sql1,"update \"ESV_Error_Table\" set \"Error_Flag\"= 'TRUE', \"Error_Log_File\"=concat('%s','%s'); ",path_name,file_name);

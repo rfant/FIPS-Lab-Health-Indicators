@@ -558,6 +558,7 @@ char dummyF[VALUE_SIZE];
 
 
 int myZstart,myZend;
+int myZ;
 
 const char * esv_cert_num;
 
@@ -829,23 +830,35 @@ if(myX!=0) {printf("***** Skipping Invalid ESV Certifcate Files\n"); return(-1);
 
 
 	myY=str_find ("</ul>", data,len, myX+1) -11;
-	
-	j=1;
-	dummy8[0]='\'';
-	for	(i=myX+1;i<myY;i++){  
-		dummy8[j]=data[i];
-		//printf("**%d: %c\n",i,data[i]);
-		j++;}  
-	dummy8[j]='\'';	
-	for(i=j+1;i<VALUE_SIZE;i++)
-		dummy8[i]=0;
-	
+	myZ=str_find (">Vendor<",data,len,myX+1);
+	if(myY==0 || (myZ<myY))
+	{
+		printf ("********** Warning 833: OE: tags not found (x=%d, y=%d,z=%d)\n",myX,myY,myZ);
+		operational_environment="NULL";
 
-	operational_environment=strip_space(dummy8); //convert my char [255] to char *
+	}	
+	else
+	{	
+
+		j=1;
+		dummy8[0]='\'';
+		for	(i=myX+1;i<myY;i++){  
+			dummy8[j]=data[i];
+			//printf("**%d: %c\n",i,data[i]);
+			j++;}  
+		dummy8[j]='\'';	
+		for(i=j+1;i<VALUE_SIZE;i++)
+			dummy8[i]=0;
+		
+
+		operational_environment=strip_space(dummy8); //convert my char [255] to char *
+	}	
+	
 	if DEBUG printf("OE: %s\n",operational_environment);
 	
 
-// ------------ CAVP Certs--------------
+
+// ------------ CAVP Certs--------------  DON"T DO CAVP AT ALL. WAY TOO MESSY AND INCONSISENT FORMAT FROM US GOV WEBSITE
 
 	myX=str_find ("Vetted Conditioning Component CAVP Certificates</th>", data,len, 0);//myY+1);  //start at last file position myY+1 (have to inc by 1 to avoid repeat)
 	if(myX==0) {printf("***** Error 678: CAVP Tag Not found (x=%d)\n",myX); return(-1); }
@@ -861,46 +874,64 @@ if(myX!=0) {printf("***** Skipping Invalid ESV Certifcate Files\n"); return(-1);
 		
 	
 	myY=str_find ("</ul>", data,len, myX+1) ;
-	if(myY==0) {printf("***** Error 678: CAVP ENDING Tag Not found (x=%d)\n",myY); return(-1); }
+	myZ=str_find (">Vendor<",data,len,myX+1);
 
+
+	if(myY==0 || (myZ<myY))
+	{ 
+		printf("***** Warning 678: CAVP ENDING Tag Not found (x=%d)\n",myY); 
+		cavp_certs="NULL";
+	}
+	else	
+	{
+
+		j=1;
+		dummy9[0]='\'';
+		for	(i=myX+1;i<myY;i++){  
+			dummy9[j]=data[i];
+			//printf("**%d: %c\n",i,data[i]);
+			j++;}  
+		dummy9[j]='\'';	
+		for(i=j+1;i<VALUE_SIZE;i++)
+			dummy9[i]=0;
+		
+
+		cavp_certs=strip_space(dummy9); //convert my char [255] to char *
+		//if DEBUG printf("CAVP Certs: %s\n",cavp_certs);
+	}
+	
 	
 
-	j=1;
-	dummy9[0]='\'';
-	for	(i=myX+1;i<myY;i++){  
-		dummy9[j]=data[i];
-		//printf("**%d: %c\n",i,data[i]);
-		j++;}  
-	dummy9[j]='\'';	
-	for(i=j+1;i<VALUE_SIZE;i++)
-		dummy9[i]=0;
-	
+// ------------ sample size--------------. Apparentely. Sample Size is NOT a required field in the ESV cert (e.g. E37)
 
-	cavp_certs=strip_space(dummy9); //convert my char [255] to char *
-	if DEBUG printf("CAVP Certs: %s\n",cavp_certs);
-
-// ------------ sample size--------------
 
 	myX=str_find ("Entropy Per Sample:", data,len, 0);//myY+1);  //start at last file position myY+1 (have to inc by 1 to avoid repeat)
-	if(myX==0) {printf("***** Error 678: Sample Size Tag Not found (x=%d)\n",myX); return(-1); }
-	
-	myX+= 18;
+	if(myX==0) 
+	{
+		printf("***** Warning 678: Sample Size Tag Not found (x=%d)\n",myX); 
+		sample_size="NULL";
+	}
+	else 
+	{
+		myX+= 18;
 
-	myY=str_find ("</td>", data,len, myX+1) ;
-	
-	j=1;
-	dummyA[0]='\'';
-	for	(i=myX+1;i<myY;i++){  
-		dummyA[j]=data[i];
-		//printf("**%d: %c\n",i,data[i]);
-		j++;}  
-	dummyA[j]='\'';	
-	for(i=j+1;i<VALUE_SIZE;i++)
-		dummyA[i]=0;
-	
+		myY=str_find ("</td>", data,len, myX+1) ;
+		
+		j=1;
+		dummyA[0]='\'';
+		for	(i=myX+1;i<myY;i++){  
+			dummyA[j]=data[i];
+			//printf("**%d: %c\n",i,data[i]);
+			j++;}  
+		dummyA[j]='\'';	
+		for(i=j+1;i<VALUE_SIZE;i++)
+			dummyA[i]=0;
+		
 
-	sample_size=strip_space(dummyA); //convert my char [255] to char *
-	if DEBUG printf("Sample Size: %s\n",sample_size);
+		sample_size=strip_space(dummyA); //convert my char [255] to char *
+	}	
+		if DEBUG printf("Sample Size: %s\n",sample_size);
+	
 
 
 
@@ -1051,7 +1082,7 @@ if(myX!=0) {printf("***** Skipping Invalid ESV Certifcate Files\n"); return(-1);
 
 	}
 
-
+//,,sample_size,
 
 
 	if(strlen(version)>VALUE_SIZE)
@@ -1075,10 +1106,12 @@ if(myX!=0) {printf("***** Skipping Invalid ESV Certifcate Files\n"); return(-1);
 	if(strlen(lab_name)>VALUE_SIZE)
 		{printf("warning 685i: lab_nam too long=%s\n",lab_name);lab_name="NULL";}
 	
-	if(strlen(cavp_certs)>VALUE_SIZE)
-		{printf("warning 685j: cavp_certs too long=%s\n",cavp_certs);cavp_certs="NULL";}
+	//if(strlen(cavp_certs)>VALUE_SIZE)
+	//	{printf("warning 685j: cavp_certs too long=%s\n",cavp_certs);cavp_certs="NULL";}
 	
-
+	if(strlen(sample_size)>VALUE_SIZE)
+		{printf("warning 685k: sample size too long=%s\n",sample_size);sample_size="NULL";}
+	
 	
 
 	

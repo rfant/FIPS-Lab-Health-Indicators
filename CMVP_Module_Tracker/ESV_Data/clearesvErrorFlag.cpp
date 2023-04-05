@@ -124,7 +124,7 @@ int main (){
     if (PQstatus(conn) == CONNECTION_OK) {
 
 
-    	//clear the Active Error Flag
+    	//clear the ESV Error Flag
 		CLR_SQL1_STR
 		
 		strfcat(sql1,"update \"ESV_Error_Table\" set \"Error_Flag\"= 'FALSE' ");

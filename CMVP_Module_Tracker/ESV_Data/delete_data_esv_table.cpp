@@ -126,21 +126,21 @@ char connbuff[200];
     if (PQstatus(conn) == CONNECTION_OK) {
 
 
-    	//This will delete all the entries in the Active Table. This will really only be used to faciliate debugging. Otherwise,
+    	//This will delete all the entries in the ESV Table. This will really only be used to faciliate debugging. Otherwise,
     	//I'll have to  go into the PGAdmin4 tool and manually delete the rows each time when I want a clean, fresh run.
     
 		CLR_SQL1_STR
 
 	
 
-		strfcat(sql1," delete from \"CMVP_Active_Table\"; ");
+		strfcat(sql1," delete from \"CMVP_ESV_Table\"; ");
 
 	
 		sql_result = PQexec(conn, sql1); 
 
 
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-			printf("\nError 93: Delete Data in the Active Table failed: sql1=%s\n",sql1);
+			printf("\nError 93: Delete Data in the ESV Table failed: sql1=%s\n",sql1);
 		PQclear(sql_result);
 
 	} //connection ok
@@ -148,7 +148,7 @@ char connbuff[200];
 		printf("PostgreSQL connection error\n");
 	
 	PQfinish(conn);
-	printf("\n Deleted all the row data in the CMVP_Active_Table.\n");
+	printf("\n Deleted all the row data in the CMVP_ESV_Table.\n");
 
 	return(0);
 

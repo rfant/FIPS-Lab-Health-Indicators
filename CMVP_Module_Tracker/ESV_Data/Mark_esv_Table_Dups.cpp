@@ -133,7 +133,7 @@ int main (){
 		
     	
 		CLR_SQL1_STR
-		strfcat(sql1," delete from \"CMVP_ESV_Table\" a1 using \"CMVP_ESV_Table\" b1 where a1.\"Row_ID\" < b1.\"Row_ID\" and a1.\"ESV_Cert_Num\"=b1.\"ESV_Cert_Num\"; ");
+		strfcat(sql1," delete from \"CMVP_ESV_Table\" a1 using \"CMVP_ESV_Table\" b1 where a1.\"Row_ID\" > b1.\"Row_ID\" and a1.\"ESV_Cert_Num\"=b1.\"ESV_Cert_Num\"; ");
 		//printf("alpha sql1=\n%s",sql1);
 
 
