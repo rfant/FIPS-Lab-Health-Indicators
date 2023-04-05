@@ -273,7 +273,7 @@ echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_esv_paret
 
 
 
-echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_esv_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=14&Direction=".$Direction." \" >Entropy per Sample Size</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_esv_pareto.php?in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&show_detail_value=".$show_detail_value."&dataSet=".$dataSet."&xLabel=".$xLabel."&dataSetName=".$dataSetName."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=14&Direction=".$Direction." \" >Entropy Rate</a></th>  ";
 
 
 echo "</tr>";
@@ -297,7 +297,7 @@ $i=1;
                       . $row['Noise_Source']. "  </td><td>  "     
                       . $row['Description']." </td><td> "
                       . $row['OE']."  </td><td>  "
-                      . "Ent: ".$row['Sample_Size']. "  </td></tr>";
+                      . "Entropy per Sample: ".$row['Sample_Size']. "  </td></tr>";
       $i++;  
       
       } //for each
