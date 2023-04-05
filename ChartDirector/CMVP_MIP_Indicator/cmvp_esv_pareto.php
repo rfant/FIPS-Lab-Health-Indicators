@@ -553,7 +553,7 @@ $IntelOnlyButton2->setAlignment (5);
 $coor_IntelOnlyButton2 = $IntelOnlyButton2->getImageCoor();
 
 
-$noise_source_button1 = $c->addText($buttonX-80,  $buttonY+200, "Physical","arial.ttf", 8,black); //draw button
+$noise_source_button1 = $c->addText($buttonX-80,  $buttonY+200, "Physical","arialbd.ttf", 8,black); //draw button
 $noise_source_button1->setSize(60,25);
 if ($in_noise_source_button1==1)
 	$noise_source_button1->setBackground(battleship_gray,-1,-2);
@@ -564,7 +564,7 @@ $coor_noise_source_button1 = $noise_source_button1->getImageCoor();
 
 
 
-$noise_source_button2 = $c->addText($buttonX,  $buttonY+200, "Non-Physical","arial.ttf", 8,black); //draw button
+$noise_source_button2 = $c->addText($buttonX,  $buttonY+200, "Non-Physical","arialbd.ttf", 8,black); //draw button
 $noise_source_button2->setSize(80,25);
 if ($in_noise_source_button2==1)
 	$noise_source_button2->setBackground(battleship_gray,-1,-2);
@@ -577,7 +577,7 @@ $coor_noise_source_button2 = $noise_source_button2->getImageCoor();
 
 
 
-$reuse_status_button1 = $c->addText($buttonX-80,  $buttonY+275, "Restricted","arial.ttf", 8,black); //draw button
+$reuse_status_button1 = $c->addText($buttonX-80,  $buttonY+275, "Restricted","arialbd.ttf", 8,black); //draw button
 $reuse_status_button1->setSize(60,25);
 if ($in_reuse_status_button1==1)
 	$reuse_status_button1->setBackground(battleship_gray,-1,-2);
@@ -587,7 +587,7 @@ $reuse_status_button1->setAlignment (5);
 $coor_reuse_status_button1 = $reuse_status_button1->getImageCoor();
 
 
-$reuse_status_button2 = $c->addText($buttonX,  $buttonY+275, "Open","arial.ttf", 8,black); //draw button
+$reuse_status_button2 = $c->addText($buttonX,  $buttonY+275, "Open","arialbd.ttf", 8,black); //draw button
 $reuse_status_button2->setSize(60,25);
 if ($in_reuse_status_button2==1)
 	$reuse_status_button2->setBackground(battleship_gray,-1,-2);
