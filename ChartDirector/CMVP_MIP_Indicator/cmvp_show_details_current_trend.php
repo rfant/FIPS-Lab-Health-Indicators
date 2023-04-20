@@ -240,6 +240,7 @@ echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_t
 
 echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=5&Direction=".$Direction." \" >RP Start Date</a></th>  ";
 
+
 echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=days_in_rp&Direction=".$Direction." \" >days in RP</a></th>  ";
 
 
@@ -249,7 +250,7 @@ echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_t
 
 echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=7&Direction=".$Direction." \" >CO Start Date</a></th>  ";
 
-echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=days_in_co&Direction=".$Direction." \" >days in CO</a></th>  ";
+echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=days_in_CO&Direction=".$Direction." \" >days in CO</a></th>  ";
 
 echo "<th bgcolor=LightBlue ><a href=\"".$URL_path."/cmvp_show_details_current_trend.php?in_IntelOnlyButton=".$in_IntelOnlyButton."&in_IntelOnlyButton2=".$in_IntelOnlyButton2."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_ModuleTypeButton=".$in_ModuleTypeButton."&xLabel=".$xLabel."&startDate=".$startDate."&endDate=".$endDate."&OrderBy=8&Direction=".$Direction." \" >FI Start Date</a></th>  ";
 
