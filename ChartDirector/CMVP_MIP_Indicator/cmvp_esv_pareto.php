@@ -597,6 +597,13 @@ $reuse_status_button2->setAlignment (5);
 $coor_reuse_status_button2 = $reuse_status_button2->getImageCoor();
 
 
+$Show_All_ESV_button1 = $c->addText($buttonX-40,  $buttonY+325, "Show All","arialbd.ttf", 8,black); //draw button
+
+$Show_All_ESV_button1->setBackground(gray1,-1,2);
+
+$Show_All_ESV_button1->setSize(60,25);
+$Show_All_ESV_button1->setAlignment (5);
+$coor_Show_All_ESV_button1 = $Show_All_ESV_button1->getImageCoor();
 
 
 //==== Get the Last_Updated date =====================================================
@@ -949,7 +956,8 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_esv_pareto.php", "{default}&s
    " title='Show Physical Noise Sources ' />"?>
 
 
-
+<area <?php echo $coor_Show_All_ESV_button1. " href='".$URL_path."/cmvp_show_details_esv_pareto.php?in_noise_source_button2=".$in_noise_source_button2."&in_noise_source_button1=".$in_noise_source_button1."&in_reuse_status_button1=".$in_reuse_status_button1."&in_reuse_status_button2=".($in_reuse_status_button2)."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Show All ESV Details ' />"?>
 
 
 
