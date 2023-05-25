@@ -606,6 +606,16 @@ $Show_All_ESV_button1->setAlignment (5);
 $coor_Show_All_ESV_button1 = $Show_All_ESV_button1->getImageCoor();
 
 
+//add the Search button
+$search_button = $c->addText($buttonX-50, $buttonY+370, "Search","arialbd.ttf", 10); //draw button
+$search_button->setSize(80, 30);
+$search_button->setBackground(gray1,-1,2);
+$search_button->setAlignment (5);
+$coor_search_button = $search_button->getImageCoor();
+
+
+
+
 //==== Get the Last_Updated date =====================================================
 $sql_Str_Last_Updated="select * from \"CMVP_Active_Table\"  order by \"Row_ID\" desc limit 1 ;";
 //echo "juliet sql=<br> ".$sql_Str_Last_Updated."<br>";
@@ -960,6 +970,9 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_esv_pareto.php", "{default}&s
    " title='Show All ESV Details ' />"?>
 
 
+
+<area <?php echo $coor_search_button. " href='".$URL_path."/cmvp_search.php?startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Search FIPS Databases ' />"?>
 
 
 

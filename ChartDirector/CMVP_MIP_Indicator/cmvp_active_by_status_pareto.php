@@ -786,6 +786,18 @@ $StandardButton2->setAlignment (5);
 $coor_StandardButton2 = $StandardButton2->getImageCoor();
 
 
+
+
+//add the Search button
+$search_button = $c->addText($buttonX-50, $buttonY+370, "Search","arialbd.ttf", 10); //draw button
+$search_button->setSize(80, 30);
+$search_button->setBackground(gray1,-1,2);
+$search_button->setAlignment (5);
+$coor_search_button = $search_button->getImageCoor();
+
+
+
+
 //==== Get the Last_Updated date =====================================================
 $sql_Str_Last_Updated="select * from \"CMVP_Active_Table\"  order by \"Row_ID\" desc limit 1 ;";
 //echo "juliet sql=<br> ".$sql_Str_Last_Updated."<br>";
@@ -1124,6 +1136,9 @@ $imageMap = $c->getHTMLImageMap("cmvp_show_details_active_by_status_pareto.php",
 
 <area <?php echo $coor_StandardButton2. " href='".$URL_path."/cmvp_active_by_status_pareto.php?in_StandardButton2=".($in_StandardButton2 ^ 1)."&in_StandardButton1=".$in_StandardButton1."&in_ModuleTypeButton=".$in_ModuleTypeButton."&in_SecurityLevelButton=".$in_SecurityLevelButton."&in_IntelOnlyButton=".($in_IntelOnlyButton )."&in_IntelOnlyButton2=".($in_IntelOnlyButton2) ."&zoom=".($zoom)."&in_TopButtons=".$in_TopButtons."&startDate=".$startDate."&endDate=".$endDate."'".
    " title='Filter on FIPS 140-3 ' />"?>
+
+<area <?php echo $coor_search_button. " href='".$URL_path."/cmvp_search.php?startDate=".$startDate."&endDate=".$endDate."'".
+   " title='Search FIPS Databases ' />"?>
 
 
 </map>
