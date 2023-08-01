@@ -51,6 +51,8 @@ $search_vendor_name=isset($_REQUEST["search_vendor_name"]) ? $_REQUEST["search_v
 $search_lab_name=isset($_REQUEST["search_lab_name"]) ? $_REQUEST["search_lab_name"] : "";
 $search_module_type=isset($_REQUEST["search_module_type"]) ? $_REQUEST["search_module_type"] : "";
 $search_security_level=isset($_REQUEST["search_security_level"]) ? $_REQUEST["search_security_level"] : "";
+$search_noise_description=isset($_REQUEST["search_noise_description"]) ? $_REQUEST["search_noise_description"] : "";
+$search_OE=isset($_REQUEST["search_OE"]) ? $_REQUEST["search_OE"] : "";
 
 //echo "<br>option=$search_option.  cert=$search_cert.  <br> list1=$which_CMVP_list_1 <br>list2=$which_CMVP_list_2. <br>list3=$which_CMVP_list_3 <br> module_name=$search_module_name. <br> vendor_name=$search_vendor_name. <br>";
 //echo "lab_name=$search_lab_name.  <br>module_type=$search_module_type.   <br>";
@@ -61,6 +63,8 @@ prevent_SQL_injection_attack($search_vendor_name);
 prevent_SQL_injection_attack($search_lab_name);
 prevent_SQL_injection_attack($search_module_type);
 prevent_SQL_injection_attack($search_security_level);
+prevent_SQL_injection_attack($search_noise_description);
+prevent_SQL_injection_attack($search_OE);
 
 
 
@@ -199,6 +203,12 @@ $name = $email = $gender = $comment = $website = "";
  
   <br><br>
   Security Level: <input type="text" name="search_security_level">
+ 
+  <br><br>
+ Noise Description: <input type="text" name="search_noise_description">
+ 
+  <br><br>
+ Operational Enviroment: <input type="text" name="search_OE">
  
   <br><br>
 
@@ -474,8 +484,19 @@ if ($search_option==1)
 			$lab_name_str= " and upper(\"Lab_Name\") like upper('%".$search_lab_name."%') ";
 
 
+		if ($search_noise_description==null)
+			$noise_description_str=" and 1=1 ";
+		else
+			$noise_description_str= " and upper(\"Description\") like upper('%".$search_noise_description."%') ";
 
-		$str1_sql= " Select * from \"CMVP_ESV_Table\" where 1=1 ".$esv_cert_str.$implementation_name_str.$vendor_name_str.$lab_name_str."   ";
+		if ($search_OE==null)
+			$OE_str=" and 1=1 ";
+		else
+			$OE_str= " and upper(\"OE\") like upper('%".$search_OE."%') ";
+
+
+
+		$str1_sql= " Select * from \"CMVP_ESV_Table\" where 1=1 ".$esv_cert_str.$implementation_name_str.$vendor_name_str.$lab_name_str.$noise_description_str.$OE_str."   ";
 		$str1_sql=$str1_sql." order by to_date(\"Validation_Date\",'MM/DD/YYY') desc  ";
 
 	 	//echo "charlie esv str1_sql=<br>".$str1_sql;
