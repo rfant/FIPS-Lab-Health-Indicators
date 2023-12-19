@@ -149,9 +149,9 @@ strfcat(sql1,"  VALUES (NULL,'3838',3838,'Cryptographic Module for Intel Platfor
 strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\") ");
 strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21',4355,'Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'4/28/2020','9/21/2020','1/25/2021','11/07/2022',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',4355); ");
 
+strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Cert_Num\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\") ");
+strfcat(sql1,"  VALUES (NULL,NULL,NULL,'Cryptographic Module for Intel Platforms Security Engine Chipset (CMP)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'02/09/2023',NULL,NULL,NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
 
-//strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\",\"Y_CO_Avg\") ");
-//strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21','1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2019','9/21/2020','1/25/2021',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
 
 
 
@@ -1045,6 +1045,13 @@ while (myX >0 && myX >= prevX && myX<termination_value) {
 				coordination=last_update_date;
 		else if (strstr(status_value,"Finalization")!=0) 
 				finalization=last_update_date;	
+		else if (strstr(status_value,"On Hold")!=0) 
+				{
+			// do nothing. "On Hold" state introduced to MIP website in Dec 2023. I will ignore it.
+				}
+
+
+
 		else
 			printf ("ERROR 708: Unknown Status Value=%s\n",status_value);
 
