@@ -528,7 +528,7 @@ if ($search_option==1)
 		echo "<th bgcolor=LightBlue >Noise Source</th>  ";
 		echo "<th bgcolor=LightBlue >Noise Description</th>  ";
 		echo "<th bgcolor=LightBlue >OE</th>  ";
-		echo "<th bgcolor=LightBlue >Entropy per Sample Size</th>  ";
+		echo "<th bgcolor=LightBlue >Entropy Rate</th>  ";
 		echo "</tr>";
 
 
@@ -547,7 +547,7 @@ if ($search_option==1)
 	      . $row['Noise_Source']. "  </td><td>  "     
 	      . $row['Description']." </td><td> "
 	      . $row['OE']."  </td><td>  "
-	      . "Ent: ".$row['Sample_Size']. "  </td></tr>";
+	      . "E".$row['Sample_Size']. "  </td></tr>";
 	      $i++;  
 	      
 	      } //for each
