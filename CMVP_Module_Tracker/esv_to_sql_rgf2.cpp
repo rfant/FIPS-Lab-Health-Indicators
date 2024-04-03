@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdarg.h>  //ubuntu
-#include "../dev_or_prod.h"
+#include "../dev_or_prod_rgf2.h"
 
 //#include "Active_Indicator_sql.h"
 
@@ -1147,16 +1147,16 @@ int main (int argc, char* argv[]) {
 	char connbuff[200];
 
 
-	userKey_[0]=userKey_[0] + 128; //rgf2
+
 //printf("alpha1\n");
 	
 
 	switch (PROD) {
 		case 2:  			//local VM machine
-			AES_set_decrypt_key(userKey_, 128, &aesKey_); //rgf2
-    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+		//	AES_set_decrypt_key(userKey_, 128, &aesKey_); //rgf2
+    	//	AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
-    		printf("\ndecrypted p/w is:%s\n",decryptedPW); //rgf2
+    		printf("\ndecrypted p/w is:%s\n",plainTextPW); //rgf2
 
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
        		conn = PQconnectdb(connbuff);
@@ -1165,11 +1165,11 @@ int main (int argc, char* argv[]) {
 	
 		case 1: 			//intel intranet production
   		
-	  		userKey_[0]=userKey_[0] - 128;  //rgf2
-			AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+	  		
+			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
-			printf("\ndecrypted p/w is:%s\n",decryptedPW); //rgf2
+			printf("\ndecrypted p/w is:%s\n",plainTextPW); //rgf2
 
     		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
     
