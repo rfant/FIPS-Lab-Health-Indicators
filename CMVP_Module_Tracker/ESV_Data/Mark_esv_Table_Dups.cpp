@@ -83,15 +83,13 @@ int main (){
 
 
 
-	for(i=0;i<16;i++)
-		userKey_[i]=rand(); //rgf2
-
+	
 
 	switch (PROD) {
 		case 2:  			//local VM machine
 			
-			AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
     		//rgf2
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
@@ -104,8 +102,8 @@ int main (){
 		case 1: 			//intel intranet production
   		
 	  		
-			AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    	//	AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
 			//rgf2
 			//snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
@@ -116,8 +114,8 @@ int main (){
 	
 		case 0: //Intel intranet pre-production
 			
-		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+		 	//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
     		
     		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
     
