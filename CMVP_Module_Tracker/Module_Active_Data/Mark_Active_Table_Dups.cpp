@@ -84,8 +84,8 @@ int main (){
 
 	switch (PROD) {
 		case 2:  			//local VM machine
-			AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
        		conn = PQconnectdb(connbuff);
@@ -95,19 +95,20 @@ int main (){
 		case 1: 			//intel intranet production
   		
 	  		
-			AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
-			
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+			//rgf2
+			//snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", encryptedPW);
     
     		conn = PQconnectdb(connbuff);
    	   		break;
 	
 		case 0: //Intel intranet pre-production
 			
-		 	AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+		 	//AES_set_decrypt_key(userKey_, 128, &aesKey_);
+    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
     		
     		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
     
@@ -128,25 +129,11 @@ int main (){
     	//If I included this code in the "active_to_sql.cpp" file, then this would run once for every single file (and there are 5000 files!!)
     	//So, much faster to run it once here.
 
-    	
-    	//Mark all the products which are "intel certifiable" in Status3. 
-		CLR_SQL1_STR
-		
-		
-		strfcat(sql1,"update \"CMVP_Active_Table\" as t1 set \"Status3\" = t2.\"Status3\" from (select \"Cert_Num\",\"Status3\" from \"CMVP_MIP_Table\"  ) as t2 ");
-		strfcat(sql1," 	where t1.\"Cert_Num\"=t2.\"Cert_Num\" ; "); 
-		sql_result = PQexec(conn, sql1); 
-
-		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-			printf("\nError 141: SQL  Marking Intel Certifiable in Active Table Command failed: sql1=%s\n",sql1);
-		PQclear(sql_result);
-
     	//mark all the rows in Active_Table which have the same Module_Name and Vendor_Name repeated on multiple rows. This is approx 1/3 of all the rows.
     	//Do this so that mapping from the CMVP_MIP_Table (which only has Module_name and Vendor_Name) to the CMVP_Active_Table will get us the "Lab_Name" for
     	//the lab field in the CMVP_MIP_Table.
     	//Also, some Module_Name and Vendor_Name dups are done by multiple labs (e.g. Samsung with atsec and GISOLVE) submiting the module
 		
-
     	
 		CLR_SQL1_STR
 		
@@ -225,6 +212,26 @@ int main (){
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 			printf("\nError 129: SQL  Permanent Sunset Table Command failed: sql1=%s\n",sql1);
 		PQclear(sql_result);
+
+		//Use the CMVP_Permanent_Sunset_Table Sunset_Date to update the Sunset Date in the Active Table. 
+		// This is mostly done when a certificate is put on Historic before its sunset date is reached (e.g. 4355) 
+		CLR_SQL1_STR
+
+		strfcat(sql1," UPDATE  \"CMVP_Active_Table\" SET \"Sunset_Date\" = TO_DATE(subquery.\"Sunset_Date\" ,'MM/DD/YYYY') ");
+		strfcat(sql1," from(	SELECT \"CMVP_Permanent_Sunset_Table\".\"Sunset_Date\", \"CMVP_Permanent_Sunset_Table\".\"Cert_Num\" from \"CMVP_Permanent_Sunset_Table\"   ");
+		strfcat(sql1," inner JOIN \"CMVP_Active_Table\"  ON \"CMVP_Permanent_Sunset_Table\".\"Cert_Num\" =  \"CMVP_Active_Table\".\"Cert_Num\"  ");
+		strfcat(sql1," 	and \"CMVP_Permanent_Sunset_Table\".\"Sunset_Date\" not like 	'%1901-01-01%') ");
+		strfcat(sql1,"  as subquery  where  \"CMVP_Active_Table\".\"Cert_Num\"=subquery.\"Cert_Num\" ");
+		strfcat(sql1,"  and \"CMVP_Active_Table\".\"Sunset_Date\" = '1901-01-01' ");
+ 		
+		//printf("update active sunset_date sql=%s\n",sql1);
+		sql_result = PQexec(conn, sql1); 
+
+
+		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+			printf("\nError 232: SQL  Update Active Sunset_Date Command failed: sql1=%s\n",sql1);
+		PQclear(sql_result);
+
 
 	} //connection ok
 	else
