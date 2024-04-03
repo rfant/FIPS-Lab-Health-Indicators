@@ -1151,8 +1151,7 @@ int main (int argc, char* argv[]) {
 //printf("alpha1\n");
 	
 
-	for(i=0;i<16;i++)
-		userKey_[i]=rand(); //rgf2
+	
 
 
 	switch (PROD) {

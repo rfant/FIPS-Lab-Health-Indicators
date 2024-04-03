@@ -86,9 +86,7 @@ char connbuff[200];
 
 	
 	
-	for(i=0;i<16;i++)
-		userKey_[i]=rand(); //rgf2
-
+	
 
 	switch (PROD) {
 		case 2:  			//local VM machine
