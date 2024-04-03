@@ -83,12 +83,20 @@ int main (){
 
 
 
+	for(i=0;i<16;i++)
+		userKey_[i]=rand(); //rgf2
+
+
 	switch (PROD) {
 		case 2:  			//local VM machine
+			
 			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
+    		//rgf2
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+    		
+
        		conn = PQconnectdb(connbuff);
    	   		
    	   		break;
@@ -99,8 +107,9 @@ int main (){
 			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
-			
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+			//rgf2
+			//snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", encryptedPW);
     
     		conn = PQconnectdb(connbuff);
    	   		break;
@@ -118,7 +127,6 @@ int main (){
 			printf("ERROR  110: Unknown PROD=%d\n",PROD); break;
 	}
 
-
 	
 
 
@@ -130,40 +138,44 @@ int main (){
     	//So, much faster to run it once here.
 
     	//Remove all the dup rows in CMVP_ESV_Table where the ESV_Cert_Num is already in the table. 
-		
-    	
 		CLR_SQL1_STR
 		strfcat(sql1," delete from \"CMVP_ESV_Table\" a1 using \"CMVP_ESV_Table\" b1 where a1.\"Row_ID\" > b1.\"Row_ID\" and a1.\"ESV_Cert_Num\"=b1.\"ESV_Cert_Num\"; ");
 		//printf("alpha sql1=\n%s",sql1);
-
-
 		sql_result = PQexec(conn, sql1); 
-
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 			printf("\nError 473: SQL  Deleting Dup ESV_Cert_Num in ESV Table Command failed: sql1=%s\n",sql1);
 		PQclear(sql_result);
 			
 
+
+
 		//Make a "clean" copy of Lab Names since some many labs have slight variations in their lab name
 		CLR_SQL1_STR
-
 		strfcat(sql1,"	update \"CMVP_ESV_Table\" set \"Clean_Lab_Name\" = UPPER((string_to_array(\"Lab_Name\", ' '))[1]) where \"Clean_Lab_Name\" is null ");
 		sql_result = PQexec(conn, sql1); 
-
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 			printf("\nError 479: SQL Clean Lab Name in ESV Table Command failed: sql1=%s\n",sql1);
 		PQclear(sql_result);
-		
+
+
 		//Fix AEGisolve name since the parser strips out the funny european AE letter
 		CLR_SQL1_STR
-
 		strfcat(sql1,"	update \"CMVP_ESV_Table\" set \"Lab_Name\"='AEGISOLVE', \"Clean_Lab_Name\"='AEGISOLVE' where \"Clean_Lab_Name\" like '%%GISOLVE%%'");
 		sql_result = PQexec(conn, sql1); 
-
 		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 			printf("\nError 122: SQL Lab Name update in ESV Table Command failed: sql1=%s\n",sql1);
 		PQclear(sql_result);
 		
+
+		//Mark All Intel ESV Certs as "Status3" is "Intelcertified".  .Intel_Certifiable.
+		CLR_SQL1_STR
+		strfcat(sql1,"	update \"CMVP_ESV_Table\" set \"Status3\"='.Intel_Certified.' where \"Vendor_Name\" like '%%Intel Corp%%'");
+		sql_result = PQexec(conn, sql1); 
+		if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+			printf("\nError 167: Status3 Certfiable update in ESV Table Command failed: sql1=%s\n",sql1);
+		PQclear(sql_result);
+		
+
 
 
 	} //connection ok

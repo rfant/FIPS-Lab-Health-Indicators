@@ -86,12 +86,20 @@ char connbuff[200];
 
 	
 	
+	for(i=0;i<16;i++)
+		userKey_[i]=rand(); //rgf2
+
+
 	switch (PROD) {
 		case 2:  			//local VM machine
+			
 			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
+    		//rgf2
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
+    		
+
        		conn = PQconnectdb(connbuff);
    	   		
    	   		break;
@@ -102,8 +110,9 @@ char connbuff[200];
 			AES_set_decrypt_key(userKey_, 128, &aesKey_);
     		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
-			
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+			//rgf2
+			//snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", encryptedPW);
     
     		conn = PQconnectdb(connbuff);
    	   		break;
@@ -118,7 +127,7 @@ char connbuff[200];
    	   		conn = PQconnectdb(connbuff);
    	   		break;
 		default: 
-			printf("ERROR  112: Unknown PROD=%d\n",PROD); break;
+			printf("ERROR  110: Unknown PROD=%d\n",PROD); break;
 	}
 
 
