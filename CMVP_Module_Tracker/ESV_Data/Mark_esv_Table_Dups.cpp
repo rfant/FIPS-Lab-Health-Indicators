@@ -7,9 +7,12 @@
 #include "utils.h"
 #include <unistd.h>
 #include <stdarg.h>  //ubuntu
-#include "../dev_or_prod.h"
-
+//#include "../dev_or_prod.h"  //rgf2
+#include <openssl/aes.h>
+//AES_KEY aesKey_;
+//unsigned char decryptedPW[16];
 //global variables
+
 PGconn *conn;
 char * MasterStr;
 
@@ -35,10 +38,7 @@ char * MasterStr;
 #define STATUS 10
 
 
-#include <openssl/aes.h>
 
-AES_KEY aesKey_;
-unsigned char decryptedPW[16];
 
 //PROTOTYPES
 
@@ -73,7 +73,7 @@ void strfcat(char *src, char *fmt, ...){
 //int main (int argc, char* argv[]) {
 int main (){
 	
-	
+	#include "../dev_or_prod.h" 
 	char connbuff[200];
 	
 	int i;
@@ -88,13 +88,12 @@ int main (){
 	switch (PROD) {
 		case 2:  			//local VM machine
 			
-			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		//AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
+			
+    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
     		
     		//rgf2
     		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
     		
-
        		conn = PQconnectdb(connbuff);
    	   		
    	   		break;
@@ -102,20 +101,19 @@ int main (){
 		case 1: 			//intel intranet production
   		
 	  		
-			//AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    	//	AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+			AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
 			//rgf2
-			//snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", encryptedPW);
+			snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
+    		
     
     		conn = PQconnectdb(connbuff);
    	   		break;
 	
 		case 0: //Intel intranet pre-production
 			
-		 	//AES_set_decrypt_key(userKey_, 128, &aesKey_);
-    		//AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
+		 	
+    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
     		
     		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
     

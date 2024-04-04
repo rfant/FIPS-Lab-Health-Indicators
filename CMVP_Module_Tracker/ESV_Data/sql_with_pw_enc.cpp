@@ -54,7 +54,7 @@ int main (int argc, char* argv[]) {
 //AES_set_decrypt_key(userKey_, 128, &aesKey_);
 AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
 
-fprintf(stdout,"\nPlainText: %s\n", decryptedPW);     
+//printf("\nPlainText: %s\n", decryptedPW);     
 return 0;
 
 

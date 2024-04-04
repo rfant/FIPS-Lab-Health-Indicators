@@ -1,10 +1,12 @@
-#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
+TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+#TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
 
-#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
-RAW_DATA_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
 
-MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
+RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
+#RAW_DATA_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
+
+MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+#MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
 
 #cd $TOOL_PATH/results
 #rm *.log
@@ -35,8 +37,6 @@ done
 
 echo "Deleting all dup rows in the CMVP_ESV_Table. Plus create a clean_lab_name by using just the first word of the lab name since there are many spellings. " 
 $TOOL_PATH/Mark_esv_Table_Dups >> $LOG_FILENAME
-
-cp $LOG_FILENAME $MY_BACKUP_PATH/results/.
 
 # If I have any error messages in the log, I'll set a flag in the POSGRESQL dbase that will show as a warning in the LHI tool.
 grep -q -i "error" $LOG_FILENAME && ./setesvErrorFlag $today.ESV.log

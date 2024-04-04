@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 #used to get the latest Active Module  list from CMVP
 #this will include cert_numbers, vendor, module name, lab name, sunset, etc.
 
 
-#MY_TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-MY_TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
+MY_TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+#MY_TOOL_PATH="/home/vcap/app/.bo-config/ESV_Data"
 
-#MY_LOCAL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
-MY_LOCAL_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
+
+MY_LOCAL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
+#MY_LOCAL_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
 
 MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
 
@@ -37,6 +38,7 @@ rm -r $URL_FILENAME
 for i in {1..100}  #fix up my sequential cert list. see above comment.
 do
   echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/entropy-validations/certificate/$i" >> $URL_FILENAME
+#  echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/$i" >> $URL_FILENAME
 done
 #--------------------------------------------------------------------
 #now save each individual certificate whether it's valid or bogus.
@@ -47,8 +49,8 @@ cd $MY_LOCAL_PATH
 xargs -n 1 curl -O < $URL_FILENAME
 
 # Backup all my Active Cert data to the Network Share Drive
-cp $MY_TOOL_PATH/esv_cert_pull/* $MY_BACKUP_PATH/esv_cert_pull_backup/.
-# cp /home/vcap/app/.bp-config/ESV_Data/esv_cert_pull/* /var/vcap/data/LHI/ESV_Data/esv_cert_pull_backup/.
+#cp $MY_TOOL_PATH/esv_cert_pull/* $MY_BACKUP_PATH/esv_cert_pull_backup/.
+
 
 
 #-------------------------------------------------------------------

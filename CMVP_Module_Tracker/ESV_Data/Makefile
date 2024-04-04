@@ -38,7 +38,7 @@ all:    ESV_ALL
 
 #	rm -f active_to_sql.o
 
-ESV_ALL: esv_to_sql.o Mark_esv_Table_Dups.o delete_data_esv_table.o setesvErrorFlag.o clearesvErrorFlag.o
+ESV_ALL: esv_to_sql.o Mark_esv_Table_Dups.o delete_data_esv_table.o setesvErrorFlag.o clearesvErrorFlag.o sql_with_pw_enc.o
 esv_to_sql.o: esv_to_sql.cpp
 	$(CXX) $(CXXFLAGS) $(INC) esv_to_sql.cpp -lpq -v -o esv_to_sql $(LIB)
 	
@@ -56,3 +56,8 @@ clearesvErrorFlag.o: clearesvErrorFlag.cpp
 
 delete_data_esv_table.o: delete_data_esv_table.cpp
 	$(CXX) $(CXXFLAGS) $(INC) delete_data_esv_table.cpp -lpq -v -o delete_data_esv_table $(LIB)
+
+sql_with_pw_enc.o: sql_with_pw_enc.cpp
+	$(CXX) $(CXXFLAGS) $(INC) sql_with_pw_enc.cpp -lpq -v -o sql_with_pw_enc $(LIB)
+	
+
