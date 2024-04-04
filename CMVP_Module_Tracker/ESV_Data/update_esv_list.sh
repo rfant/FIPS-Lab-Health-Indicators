@@ -35,7 +35,7 @@ cd $MY_LOCAL_PATH
 #I'll then clean up all dupe cert files and delete any bogus cert files.
 rm -r $URL_FILENAME
 
-for i in {1..100}  #fix up my sequential cert list. see above comment.
+for i in {1..1000}  #fix up my sequential cert list. see above comment.
 do
   echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/entropy-validations/certificate/$i" >> $URL_FILENAME
 #  echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/$i" >> $URL_FILENAME
