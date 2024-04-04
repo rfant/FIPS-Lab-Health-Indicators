@@ -7,10 +7,8 @@
 #include "utils.h"
 #include <unistd.h>
 #include <stdarg.h>  //ubuntu
-//#include "../dev_or_prod.h" //rgf2
-#include <openssl/aes.h>
-//AES_KEY aesKey_;
-//unsigned char decryptedPW[16];
+
+
 
 //global variables
 PGconn *conn;
@@ -41,38 +39,9 @@ char * MasterStr;
 //PROTOTYPES
 void strfcat(char *, char *, ...);
 int str_find (const char * ,byte * ,const long , long );
-//int date1_lt_date2 (const char *, const char *);
+int date1_lt_date2 (const char *, const char *);
 
 #include "current_MIP_Indicator_sql.h"
-
-//====================================================
-//===================================================================================================
-void strfcat(char *src, char *fmt, ...){
-//this is sprintf and strcat combined.
-//strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
-//strfcat(dst, "%d:%d:%c\n", 4,13,'s');
-//printf("charlie1\n");
-    //char buf[2048];
-    char buf[SQL_MAX];
-//printf("charlie2\n");
-
-    va_list args;
-
-    va_start(args, fmt);
-//printf("charlie3. buf=%d, fmt=%d, args=%d\n",strlen(buf),strlen(fmt),args);
-
- //   vsprintf(buf, fmt, args);
-    vsnprintf(buf,sizeof buf, fmt,args);
-
-    va_end(args);
-
-//printf("charlie5\n");
-
-     //strcat(src, buf);
-    strncat(src,buf,sizeof buf);
-//printf("charlie6\n");
-
-} //strfcat
 
 
 //=======================================================
@@ -102,18 +71,6 @@ int k;
 	
 
 
-// Set the SL and Module Type for this Intel ADL-M product in the MIP table.
-
-CLR_SQL1_STR
-
-strfcat(sql1," update \"CMVP_MIP_Table\" set \"Lab_Name\"='ATSEC', \"Module_Type\"='Firmware-Hybrid', \"SL\"=2 where \"Module_Name\" ");
-strfcat(sql1," like '%%Crypto Module for Intel Alder Lake Converged Security and Manageability Engine (CSME) 5.0.0.0 and 5.1.0.0%%'; ");
-sql_result = PQexec(conn, sql1); 
-if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-	printf("\nError 114: SQL Update SL and Module_Type in MIP Table Command failed: sql1=%s\n",sql1);
-PQclear(sql_result);
-
-
 
 
 // Set the SL and Module Type in MIP_Table based on data in Active_Table.
@@ -126,7 +83,7 @@ strfcat(sql1," inner JOIN \"CMVP_Active_Table\"  ON \"CMVP_MIP_Table\".\"Module_
 strfcat(sql1," and \"CMVP_MIP_Table\".\"Vendor_Name\" = \"CMVP_Active_Table\".\"Vendor_Name\" and \"CMVP_Active_Table\".\"Status2\" is null ) ");
 strfcat(sql1," as subquery  where \"CMVP_MIP_Table\".\"Module_Name\"=subquery.\"Module_Name\" and \"CMVP_MIP_Table\".\"Vendor_Name\"=subquery.\"Vendor_Name\" ; ");
 sql_result = PQexec(conn, sql1); 
-//sql_result = PQexec(conn, sql1); 
+sql_result = PQexec(conn, sql1); 
 if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
 	printf("\nError 109: SQL Update SL and Module_Type in MIP Table Command failed: sql1=%s\n",sql1);
 PQclear(sql_result);
@@ -137,20 +94,13 @@ PQclear(sql_result);
 //the same name make my algorithm want to skip both of them as "DUP-Name". Also, I'll remove all the (R) marks and single quotes.
 
 CLR_SQL1_STR
-
 strfcat(sql1," delete from \"CMVP_MIP_Table\" where \"Module_Name\" like 'Cryptographic Module for Intel Platform%%' and \"Clean_Lab_Name\" like 'UL' and \"Vendor_Name\" like 'Intel%%'; ");
-
-//new & missing UL
 strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Cert_Num\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\") ");
-strfcat(sql1,"  VALUES (NULL,'3838',3838,'Cryptographic Module for Intel Platforms Security Engine Chipset (ICL)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'10/11/2019','6/1/2020','7/28/2020','3/4/2021',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
+strfcat(sql1,"  VALUES (NULL,'3838',3838,'Cryptographic Module for Intel Platforms Security Engine Chipset (ICL)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'7/28/2020','9/21/2020','1/25/2021','3/4/2021',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
 
-strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\") ");
-strfcat(sql1,"  VALUES ('Vanished-03/16/21. Reappear-04/07/21',4355,'Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'4/28/2020','9/21/2020','1/25/2021','11/07/2022',(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',4355); ");
-
-strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Cert_Num\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\") ");
-strfcat(sql1,"  VALUES (NULL,NULL,NULL,'Cryptographic Module for Intel Platforms Security Engine Chipset (CMP)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'02/09/2023',NULL,NULL,NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid'); ");
-
-
+//
+strfcat(sql1," INSERT INTO \"CMVP_MIP_Table\"(\"Status2\",\"TID\",\"Module_Name\", \"Vendor_Name\", \"Lab_Name\",\"IUT_Start_Date\", \"Review_Pending_Start_Date\",\"In_Review_Start_Date\", \"Coordination_Start_Date\",\"Finalization_Start_Date\",\"Last_Updated\",\"Standard\",\"Clean_Lab_Name\",\"SL\",\"Module_Type\",\"Cert_Num\",\"Y_CO_Avg\") ");
+strfcat(sql1,"  VALUES (NULL,'1002','Cryptographic Module for Intel Platforms Security Engine Chipset (CML)','Intel Corporation','UL VERIFICATION SERVICES INC',NULL,'10/01/2019','5/02/2020','7/28/2020',NULL,(select CURRENT_DATE),'FIPS 140-2','UL',1,'Firmware-Hybrid',NULL,110); ");
 
 
 
@@ -168,6 +118,18 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  {
 
 
 
+//Make a "clean" copy of Module_TYpes and Lab Names since some many labs  have slight variations in their lab name
+CLR_SQL1_STR
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Lab_Name\" = UPPER((string_to_array(\"Lab_Name\", ' '))[1]) where \"Clean_Lab_Name\" is null ;");
+//printf("clean_lab_update sql=%s\n",sql1);
+strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Module_Type\" =  (case when \"Module_Type\" like '%%Hybrid%%' then 'Hybrid' else \"Module_Type\" end) ");
+strfcat(sql1,"	where \"Clean_Module_Type\" is null ");
+//printf("clean_module_type update sql = %s\n",sql1);
+sql_result = PQexec(conn, sql1); 
+sql_result = PQexec(conn, sql1); 
+if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
+	printf("\nError 80: SQL Clean Lab Name in MIP Table Command failed: sql1=%s\n",sql1);
+PQclear(sql_result);
 
 
 //zero out sql1 command string. Not sure why this is necessary. But will fail if I don't
@@ -180,12 +142,6 @@ strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"Vend
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1000',\"Module_Type\"='Firmware-Hybrid',\"SL\"=1, \"In_Review_Start_Date\"='2021-07-25' where \"Module_Name\" like 'Intel Converged Security and Manageability Engine (CSME) Crypto Module for Tiger Point PCH, Mule Creek Canyon PCH, and Rocket Lake PCH' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1000' where \"Module_Name\" like 'Cryptographic Module for Intel Converged Security and Manageability Engine (CSME) for Intel Tiger Point PCH' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
 
-
-//Updating lab name and module type for Intel Module since we know this info obviously.  New Alder Lake Name
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"SL\"=2,  \"Module_Type\"='Firmware-Hybrid', \"Lab_Name\"='ATSEC' where \"Module_Name\" like 'Crypto Module for Intel Alder Point PCH Converged Security and Manageability Engine (CSME)' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
-
-
-
 //space added to module name??!!?
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1001',\"Module_Type\"='Firmware-Hybrid',\"SL\"=1 where \"Module_Name\" like 'Cryptographic Module for Intel Converged Security and Manageability Engine (CSME)' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1001' where \"Module_Name\" like 'Cryptographic Module for Intel Converged Security and Manageability Engine(CSME)' and \"Vendor_Name\" like '%%Intel Corp%%'; ");
@@ -194,8 +150,6 @@ strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"TID\" = '1001' where \"Module_Nam
 //Manually adding Lab_Name because I know who it is
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"TID\" like '1000'; ");
 strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"TID\" like '1001'; ");
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Lab_Name\" = 'ATSEC' where \"Module_Name\" like '%%Alder Lake%%'; ");
-
 
 //Cryptographic Module for Intel® Platforms' Security Engine Chipset
 //strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Finalization_Start_Date\"=  '2021-10-04', \"Coordination_Start_Date\"='2021-08-04', \"Lab_Name\" = 'ATSEC' where \"Vendor_Name\" like '%%eWBM%%' and \"Module_Name\" like '%%MS1201 Security Sub-system%%'; ");
@@ -225,19 +179,6 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)
 	printf("\nError 182: SQL Lab Name update in MIP Table Command failed: sql1=%s\n",sql1);
 PQclear(sql_result);
 
-
-//Make a "clean" copy of Module_Types and Lab Names since some many labs  have slight variations in their lab name
-CLR_SQL1_STR
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Lab_Name\" = UPPER((string_to_array(\"Lab_Name\", ' '))[1]) where \"Clean_Lab_Name\" is null ;");
-//printf("clean_lab_update sql=%s\n",sql1);
-strfcat(sql1,"	update \"CMVP_MIP_Table\" set \"Clean_Module_Type\" =  (case when \"Module_Type\" like '%%Hybrid%%' then 'Hybrid' else \"Module_Type\" end) ");
-strfcat(sql1,"	where \"Clean_Module_Type\" is null ");
-//printf("clean_module_type update sql = %s\n",sql1);
-sql_result = PQexec(conn, sql1); 
-sql_result = PQexec(conn, sql1); 
-if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-	printf("\nError 80: SQL Clean Lab Name in MIP Table Command failed: sql1=%s\n",sql1);
-PQclear(sql_result);
 //---------------------------------------------------------------------------
 //Mark the modules that are Intel "FIPS Certifiable". These are Intel products that have been sold to customer but customer does the FIPS certification.
 //Manually done right now, but will need to add function to indicator to allow admins to update
@@ -267,16 +208,6 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)
 PQclear(sql_result);
 
 
-//Any module which has a "Cert_Num" AND a Null "Finalization_Start_Date", I'll set the "Finalization_Start_Date" to the "Promoted" date in "Status2"
-CLR_SQL1_STR
-
-strfcat(sql1,"update \"CMVP_MIP_Table\" set \"Finalization_Start_Date\" =TO_DATE(replace (right(\"Status2\" ,length(\"Status2\")-9) , '''',''),'MM/DD/YYYY') ");
-strfcat(sql1,"where  \"Finalization_Start_Date\" is null and \"Status2\" like '%%Promoted%%' ");
-sql_result = PQexec(conn, sql1); 
-if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  
-	printf("\nError 208: SQL Lab update in MIP Table Command failed: sql1=%s\n",sql1);
-PQclear(sql_result);
-
 
 
 //--------------------------------------------------------------------------------		
@@ -301,7 +232,7 @@ return(1);
 
 
 //====================================================
-/*int date1_lt_date2 (const char *date1, const char *date2){
+int date1_lt_date2 (const char *date1, const char *date2){
 //date1 less than date2
 //Quick and dirty date compare.
 //Assumes date format is 'mm/dd/yyyy'
@@ -311,44 +242,60 @@ return(1);
 // NOTE: think of NULL = infinity. Then
 //	 NULL  < mm/dd/yyyy  returns 0 (false)
 //   mm/dd/yyyy < NULL returns 1 (true)  
+
+
+
 //printf("zulu1:DATE1=%s  DATE2=%s  \n",date1,date2);
     int day1,month1,year1;
     int day2,month2,year2;
+
     if(date1=="NULL" && date2!="NULL") 
     	return(0);
+
     if(date1!="NULL" && date2=="NULL")
     	return(1);
+
     if(date1=="NULL" && date2=="NULL")
     	return(0);
+
     sscanf(date1,"'%d/%d/%d'",&month1,&day1,&year1); //reads the numbers in a mm/dd/yyyy format
     sscanf(date2,"'%d/%d/%d'",&month2,&day2,&year2); //from the string
+
     //printf("zulu2 Date1: month1=%d.  day1=%d. year1=%d\n",month1,day1,year1);
 	//printf("zulu2 Date2: month2=%d.  day2=%d. year2=%d\n",month2,day2,year2);
+
     if(year1<year2)
     	return(1);
     else if (year1>year2)
     	return(0);   
     else
     {//  year1=year2
+
     	if(month1<month2)
     		return(1);
     	else if (month1>month2)
     		return(0);
     	else
     	{//  month1=month2
+
     		if(day1<day2)
     			return(1);
     		else if (day1>day2)
     			return(0);
     		else
     			return(0);  //hitting this means date1=date2
+
     	}
     }
  	printf("ERROR 185: should never get here\n");
+
     return (0);
+
+
 	
 }  //date1 lt date2
-*/
+
+
 //=============================================================================================
 int get_value_from_sql (){
 
@@ -689,21 +636,25 @@ return 0;
 
 
 //===================================================================================================
-/*void strfcat(char *src, char *fmt, ...){
+void strfcat(char *src, char *fmt, ...){
 //this is sprintf and strcat combined.
 //strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
 //strfcat(dst, "%d:%d:%c\n", 4,13,'s');
+
     //char buf[2048];
+
 	
+
     char buf[SQL_MAX];
     va_list args;
+
     va_start(args, fmt);
     vsprintf(buf, fmt, args);
     va_end(args);
 //printf("alpha:size(src)=%d. size(buf)=%d\n",strlen(src),strlen(buf));
     strcat(src, buf);
 }//strfcat
-*/
+
 //====================================================================================================
 long int parse_modules_from_single_cmvp_file (char * file_name,byte* data,const long len){
 //this will parse a single module from the HTML _cmvp_file after it is pulled from the CMVP MIP Status website
@@ -805,7 +756,7 @@ int Status_Column_Exists;    // "Status" with a single value (Review Pending, In
 
 	
 	if((myX==0 || myY==0)) {
-		printf("***** Error 142a: Last Update Tag Not found in %s (x=%d.y=%d)\n",file_name,myX,myY);
+		printf("***** Error 142a: Last Update Tag Not found (x=%d.y=%d)\n",myX,myY);
 		return 1;
 	}
 	else{
@@ -1043,13 +994,6 @@ while (myX >0 && myX >= prevX && myX<termination_value) {
 				coordination=last_update_date;
 		else if (strstr(status_value,"Finalization")!=0) 
 				finalization=last_update_date;	
-		else if (strstr(status_value,"On Hold")!=0) 
-				{
-			// do nothing. "On Hold" state introduced to MIP website in Dec 2023. I will ignore it.
-				}
-
-
-
 		else
 			printf ("ERROR 708: Unknown Status Value=%s\n",status_value);
 
@@ -1288,7 +1232,7 @@ if (PQresultStatus(sql_result) != PGRES_COMMAND_OK)  {
 // to the Active state, or something else.  This next section will mark any disappearing modules by setting its status to 'VANISHED'
 //NOTE1: the expectation is that ALL "normal" modules will eventually VANISH. Since upon going ACTIVE, they will disappear from the Daily_CMVP_MIP_Table.
 //NOTE2: a module can VANISH, and then Reappear on the MIP list. The elapsed time between the two states could be days/weeks/months. 
-//		The merge_all_dup function below addresses that by creating a state called "Vanished-mm/dd/yyyy. Reappear-mm/dd/yyyy" where the VANISH and Reapper dates are included.
+//		The merge_all_dup function below addresses that by creating a state called "Van-mm/dd/yyyy. Reappear-mm/dd/yyyy" where the VANISH and Reapper dates are included.
 
 //See if this module has dropped off the MIP list.
 CLR_SQL1_STR
@@ -1363,15 +1307,15 @@ if (PQresultStatus(sql_result) != PGRES_TUPLES_OK)
 {//check status
    printf("\nError 1042: SQL Merge Function Command failed: sql1=%s\n",sql1);
    switch (PQresultStatus(sql_result)) {
-			case PGRES_EMPTY_QUERY: printf(" \n PGRES_EMPTY_QUERY:The string sent to the server was empty.\n"); break;
-			case PGRES_COMMAND_OK: printf("\n PGRES_COMMAND_OK:Successful completion of a command returning no data. \n"); break;
-			case PGRES_TUPLES_OK: printf("\n PGRES_TUPLES_OK:Successful completion of a command returning data (such as a SELECT or SHOW). \n"); break;
-			case PGRES_COPY_OUT: printf(" \n PGRES_COPY_OUT:Copy Out (from server) data transfer started.\n"); break;
-			case PGRES_COPY_IN: printf(" \n PGRES_COPY_IN:Copy In (to server) data transfer started.\n"); break;
-			case PGRES_BAD_RESPONSE: printf("\n PGRES_BAD_RESPONSE:The server's response was not understood. \n"); PQclear(sql_result); return(1);break;
-			case PGRES_NONFATAL_ERROR: printf("\n PGRES_NONFATAL_ERROR:A nonfatal error (a notice or warning) occurred. \n"); PQclear(sql_result); return(1);break;
-			case PGRES_FATAL_ERROR: printf("\n PGRES_FATAL_ERROR: A fatal error occurred.\n"); PQclear(sql_result); return(1);break;
-			default: printf("\n Unknown PQresultStatus=%s\n",PQresultStatus(sql_result)); break;
+			case PGRES_EMPTY_QUERY: printf(" PGRES_EMPTY_QUERY:The string sent to the server was empty.\n"); break;
+			case PGRES_COMMAND_OK: printf("PGRES_COMMAND_OK:Successful completion of a command returning no data. \n"); break;
+			case PGRES_TUPLES_OK: printf("PGRES_TUPLES_OK:Successful completion of a command returning data (such as a SELECT or SHOW). \n"); break;
+			case PGRES_COPY_OUT: printf(" PGRES_COPY_OUT:Copy Out (from server) data transfer started.\n"); break;
+			case PGRES_COPY_IN: printf(" PGRES_COPY_IN:Copy In (to server) data transfer started.\n"); break;
+			case PGRES_BAD_RESPONSE: printf("PGRES_BAD_RESPONSE:The server's response was not understood. \n"); PQclear(sql_result); return(1);break;
+			case PGRES_NONFATAL_ERROR: printf("PGRES_NONFATAL_ERROR:A nonfatal error (a notice or warning) occurred. \n"); PQclear(sql_result); return(1);break;
+			case PGRES_FATAL_ERROR: printf("PGRES_FATAL_ERROR: A fatal error occurred.\n"); PQclear(sql_result); return(1);break;
+			default: printf("Unknown PQresultStatus=%s\n",PQresultStatus(sql_result)); break;
 	} //switch	
 	PQclear(sql_result);	
 
@@ -1413,7 +1357,6 @@ return 0;
 
 int main (int argc, char* argv[]) {
 
-	#include "../dev_or_prod.h"
 	const char *Table_Name="CMVP_MIP_Table";
 	char *file_path;
 	long int file_pos=0;
@@ -1421,41 +1364,10 @@ int main (int argc, char* argv[]) {
 	//char *last_updated;
 	data_t data;
 	int i;
-	int Postgresql_Connection_Status;
-	char connbuff[200];
+
 
 	
-	switch (PROD) {
-		case 2:  			//local VM machine
-			
-    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
-    		
-    		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
-       		conn = PQconnectdb(connbuff);
-   	   		break;
-		case 1: 			//intel intranet production
-	  		
-			AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-			
-    		//rgf2
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
-    		
-    		conn = PQconnectdb(connbuff);
-   	   		break;
-		case 0: //Intel intranet pre-production
-			
-		 	AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-    		
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
-   	   		
-   	   		conn = PQconnectdb(connbuff);
-   	   		break;
-		default: 
-			printf("ERROR  1276: Unknown PROD=%d\n",PROD); break;
-	}
-
-
-
+	conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
     if (PQstatus(conn) == CONNECTION_OK) {
     	printf("SUCCESSFUL postgres connection\n");
 
