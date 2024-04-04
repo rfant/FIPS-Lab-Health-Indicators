@@ -5,7 +5,7 @@
 
 
 #MY_TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-MY_TOOL_PATH="/home/vcap/app/.bo-config/ESV_Data"
+MY_TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
 
 
 #MY_LOCAL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
