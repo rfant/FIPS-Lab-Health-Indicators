@@ -8,10 +8,9 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdarg.h>  //ubuntu
-//#include "../dev_or_prod.h"  //rgf2
-#include <openssl/aes.h>
-//AES_KEY aesKey_;
-//unsigned char decryptedPW[16];
+#include "../dev_or_prod.h"
+
+//#include "Active_Indicator_sql.h"
 
 //global variables
 PGconn *conn;
@@ -45,33 +44,7 @@ const char * sanitize_sql_input ( char *);
 const char * strip_space ( char * );
 void strfcat(char *, char *, ...);
 int str_find (const char * ,byte * ,const long , long );
-//int date1_lt_date2 (const char *, const char *);
-
-
-
-//===============================================================
-void strfcat(char *src, char *fmt, ...){
-//this is sprintf and strcat combined.
-//strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
-//strfcat(dst, "%d:%d:%c\n", 4,13,'s');
-
-    //char buf[2048];
-
-
-    char buf[SQL_MAX];
-    va_list args;
-
-    va_start(args, fmt);
-
-//   vsprintf(buf, fmt, args);
-    vsnprintf(buf,sizeof buf, fmt,args);
-
-    va_end(args);
-
-    //strcat(src, buf);
-    strncat(src,buf,sizeof buf);
-
-}//strfcat
+int date1_lt_date2 (const char *, const char *);
 
 //===========================================================
 
@@ -336,7 +309,7 @@ strfcat(sql1," INSERT INTO \"CMVP_Active_Table\" ( \"Cert_Num\",\"Module_Name\",
 
 strfcat(sql1," VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, (select CURRENT_DATE),%s) ",cert_num, module_name, standard, status, sunset, validation,  security_level, module_type, vendor_name,  lab_name,fips_algorithms);
 
-printf("alpha 3 insert: sql1=%s\n",sql1);
+//printf("alpha 1 insert: sql1=%s\n",sql1);
 
 		sql_result = PQexec(conn, sql1); 
 
@@ -351,7 +324,32 @@ return 0;
 
 //===========================================================================================================
 
+//===================================================================================================
+void strfcat(char *src, char *fmt, ...){
+//this is sprintf and strcat combined.
+//strfcat(dst, "Where are %d %s %c\n", 5,"green wizards",'?');
+//strfcat(dst, "%d:%d:%c\n", 4,13,'s');
+//printf("charlie1\n");
+    //char buf[2048];
+    char buf[SQL_MAX];
+//printf("charlie2\n");
 
+    va_list args;
+
+    va_start(args, fmt);
+//printf("charlie3. buf=%d, fmt=%d, args=%d\n",strlen(buf),strlen(fmt),args);
+
+    vsprintf(buf, fmt, args);
+//printf("charlie4\n");
+
+    va_end(args);
+
+//printf("charlie5\n");
+
+    strcat(src, buf);
+//printf("charlie6\n");
+
+} //strfcat
 //===========================================================================================
 const char * convert_date_format( char * inputDate){
 
@@ -456,7 +454,7 @@ return return_str;
 
 }// convert date_format 
 //===============================================================================================
-/*int date1_lt_date2 (const char *date1, const char *date2){
+int date1_lt_date2 (const char *date1, const char *date2){
 //date1 less than date2
 //Quick and dirty date compare.
 //Assumes date format is 'mm/dd/yyyy'
@@ -513,7 +511,7 @@ return return_str;
 	
 }  //date1 lt date2
 
-*/
+
 //====================================================================================================
 long int parse_modules_from_single_html_file (char * file_name,byte* data,const long len){
 //this will parse a single module from the HTML email file as received from the CMVP website
@@ -964,8 +962,7 @@ if(myX!=0) {printf("***** Skipping Invalid Certifcate Files\n"); return(-1); }
 		dummy_value_fips_algorithms=strip_space(dummyA); //convert my char [] to char *
 	
 		//data-fips-count is the number of FIPS algorithms associated with this cert_num
-		//sscanf(dummy_value_fips_algorithms, "'%d'", &data_fips_count); 
-		data_fips_count=0; 		
+		sscanf(dummy_value_fips_algorithms, "'%d'", &data_fips_count);  		
 		
 		myX=str_find ("<td class=\"text-nowrap\">", data,len, 0);  //start at top of the file and begin scanning for algorithms which will start with -nowrwap tag
 		if(myX==0) {printf("***** Warning 859: text-nowrap Tag Not found (x=%d, cert_num=%s) \n",myX,cert_num); dummy_value_fips_algorithms="NULL"; }
@@ -1121,7 +1118,7 @@ if(myX!=0) {printf("***** Skipping Invalid Certifcate Files\n"); return(-1); }
 
 	//if DEBUG printf("Validation_7: %s\n",validation);
 	
-printf("\nalpha2\n");
+
 	//here's the actual table insert
  	insert_sql_table(cert_num,module_name,standard,status,sunset,validation,security_level,module_type,vendor_name,lab_name,fips_algorithms);
 
@@ -1151,7 +1148,6 @@ strfcat(sql1," where t1.\"Cert_Num\"=t2.\"Cert_Num\"; ");
 
 strfcat(sql1," update \"CMVP_Active_Table\" set \"Status\" = case  ");
 strfcat(sql1," 	 when \"Status\"='Revoked' then 'Revoked'  ");
-strfcat(sql1," 	 when \"Status\"='Historical' then 'Historical'  ");  //rgf cert 4355 went historical before sunset date. 
 strfcat(sql1," 	 when (select CURRENT_DATE)::date  <= \"Sunset_Date\"::date   then 'Active' else 'Historical'  end;  ");
 
 strfcat(sql1," delete from \"CMVP_Active_Table\" t1 using \"CMVP_Active_Table\" t2  ");
@@ -1222,9 +1218,7 @@ return 0;
 //============================================================
 int main (int argc, char* argv[]) {
 
-#include "../dev_or_prod.h" 
-
- const char *Table_Name="CMVP_Active_Table";
+	const char *Table_Name="CMVP_Active_Table";
 	char *file_path;
 	char *file_num;
 
@@ -1235,69 +1229,50 @@ int main (int argc, char* argv[]) {
 	data_t data;
 	int i;
 	int myX;
-	int Postgresql_Connection_Status;
-	char connbuff[200];
-
 //printf("alpha1\n");
+
 	
 	switch (PROD) {
 		case 2:  			//local VM machine
-			
-    		AES_decrypt(VMencryptedPW, decryptedPW,&aesKey_);
-    		
-    		snprintf(connbuff,sizeof connbuff,"host=localhost user=postgres password=%s dbname=postgres", decryptedPW);
-       		conn = PQconnectdb(connbuff);
-   	   		
-   	   		break;
-	
+			conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
+			break;
 		case 1: 			//intel intranet production
-  		
-	  		
-			
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-
-			//rgf2
-			snprintf(connbuff,sizeof connbuff,"host=postgres5320-lb-fm-in.dbaas.intel.com user=lhi_prod2_so password=%s dbname=lhi_prod2 ", decryptedPW);
-    		    
-    		conn = PQconnectdb(connbuff);
-   	   		break;
-	
+	  		conn = PQconnectdb("host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=icDuf94Gae dbname=lhi_prod  port=5433 ");
+			break;
 		case 0: //Intel intranet pre-production
-			
-		 	
-    		AES_decrypt(IntelencryptedPW, decryptedPW,&aesKey_);
-    		
-    		snprintf(connbuff,sizeof connbuff,"host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=%s dbname=lhi_pre_prod ", decryptedPW);
-    
-   	   		//conn = PQconnectdb(connbuff);
-   	   		break;
+			conn = PQconnectdb("host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=icDuf94Gae dbname=lhi_pre_prod  ");
+		 	break;
 		default: 
-			printf("ERROR  112: Unknown PROD=%d\n",PROD); break;
+			printf("ERROR Unknown PROD=%d\n",PROD); break;
 	}
 
+	//if (PROD==1) 
+	//{
+	//		
+	//	//local VM machine
+	//	conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
+	//
+	//	//intel intranet production
+	// 	//conn=PQconnectdb("host=postgres5456-lb-fm-in.dbaas.intel.com user=lhi_prod_so password=icDuf94Gae dbname=lhi_prod  port=5433 ");
+	
+	//}
+	//else
+	//{
+	//	//Intel intranet pre-production
+	//	conn=PQconnectdb("host=postgres5596-lb-fm-in.dbaas.intel.com user=lhi_pre_prod_so password=icDuf94Gae dbname=lhi_pre_prod  ");
+	//	
+	//	
+	//  	//local VM machine
+	//	//conn = PQconnectdb("host=localhost user=postgres password=postgres dbname=postgres ");
+	//
+	//}	
 
 
+	
+    if (PQstatus(conn) == CONNECTION_OK) {
 
-	Postgresql_Connection_Status=PQstatus(conn);
-
-	switch(Postgresql_Connection_Status) {
-		case CONNECTION_OK: 			printf("alpha Connection OK\n"); break;
-		case CONNECTION_BAD:			printf("Connection Bad. Possilbe invalid connection parameters\n"); break;
-		case CONNECTION_STARTED: 		printf("Connection Started\n");break;
-		case CONNECTION_MADE:  			printf("Connecton Made\n"); break;
-		case CONNECTION_AWAITING_RESPONSE: printf("Connection Awaiting Response\n"); break;
-		case CONNECTION_AUTH_OK: 		printf("Connection Auth Ok\n"); break;
-		case CONNECTION_SSL_STARTUP: 	printf("Connection _SSL_Startup\n"); break;
-		case CONNECTION_SETENV: 		printf("Connect Setenv\n"); break;
-		case CONNECTION_CHECK_WRITABLE: printf("Connection_Check_Writable\n"); break;
-		case CONNECTION_CONSUME: 		printf("Connection Consume\n"); break;
-		default:
-			printf("ERROR 1297: unknown connection error = %d\n",Postgresql_Connection_Status); break;
-		} // switch
-
-
-	if (Postgresql_Connection_Status==CONNECTION_OK) {
-   
+//printf("alpha2\n");
+	      	
 
 		if(argc != 2) { 
 			printf("*** Error 345: Missing Input File Name.\n");
@@ -1307,23 +1282,24 @@ int main (int argc, char* argv[]) {
 		// get input filename
 		file_path = argv[1];
 	
-		//------ do file manipulation stuff here
+		//------ do file stuff here
+	//	printf("\n\n********************************************************************************\n\n");
 		//printf("Opening file: '%s'\n", file_path);
 		if(!read_file(file_path, &data))
 				printf("*** Error 356: Error reading file '%s'.\n",file_path);
 			
 		
 
-		//printf("alpha3\n");
+	//	printf("alpha3\n");
 					
 		parse_modules_from_single_html_file(file_path, data.rawsymbols,  data.len);
 		
-	//printf("alpha4\n");
+//	printf("alpha4\n");
 
     		//printf("alphaC\n");
 	} //connection ok
 	else
-		printf("PostgreSQL connection error. connstr=%s\n",connbuff);
+		printf("PostgreSQL connection error\n");
 
 	PQfinish(conn);
 //printf("alpha5\n");
