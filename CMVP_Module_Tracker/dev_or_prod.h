@@ -15,8 +15,9 @@
 unsigned char VMencryptedPW []={218,25,112,80,80,4,144,228,28,211,51,153,143,165,170,231};
 unsigned char IntelencryptedPW []={44,155,95,216,43,67,13,219,62,86,123,205,185,227,198,171};
 unsigned char userKey_[]="0003141592653598";
-unsigned char encryptedPW[]={0x69, 0x63, 0x44, 0x75, 0x66, 0x39, 0x34, 0x47, 0x61, 0x65, 0x2D, 0, 0, 0, 0, 0, 0}; //rgf2
+unsigned char decryptedPW[16];
 
-//unsigned char plainTextPW[]="icDuf94Gae-";
+AES_KEY aesKey_;
+AES_set_decrypt_key(userKey_, 128, &aesKey_);
 
  
