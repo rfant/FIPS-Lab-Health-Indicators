@@ -1,54 +1,53 @@
-#Loops all the files
-#!/bin/bash
 
-TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data"
-#TOOL_PATH="/home/vcap/app/.bp-config/Module_In_Process_Data"
-
-#current data from CMVP MIP website pull
-RAW_CURRENT_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data/cmvp_website_pull"
-#RAW_DATA_PATH="/home/vcap/app/.bp-config/Module_In_Process_Data/cmvp_website_pull"
-
-MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/Module_In_Process_Data"
-#MY_BACKUP_PATH="/var/vcap/data/LHI/Module_In_Process_Data"
+#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data"
+TOOL_PATH="/home/vcap/app/.bp-config/Module_Active_Data"
 
 
+#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data/active_cert_pull"
+RAW_DATA_PATH="/home/vcap/app/.bp-config/Module_Active_Data/active_cert_pull"
 
-#today=`date '+%m_%d_%Y'`;
-today=`date '+%Y_%m_%d'`;
+#MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Datat/cactive_cert_pull_backup"
+MY_BACKUP_PATH="/var/vcap/data/LHI/Module_Active_Data"
 
+#cd $TOOL_PATH/results
+#rm *.log
+#cd ..
 
-
-LOG_FILENAME_CURRENT="$TOOL_PATH/results/$today.MIP_current_parser.log"
-rm -f $LOG_FILENAME_CURRENT       
+today=`date '+%m_%d_%Y'`;
+LOG_FILENAME="$TOOL_PATH/results/$today.ACTIVE.log"
 
 
 echo "=================================================================================="
-#-------------------------------------
-i=1
-# process current website data, second
-for f in `ls $RAW_CURRENT_DATA_PATH/* | sort -n`
 
+#remove todays log_file only just in case I am debugging
+rm $LOG_FILENAME   
+
+#clean out the Active Table for a fresh start. Should only use this for debugging purposes.
+#$TOOL_PATH/delete_data_active_table   
+
+i=1
+
+for f in `ls $RAW_DATA_PATH/ | sort -n`
 do
-	# take action on each file. $f store current file name
-  	echo "$i: All_Labs_Current_Data  Processing $f file..."
-    $TOOL_PATH/current_mip_to_sql $f >> $LOG_FILENAME_CURRENT
-  	echo "$i: ################" >> $LOG_FILENAME_CURRENT
- 	
- 
- 	((i+=1))
+	
+	echo "$i: Processing $RAW_DATA_PATH/$f file..."
+
+  	$TOOL_PATH/active_to_sql $RAW_DATA_PATH/$f  >> $LOG_FILENAME
+  	echo "$i: ################"   >> $LOG_FILENAME
+
+	((i+=1))
 done
 
-echo "Invoke the LHI to force a refresh of the confidence tool." >> $LOG_FILENAME_CURRENT
-#curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/cmvp_mip_forecast_stackedbar.php 
-#curl https://fips-lab-indicator.apps1-fm-int.icloud.intel.com/cmvp_mip_forecast_stackedbar.php 
+#echo "Marking all dup rows in the CMVP_Active_Table. Plus create a clean_lab_name by using just the first word of the lab name since there are many spellings. Plus adding sunset date" 
+$TOOL_PATH/Mark_Active_Table_Dups >> $LOG_FILENAME
 
-echo "force a refresh of the certifiable list" >> $LOG_FILENAME_CURRENT
-#curl http://127.0.0.1/ChartDirector/CMVP_MIP_Indicator/ccmvp_LHI_Admin.php?admin_option=5 
-#curl https://fips-lab-indicator.apps1-fm-int.icloud.intel.com/cmvp_LHI_Admin.php?admin_option=5
-
-#cp $LOG_FILENAME_CURRENT $MY_BACKUP_PATH/results/.
+#copy log files
+#cp $LOG_FILE $MY__BACKUP_PATH/results/.
 
 
-# If I have any error messages in the log, I'll set the MIP Error Flag in the sql dbase which will create a button in the LHI tool.
-grep -q -i "error" $LOG_FILENAME_CURRENT && ./setMIPErrorFlag $today.MIP_current_parser.log
+# If I have any error messages in the log, I'll set a flag in the POSGRESQL dbase that will show as a warning in the LHI tool.
+grep -q -i "error" $LOG_FILENAME && ./setActiveErrorFlag $today.ACTIVE.log
 
+
+
+	
