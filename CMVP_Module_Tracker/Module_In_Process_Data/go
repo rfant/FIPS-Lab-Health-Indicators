@@ -1,29 +1,26 @@
+#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
 
-#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data"
-TOOL_PATH="/home/vcap/app/.bp-config/Module_Active_Data"
 
+#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
+RAW_DATA_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
 
-#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Data/active_cert_pull"
-RAW_DATA_PATH="/home/vcap/app/.bp-config/Module_Active_Data/active_cert_pull"
-
-#MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/Module_Active_Datat/cactive_cert_pull_backup"
-MY_BACKUP_PATH="/var/vcap/data/LHI/Module_Active_Data"
+#MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
 
 #cd $TOOL_PATH/results
 #rm *.log
 #cd ..
 
 today=`date '+%m_%d_%Y'`;
-LOG_FILENAME="$TOOL_PATH/results/$today.ACTIVE.log"
+LOG_FILENAME="$TOOL_PATH/results/$today.ESV.log"
 
-
-echo "=================================================================================="
 
 #remove todays log_file only just in case I am debugging
 rm $LOG_FILENAME   
 
-#clean out the Active Table for a fresh start. Should only use this for debugging purposes.
-#$TOOL_PATH/delete_data_active_table   
+#clean out the ESV Table for a fresh start. Should only use this for debugging purposes.
+#$TOOL_PATH/delete_data_esv_table   
 
 i=1
 
@@ -32,21 +29,17 @@ do
 	
 	echo "$i: Processing $RAW_DATA_PATH/$f file..."
 
-  	$TOOL_PATH/active_to_sql $RAW_DATA_PATH/$f  >> $LOG_FILENAME
+  	$TOOL_PATH/esv_to_sql $RAW_DATA_PATH/$f  >> $LOG_FILENAME
   	echo "$i: ################"   >> $LOG_FILENAME
 
 	((i+=1))
 done
 
-#echo "Marking all dup rows in the CMVP_Active_Table. Plus create a clean_lab_name by using just the first word of the lab name since there are many spellings. Plus adding sunset date" 
-$TOOL_PATH/Mark_Active_Table_Dups >> $LOG_FILENAME
-
-#copy log files
-#cp $LOG_FILE $MY__BACKUP_PATH/results/.
-
+echo "Deleting all dup rows in the CMVP_ESV_Table. Plus create a clean_lab_name by using just the first word of the lab name since there are many spellings. " 
+$TOOL_PATH/Mark_esv_Table_Dups >> $LOG_FILENAME
 
 # If I have any error messages in the log, I'll set a flag in the POSGRESQL dbase that will show as a warning in the LHI tool.
-grep -q -i "error" $LOG_FILENAME && ./setActiveErrorFlag $today.ACTIVE.log
+grep -q -i "error" $LOG_FILENAME && ./setesvErrorFlag $today.ESV.log
 
 
 
