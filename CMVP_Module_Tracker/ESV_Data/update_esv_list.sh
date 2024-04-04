@@ -4,12 +4,12 @@
 #this will include cert_numbers, vendor, module name, lab name, sunset, etc.
 
 
-MY_TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-#MY_TOOL_PATH="/home/vcap/app/.bo-config/ESV_Data"
+#MY_TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+MY_TOOL_PATH="/home/vcap/app/.bo-config/ESV_Data"
 
 
-MY_LOCAL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
-#MY_LOCAL_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
+#MY_LOCAL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
+MY_LOCAL_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
 
 MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
 
@@ -37,6 +37,7 @@ rm -r $URL_FILENAME
 
 for i in {1..1000}  #fix up my sequential cert list. see above comment.
 do
+  echo $i
   echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/entropy-validations/certificate/$i" >> $URL_FILENAME
 #  echo "https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/$i" >> $URL_FILENAME
 done

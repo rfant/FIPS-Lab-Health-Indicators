@@ -1,12 +1,12 @@
-TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-#TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
+#TOOL_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+TOOL_PATH="/home/vcap/app/.bp-config/ESV_Data"
 
 
-RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
-#RAW_DATA_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
+#RAW_DATA_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data/esv_cert_pull"
+RAW_DATA_PATH="/home/vcap/app/.bp-config/ESV_Data/esv_cert_pull"
 
-MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
-#MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
+#MY_BACKUP_PATH="/home/rfant/CMVP_Module_Tracker/ESV_Data"
+MY_BACKUP_PATH="/var/vcap/data/LHI/ESV_Data"
 
 #cd $TOOL_PATH/results
 #rm *.log
